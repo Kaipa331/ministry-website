@@ -6,26 +6,26 @@ export default function AboutUs() {
   return (
     <div className="w-full" style={{ background: "linear-gradient(180deg, rgb(250, 248, 255) 0%, rgb(245, 244, 255) 100%)" }}>
       {/* Hero Section */}
-      <section className="max-w-[1280px] mx-auto px-[64px] pt-[160px] pb-[80px]">
-        <div className="flex flex-col gap-[8px] mb-[48px]">
-          <p className="font-sans font-semibold text-[#757682] text-[12px] tracking-[2px] uppercase">DIVINE VISITATION</p>
-          <h1 className="font-heading font-bold text-[#001a4d] text-[56px] leading-[1.1] tracking-[-1px]">About the Mighty Angel</h1>
-          <p className="font-sans italic text-[#444650] text-[16px] mt-2 max-w-[600px]">
+      <section className="max-w-[1280px] mx-auto px-[16px] md:px-[64px] pt-[120px] md:pt-[160px] pb-[48px] md:pb-[80px]">
+        <div className="flex flex-col gap-[8px] mb-[32px] md:mb-[48px]">
+          <p className="font-sans font-semibold text-[#757682] text-[11px] md:text-[12px] tracking-[2px] uppercase">DIVINE VISITATION</p>
+          <h1 className="font-heading font-bold text-[#001a4d] text-[36px] md:text-[56px] leading-[1.1] tracking-[-1px]">About the Mighty Angel</h1>
+          <p className="font-sans italic text-[#444650] text-[14px] md:text-[16px] mt-2 max-w-[600px]">
             A vision that transformed a ministry and echoed through the heavens.
           </p>
         </div>
 
         {/* Featured Article */}
-        <div className="grid grid-cols-[1fr_360px] gap-[48px] items-start">
-          <div className="flex flex-col gap-[32px]">
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_360px] gap-[32px] md:gap-[48px] items-start">
+          <div className="flex flex-col gap-[24px] md:gap-[32px]">
             <div className="flex flex-col gap-[8px]">
-              <p className="font-sans font-semibold text-[#FFD700] text-[11px] tracking-[2px] uppercase">FEBRUARY 2024 — BLOG</p>
-              <h2 className="font-heading font-bold text-[#001a4d] text-[32px] leading-[1.2]">
+              <p className="font-sans font-semibold text-[#FFD700] text-[10px] md:text-[11px] tracking-[2px] uppercase">FEBRUARY 2024 — BLOG</p>
+              <h2 className="font-heading font-bold text-[#001a4d] text-[24px] md:text-[32px] leading-[1.2]">
                 On that sacred Monday, the spiritual atmosphere shifted. It was more than a dream; it was a profound interaction with the celestial.
               </h2>
             </div>
 
-            <div className="flex flex-col gap-[20px] font-sans font-normal text-[#444650] text-[16px] leading-[1.7]">
+            <div className="flex flex-col gap-[16px] md:gap-[20px] font-sans font-normal text-[#444650] text-[14px] md:text-[16px] leading-[1.7]">
               <p>
                 The vision unfolded with crystalline clarity. An immense presence filled the room — the Mighty Angel — standing with a divine patent bearing heaven's seal and an ancient commission that would redefine the ministry's purposes.
               </p>
@@ -37,7 +37,7 @@ export default function AboutUs() {
               </p>
             </div>
 
-            <button className="flex items-center gap-[8px] font-sans font-semibold text-[#001a4d] text-[14px] hover:gap-[12px] transition-all w-fit">
+            <button className="flex items-center gap-[8px] font-sans font-semibold text-[#001a4d] text-[13px] md:text-[14px] hover:gap-[12px] transition-all w-fit">
               Watch Full Video
               <svg width="16" height="8" viewBox="0 0 16 8" fill="none">
                 <path d="M12.175 4H0V3H12.175L9.575 0.4L10.5 0L14 3.5L10.5 7L9.575 6.6L12.175 4Z" fill="#001A4D" />
@@ -77,28 +77,28 @@ export default function AboutUs() {
       </section>
 
       {/* Since that day section */}
-      <section className="max-w-[1280px] mx-auto px-[64px] pb-[60px]">
-        <div className="bg-white rounded-[20px] p-[48px] shadow-[0px_2px_24px_rgba(0,26,77,0.06)]">
-          <p className="font-sans font-normal text-[#444650] text-[16px] leading-[1.8] max-w-[720px]">
+      <section className="max-w-[1280px] mx-auto px-[16px] md:px-[64px] pb-[40px] md:pb-[60px]">
+        <div className="bg-white rounded-[16px] md:rounded-[20px] p-[28px] md:p-[48px] shadow-[0px_2px_24px_rgba(0,26,77,0.06)]">
+          <p className="font-sans font-normal text-[#444650] text-[14px] md:text-[16px] leading-[1.8] max-w-[720px]">
             Since that day, every podcast recorded and every testimony shared is filtered through this divine mandate. The Mighty Angel stands as a sentinel of our commitment to majestic professionalism and spiritual accuracy.
           </p>
         </div>
       </section>
 
       {/* Carry the Sound CTA */}
-      <section className="max-w-[1280px] mx-auto px-[64px] pb-[120px]">
-        <div className="bg-[#001a4d] rounded-[24px] p-[64px] relative overflow-hidden text-center">
-          <div className="absolute left-1/2 top-[-60px] w-[300px] h-[300px] rounded-full bg-[rgba(255,215,0,0.06)] -translate-x-1/2" />
-          <p className="font-sans font-semibold text-[#b3c5ff] text-[12px] tracking-[2px] uppercase mb-[12px]">OUR CALLING</p>
-          <h2 className="font-heading font-bold text-white text-[40px] leading-tight mb-[16px]">Carry the Sound</h2>
-          <p className="font-sans font-normal text-[#b3c5ff] text-[16px] leading-relaxed max-w-[480px] mx-auto mb-[32px]">
+      <section className="max-w-[1280px] mx-auto px-[16px] md:px-[64px] pb-[80px] md:pb-[120px]">
+        <div className="bg-[#001a4d] rounded-[16px] md:rounded-[24px] p-[32px] md:p-[64px] relative overflow-hidden text-center">
+          <div className="absolute left-1/2 top-[-60px] w-[200px] md:w-[300px] h-[200px] md:h-[300px] rounded-full bg-[rgba(255,215,0,0.06)] -translate-x-1/2" />
+          <p className="font-sans font-semibold text-[#b3c5ff] text-[11px] md:text-[12px] tracking-[2px] uppercase mb-[10px] md:mb-[12px]">OUR CALLING</p>
+          <h2 className="font-heading font-bold text-white text-[28px] md:text-[40px] leading-tight mb-[12px] md:mb-[16px]">Carry the Sound</h2>
+          <p className="font-sans font-normal text-[#b3c5ff] text-[14px] md:text-[16px] leading-relaxed max-w-[480px] mx-auto mb-[24px] md:mb-[32px]">
             The Voice of the Mighty Angel continues to guide us as we reach frequencies globally through professional content and community engagement.
           </p>
-          <div className="flex items-center justify-center gap-[16px]">
-            <button className="bg-[#FFD700] font-sans font-bold text-[#001a4d] text-[13px] tracking-[1.3px] px-[32px] py-[12px] rounded-full hover:bg-[#ffca00] transition-colors">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-[12px] md:gap-[16px]">
+            <button className="bg-[#FFD700] font-sans font-bold text-[#001a4d] text-[12px] md:text-[13px] tracking-[1.3px] px-[24px] md:px-[32px] py-[10px] md:py-[12px] rounded-full hover:bg-[#ffca00] transition-colors">
               EXPLORE PODCASTS
             </button>
-            <button className="border border-white/40 font-sans font-normal text-white text-[13px] tracking-[1px] px-[32px] py-[12px] rounded-full hover:bg-white/10 transition-colors">
+            <button className="border border-white/40 font-sans font-normal text-white text-[12px] md:text-[13px] tracking-[1px] px-[24px] md:px-[32px] py-[10px] md:py-[12px] rounded-full hover:bg-white/10 transition-colors">
               Support the vision
             </button>
           </div>

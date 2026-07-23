@@ -3,12 +3,12 @@ import svgPaths from "../../imports/svg-lz7pxwlanc";
 export default function Footer() {
   return (
     <div className="bg-[#1a1b20] w-full">
-      <div className="max-w-[1280px] mx-auto px-[64px] py-[80px]">
-        <div className="flex items-start justify-between mb-[48px]">
+      <div className="max-w-[1280px] mx-auto px-[16px] md:px-[64px] py-[48px] md:py-[80px]">
+        <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-[32px] md:gap-0 mb-[32px] md:mb-[48px]">
           {/* Brand */}
           <div className="flex flex-col gap-[16px] max-w-[384px]">
-            <p className="font-heading font-bold text-[#ffd700] text-[24px]">Lord Overtone</p>
-            <p className="font-sans font-normal text-[rgba(227,226,232,0.7)] text-[15px] leading-[1.6]">
+            <p className="font-heading font-bold text-[#ffd700] text-[20px] md:text-[24px]">Lord Overtone</p>
+            <p className="font-sans font-normal text-[rgba(227,226,232,0.7)] text-[14px] md:text-[15px] leading-[1.6]">
               Sharing divine frequencies and celestial messages through modern media. A place for peace and spiritual clarity.
             </p>
             <div className="flex gap-[16px] mt-2">
@@ -36,7 +36,7 @@ export default function Footer() {
           </div>
 
           {/* Links */}
-          <div className="flex gap-[48px]">
+          <div className="flex flex-col md:flex-row gap-[32px] md:gap-[48px]">
             <div className="flex flex-col gap-[16px]">
               <p className="font-sans font-normal text-white text-[14px] uppercase tracking-[1px]">EXPLORE</p>
               {["Episodes", "Gallery", "Speakers"].map((l) => (
@@ -61,15 +61,15 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div
-          className="flex items-center justify-between pt-[32px]"
+          className="flex flex-col md:flex-row md:items-center justify-between gap-[16px] pt-[24px] md:pt-[32px]"
           style={{ borderTop: "1px solid rgba(227,226,232,0.1)" }}
         >
-          <p className="font-sans font-normal text-[rgba(255,255,255,0.5)] text-[14px]">
+          <p className="font-sans font-normal text-[rgba(255,255,255,0.5)] text-[13px] md:text-[14px]">
             © 2026 Lord Overtone Ministry. All Rights Reserved.
           </p>
-          <div className="flex gap-[24px]">
+          <div className="flex gap-[16px] md:gap-[24px]">
             {["Privacy Policy", "Terms of Service"].map((l) => (
-              <p key={l} className="font-sans font-normal text-[rgba(227,226,232,0.7)] text-[14px] cursor-pointer hover:text-white transition-colors">{l}</p>
+              <p key={l} className="font-sans font-normal text-[rgba(227,226,232,0.7)] text-[13px] md:text-[14px] cursor-pointer hover:text-white transition-colors">{l}</p>
             ))}
           </div>
         </div>
