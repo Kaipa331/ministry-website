@@ -6,17 +6,16 @@ function HeroSection() {
   return (
     <div className="max-w-[1280px] relative shrink-0 w-full">
       <div className="flex flex-col items-center max-w-[inherit] size-full">
-        <div className="content-stretch flex flex-col gap-[20px] md:gap-[24px] items-center max-w-[inherit] px-[16px] md:px-[64px] relative size-full">
+        <div className="content-stretch flex flex-col gap-[16px] md:gap-[24px] items-center max-w-[inherit] px-[16px] md:px-[64px] relative size-full">
           <div className="content-stretch flex flex-col items-center relative shrink-0 w-full">
-            <div className="[word-break:break-word] flex flex-col font-heading font-bold justify-center leading-[0] not-italic relative shrink-0 text-[#001a4d] text-[36px] md:text-[64px] text-center tracking-[-1.28px] whitespace-nowrap">
-              <p className="leading-[40px] md:leading-[70.4px]">Divine Connection</p>
-            </div>
+            <h1 className="font-heading font-bold text-[#001a4d] text-[36px] md:text-[64px] text-center tracking-[-1.28px] leading-[1.2] md:leading-[70.4px]">
+              Divine Connection
+            </h1>
           </div>
-          <div className="content-stretch flex flex-col items-center max-w-[100%] md:max-w-[672px] relative shrink-0 w-full">
-            <div className="[word-break:break-word] flex flex-col font-sans font-normal justify-center leading-[0] not-italic relative shrink-0 text-[#444650] text-[15px] md:text-[18px] text-center">
-              <p className="leading-[24px] md:leading-[29.25px] mb-0">Whether you have a testimony to share, a prayer request, or simply want</p>
-              <p className="leading-[24px] md:leading-[29.25px]">to learn more about Lord Overtone Ministry, our doors and hearts are open.</p>
-            </div>
+          <div className="content-stretch flex flex-col items-center max-w-[672px] relative shrink-0 w-full">
+            <p className="font-sans font-normal text-[#444650] text-[15px] md:text-[18px] text-center leading-[1.6] mb-0">
+              Whether you have a testimony to share, a prayer request, or simply want to learn more about Lord Overtone Ministry, our doors and hearts are open.
+            </p>
           </div>
         </div>
       </div>
@@ -26,7 +25,7 @@ function HeroSection() {
 
 function ContactInfoSidebar() {
   return (
-    <div className="col-span-1 md:col-[1/span_4] content-stretch flex flex-col gap-[20px] md:gap-[24px] items-start justify-self-stretch pb-[12.22px] relative row-1 self-start shrink-0">
+    <div className="col-span-1 md:col-[1/span_4] content-stretch flex flex-col gap-[20px] md:gap-[24px] items-start justify-self-stretch pb-[12.22px] relative self-start shrink-0">
       {/* Reach Out */}
       <div className="bg-[#f4f3f9] relative rounded-[12px] shrink-0 w-full">
         <div aria-hidden className="absolute border border-[rgba(197,198,210,0.2)] border-solid inset-0 pointer-events-none rounded-[12px]" />
@@ -125,7 +124,7 @@ function ContactInfoSidebar() {
 
 function ContactForm() {
   return (
-    <div className="backdrop-blur-[10px] bg-[rgba(255,255,255,0.7)] col-span-1 md:col-[5/span_8] justify-self-stretch relative rounded-[16px] md:rounded-[24px] row-1 self-start shrink-0">
+    <div className="backdrop-blur-[10px] bg-[rgba(255,255,255,0.7)] col-span-1 md:col-[5/span_8] justify-self-stretch relative rounded-[16px] md:rounded-[24px] self-start shrink-0 overflow-hidden">
       <div className="overflow-clip rounded-[inherit] size-full">
         <div className="content-stretch flex flex-col gap-[24px] md:gap-[32px] items-start pb-[40px] md:pb-[65.01px] pt-[40px] md:pt-[64px] px-[24px] md:px-[65px] relative size-full">
           <div className="relative shrink-0 w-full">
@@ -229,26 +228,20 @@ function ContactForm() {
 
 function VisualAnchorSection() {
   return (
-    <div className="bg-[rgba(255,255,255,0)] content-stretch flex flex-col h-[360px] md:h-[540px] items-start justify-center overflow-clip relative rounded-[16px] md:rounded-[24px] shadow-[0px_20px_25px_-5px_rgba(0,0,0,0.1),0px_8px_10px_-6px_rgba(0,0,0,0.1)] shrink-0 w-full max-w-[1152px]">
+    <div className="bg-[rgba(255,255,255,0)] content-stretch flex flex-col h-[320px] md:h-[540px] items-start justify-center overflow-hidden relative rounded-[16px] md:rounded-[24px] shadow-[0px_20px_25px_-5px_rgba(0,0,0,0.1),0px_8px_10px_-6px_rgba(0,0,0,0.1)] shrink-0 w-full max-w-[1152px]">
       <div className="flex-1 min-h-px relative w-full h-full">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <img alt="Visit Our Ministry" className="absolute h-[125.55%] left-0 max-w-none top-[-12.77%] w-full object-cover" src={MOUNTAIN_IMG} />
+          <img alt="Visit Our Ministry" className="absolute h-full left-0 w-full object-cover" src={MOUNTAIN_IMG} />
         </div>
       </div>
-      <div className="absolute bg-gradient-to-t from-[rgba(0,26,77,0.6)] inset-[0] to-[rgba(0,26,77,0)]" />
-      <div className="absolute bottom-[32px] md:bottom-[48px] content-stretch flex flex-col gap-[12px] md:gap-[14.795px] items-start left-[24px] md:left-[48px] max-w-[100%] md:max-w-[512px]">
-        <div className="content-stretch flex flex-col items-start relative shrink-0 w-full">
-          <div className="[word-break:break-word] flex flex-col font-heading font-bold justify-center leading-[0] not-italic relative shrink-0 text-[#ffd700] text-[36px] md:text-[64px] tracking-[-1.28px] whitespace-nowrap">
-            <p className="leading-[36px] md:leading-[64px]">Visit Our Ministry</p>
-          </div>
-        </div>
-        <div className="content-stretch flex flex-col items-start opacity-90 pb-[0.595px] relative shrink-0 w-full">
-          <div className="[word-break:break-word] flex flex-col font-sans font-normal justify-center leading-[0] not-italic relative shrink-0 text-[14px] md:text-[18px] text-white">
-            <p className="leading-[22.4px] md:leading-[28.8px] mb-0">Located in the heart of the serene mountains, our</p>
-            <p className="leading-[22.4px] md:leading-[28.8px] mb-0">physical headquarters is a place of peace, reflection,</p>
-            <p className="leading-[22.4px] md:leading-[28.8px]">and community.</p>
-          </div>
-        </div>
+      <div className="absolute bg-gradient-to-t from-[rgba(0,26,77,0.7)] inset-[0] to-[rgba(0,26,77,0.1)]" />
+      <div className="absolute bottom-[24px] md:bottom-[48px] left-[20px] right-[20px] md:left-[48px] md:right-auto md:max-w-[512px] flex flex-col gap-[10px] md:gap-[16px] items-start">
+        <h2 className="font-heading font-bold text-[#ffd700] text-[28px] md:text-[56px] tracking-[-1.28px] leading-[1.2]">
+          Visit Our Ministry
+        </h2>
+        <p className="font-sans font-normal text-white text-[13px] md:text-[16px] opacity-90 leading-relaxed max-w-[440px]">
+          Located in the heart of the serene mountains, our physical headquarters is a place of peace, reflection, and community.
+        </p>
       </div>
     </div>
   );
@@ -269,7 +262,9 @@ export default function ContactUs() {
             <ContactForm />
           </div>
         </div>
-        <VisualAnchorSection />
+        <div className="w-full max-w-[1280px] px-[16px] md:px-[64px] flex justify-center">
+          <VisualAnchorSection />
+        </div>
       </div>
     </div>
   );
