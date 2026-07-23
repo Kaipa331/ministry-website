@@ -27,7 +27,7 @@ export default function Nav({ currentPage, onNavigate }: NavProps) {
           onClick={() => onNavigate("home")}
           className="flex items-center gap-[12px] font-heading font-bold text-[#001a4d] text-[20px] md:text-[24px] tracking-[-0.6px] whitespace-nowrap hover:opacity-80 transition-opacity"
         >
-          <img src="/logo.png" alt="Logo" className="h-[32px] md:h-[40px] w-auto" />
+          <img src="/logo.png" alt="Logo" className="h-[32px] md:h-[40px] w-auto brightness-0" />
           <span className="hidden sm:inline">Lord Overtone</span>
         </button>
 

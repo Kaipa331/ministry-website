@@ -22,18 +22,21 @@ const testimonials = [
     role: "Community Leader",
     quote: '"The Lord Overtone podcasts have been a sanctuary for my soul. Listening to \'Kupembedza Mulengi\' changed how I view my cultural identity within my faith."',
     avatar: "SM",
+    image: "/avatar-sarah.png",
   },
   {
     name: "David K.",
     role: "Educator",
     quote: '"Finding content that is both intellectually stimulating and spiritually nourishing is rare. This ministry hits that perfect balance every single time."',
     avatar: "DK",
+    image: "/avatar-david.png",
   },
   {
     name: "John Phiri",
     role: "Student",
     quote: '"As a young seeker, I found clarity through the podcast episodes. The cultural perspective on faith is exactly what my generation needs to hear."',
     avatar: "JP",
+    image: "/avatar-john.png",
   },
 ];
 
@@ -151,7 +154,11 @@ export default function Podcast() {
           {testimonials.map((t) => (
             <div key={t.name} className="bg-white rounded-[14px] md:rounded-[16px] p-[20px] md:p-[28px] shadow-[0px_2px_16px_rgba(0,26,77,0.07)]">
               <div className="flex items-center gap-[10px] md:gap-[12px] mb-[12px] md:mb-[16px]">
-                <div className="w-[40px] md:w-[44px] h-[40px] md:h-[44px] rounded-full bg-[#e8e4ff] flex items-center justify-center font-sans font-bold text-[#001a4d] text-[12px] md:text-[13px] shrink-0">{t.avatar}</div>
+                {t.image ? (
+                  <img src={t.image} alt={t.name} className="w-[40px] md:w-[44px] h-[40px] md:h-[44px] rounded-full object-cover shrink-0 border border-[rgba(255,215,0,0.3)]" />
+                ) : (
+                  <div className="w-[40px] md:w-[44px] h-[40px] md:h-[44px] rounded-full bg-[#e8e4ff] flex items-center justify-center font-sans font-bold text-[#001a4d] text-[12px] md:text-[13px] shrink-0">{t.avatar}</div>
+                )}
                 <div>
                   <p className="font-sans font-semibold text-[#1a1b20] text-[13px] md:text-[14px]">{t.name}</p>
                   <p className="font-sans font-normal text-[#757682] text-[11px] md:text-[12px]">{t.role}</p>
@@ -171,6 +178,12 @@ export default function Podcast() {
           <p className="font-sans font-semibold text-white text-[11px] md:text-[13px] truncate">The Quiet Voice</p>
           <p className="font-sans font-normal text-[#757682] text-[10px] md:text-[11px]">Episode 42</p>
         </div>
+        {/* Mobile Play Button */}
+        <button className="sm:hidden ml-auto w-[32px] h-[32px] rounded-full bg-white flex items-center justify-center hover:bg-[#e8e4ff] transition-colors shrink-0">
+          <svg className="w-[12px] h-[12px]" viewBox="0 0 14 14" fill="none">
+            <path d="M2.5 1.5L11.5 7L2.5 12.5V1.5Z" fill="#001A4D" />
+          </svg>
+        </button>
         <div className="hidden sm:flex items-center gap-[12px] md:gap-[16px]">
           <button className="text-[#757682] hover:text-white transition-colors">
             <svg className="w-[14px] md:w-[16px] h-[14px] md:h-[16px]" viewBox="0 0 16 16" fill="none">

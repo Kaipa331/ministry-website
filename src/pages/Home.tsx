@@ -9,18 +9,21 @@ const testimonials = [
     role: "Community Leader",
     quote: '"The Lord Overtone podcasts have been a sanctuary for my soul. Listening to \'Kupembedza Mulengi\' changed how I view my cultural identity within my faith."',
     avatar: "SM",
+    image: "/avatar-sarah.png",
   },
   {
     name: "David K.",
     role: "Educator",
     quote: '"Finding content that is both intellectually stimulating and spiritually nourishing is rare. This ministry hits that perfect balance every single time."',
     avatar: "DK",
+    image: "/avatar-david.png",
   },
   {
     name: "John Phiri",
     role: "Student",
     quote: '"As a young seeker, I found clarity through the podcast episodes. The cultural perspective on faith is exactly what my generation needs to hear."',
     avatar: "JP",
+    image: "/avatar-john.png",
   },
 ];
 
@@ -44,7 +47,7 @@ export default function Home() {
         <div className="flex flex-col gap-[20px] md:gap-[24px]">
           <div className="flex flex-col gap-[8px]">
             <p className="font-sans font-semibold text-[#001a4d] text-[11px] md:text-[13px] tracking-[2px] uppercase">Divine Frequencies</p>
-            <h1 className="font-heading font-bold text-[#48px] md:text-[72px] leading-[1] tracking-[-1.5px]">
+            <h1 className="font-heading font-bold text-[48px] md:text-[72px] leading-[1] tracking-[-1.5px]">
               <span className="text-[#001a4d]">LORD</span>
               <br />
               <span className="text-[#FFD700]">OVERTONE</span>
@@ -144,7 +147,7 @@ export default function Home() {
         {/* First testimonial */}
         <div className="bg-white rounded-[16px] p-[20px] md:p-[28px] shadow-[0px_2px_16px_rgba(0,26,77,0.07)]">
           <div className="flex items-center gap-[10px] md:gap-[12px] mb-[12px] md:mb-[16px]">
-            <div className="w-[40px] md:w-[48px] h-[40px] md:h-[48px] rounded-full bg-[#e8e4ff] flex items-center justify-center font-sans font-bold text-[#001a4d] text-[13px] md:text-[15px]">SM</div>
+            <img src="/avatar-sarah.png" alt="Sarah M." className="w-[40px] md:w-[48px] h-[40px] md:h-[48px] rounded-full object-cover shrink-0 border border-[rgba(255,215,0,0.3)]" />
             <div>
               <p className="font-sans font-semibold text-[#1a1b20] text-[13px] md:text-[14px]">Sarah M.</p>
               <p className="font-sans font-normal text-[#757682] text-[11px] md:text-[12px]">Lagos, Nigeria</p>
@@ -183,7 +186,11 @@ export default function Home() {
           {testimonials.map((t) => (
             <div key={t.name} className="bg-white rounded-[16px] p-[20px] md:p-[28px] shadow-[0px_2px_16px_rgba(0,26,77,0.07)]">
               <div className="flex items-center gap-[10px] md:gap-[12px] mb-[12px] md:mb-[16px]">
-                <div className="w-[40px] md:w-[44px] h-[40px] md:h-[44px] rounded-full bg-[#e8e4ff] flex items-center justify-center font-sans font-bold text-[#001a4d] text-[12px] md:text-[13px]">{t.avatar}</div>
+                {t.image ? (
+                  <img src={t.image} alt={t.name} className="w-[40px] md:w-[44px] h-[40px] md:h-[44px] rounded-full object-cover shrink-0 border border-[rgba(255,215,0,0.3)]" />
+                ) : (
+                  <div className="w-[40px] md:w-[44px] h-[40px] md:h-[44px] rounded-full bg-[#e8e4ff] flex items-center justify-center font-sans font-bold text-[#001a4d] text-[12px] md:text-[13px] shrink-0">{t.avatar}</div>
+                )}
                 <div>
                   <p className="font-sans font-semibold text-[#1a1b20] text-[13px] md:text-[14px]">{t.name}</p>
                   <p className="font-sans font-normal text-[#757682] text-[11px] md:text-[12px]">{t.role}</p>
