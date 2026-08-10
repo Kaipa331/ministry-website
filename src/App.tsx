@@ -1,31 +1,46 @@
-import { useState } from "react";
+import { useEffect } from "react";
+import { Outlet, useLocation } from "react-router-dom";
 import Nav from "./components/Nav";
 import Footer from "./components/Footer";
-import Home from "./pages/Home";
-import AboutUs from "./pages/AboutUs";
-import Podcast from "./pages/Podcast";
-import ContactUs from "./pages/ContactUs";
+import MiniPlayer from "./components/MiniPlayer";
+import ScrollToTop from "./components/ScrollToTop";
+import { PlayerProvider } from "./context/PlayerContext";
+import { site } from "./data/content";
 
-type Page = "home" | "about" | "podcast" | "contact";
+const titles: Record<string, string> = {
+  "/": site.name,
+  "/about": `About · ${site.name}`,
+  "/podcast": `Podcast · ${site.name}`,
+  "/gallery": `Gallery · ${site.name}`,
+  "/contact": `Contact · ${site.name}`,
+  "/privacy": `Privacy · ${site.name}`,
+  "/terms": `Terms · ${site.name}`,
+};
+
+function DocumentTitle() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    document.title = titles[pathname] ?? site.fullName;
+  }, [pathname]);
+  return null;
+}
 
 export default function App() {
-  const [page, setPage] = useState<Page>("home");
-
-  const handleNavigate = (p: Page) => {
-    setPage(p);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  const { pathname } = useLocation();
+  const showPlayer = pathname === "/podcast" || pathname === "/";
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#faf8ff]">
-      <Nav currentPage={page} onNavigate={handleNavigate} />
-      <main className="flex-1">
-        {page === "home" && <Home />}
-        {page === "about" && <AboutUs />}
-        {page === "podcast" && <Podcast />}
-        {page === "contact" && <ContactUs />}
-      </main>
-      {page !== "podcast" && <Footer />}
-    </div>
+    <PlayerProvider>
+      <ScrollToTop />
+      <DocumentTitle />
+      <div className={`flex min-h-screen flex-col bg-[#faf8ff] ${showPlayer ? "pb-16" : ""}`}>
+        <Nav />
+        <main className="flex-1">
+          <Outlet />
+        </main>
+        <Footer />
+        {showPlayer && <MiniPlayer />}
+      </div>
+    </PlayerProvider>
   );
 }
