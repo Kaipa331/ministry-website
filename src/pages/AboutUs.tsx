@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { pillars, site } from "../data/content";
+import { approvedTestimonials, pillars, site } from "../data/content";
 
 export default function AboutUs() {
   return (
@@ -14,6 +14,17 @@ export default function AboutUs() {
           </h1>
           <p className="mt-2 max-w-[600px] font-sans text-[14px] italic text-[#444650] md:text-[16px]">
             A vision that transformed a ministry and echoed through the heavens.
+          </p>
+        </div>
+
+        <div className="mb-10 rounded-2xl border border-[rgba(255,215,0,0.35)] bg-white p-5 shadow-[0px_2px_16px_rgba(0,26,77,0.06)] md:mb-12 md:p-7">
+          <p className="font-sans text-[11px] font-bold uppercase tracking-[1.8px] text-[#735c00]">Important</p>
+          <p className="mt-2 font-heading text-[22px] font-bold text-[#001a4d] md:text-[28px]">
+            This is not a church — it is a ministry.
+          </p>
+          <p className="mt-2 max-w-[720px] font-sans text-[14px] leading-relaxed text-[#444650] md:text-[15px]">
+            There is a big difference. {site.fullName} / {site.organization} exists to carry divine frequencies,
+            prophetic clarity, and celestial teaching. We are a ministry family, not a conventional church institution.
           </p>
         </div>
 
@@ -65,15 +76,12 @@ export default function AboutUs() {
             <div className="rounded-2xl bg-white p-6 shadow-[0px_2px_16px_rgba(0,26,77,0.07)]">
               <p className="mb-4 font-sans text-[13px] font-bold uppercase tracking-[1.5px] text-[#001a4d]">Core Pillars</p>
               <div className="flex flex-col gap-3">
-                {pillars.map((pillar) => (
-                  <div key={pillar} className="flex items-center gap-2.5">
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden>
-                      <path
-                        d="M10 1.67 12.4 7l5.93.5-4.5 3.9 1.4 5.6L10 14.3l-5.23 2.7 1.4-5.6-4.5-3.9L9.6 7 10 1.67Z"
-                        fill="#001A4D"
-                      />
-                    </svg>
-                    <p className="font-sans text-[14px] text-[#444650]">{pillar}</p>
+                {pillars.map((pillar, index) => (
+                  <div key={pillar} className="flex items-start gap-2.5">
+                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#001a4d] font-sans text-[10px] font-bold text-[#FFD700]">
+                      {index + 1}
+                    </span>
+                    <p className="font-sans text-[14px] leading-snug text-[#444650]">{pillar}</p>
                   </div>
                 ))}
               </div>
@@ -92,9 +100,40 @@ export default function AboutUs() {
           <img src="/WEBSITE.jpg" alt="The February 2014 commission story" className="h-auto w-full object-cover" />
         </div>
         <p className="mt-6 max-w-[720px] font-sans text-[14px] leading-[1.8] text-[#444650] md:text-[16px]">
-          Since that day, every podcast recorded and every testimony shared is filtered through this divine mandate. The
+          Since that day, every message recorded and every testimony shared is filtered through this divine mandate. The
           Mighty Angel stands as a sentinel of our commitment to majestic professionalism and spiritual accuracy.
         </p>
+      </section>
+
+      <section className="mx-auto max-w-[1280px] px-4 pb-12 md:px-16 md:pb-16">
+        <div className="mb-6 flex flex-col gap-2 md:mb-8">
+          <p className="font-sans text-[11px] font-semibold uppercase tracking-[2px] text-[#757682]">Reviewed voices</p>
+          <h2 className="font-heading text-[28px] font-bold text-[#001a4d] md:text-[36px]">Selected testimonies</h2>
+          <p className="max-w-[640px] font-sans text-[14px] text-[#444650]">
+            Comments and testimonies are moderated. Only reviewed messages appear here — nothing is published without
+            ministry review.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-3 md:gap-6">
+          {approvedTestimonials.map((t) => (
+            <article key={t.name} className="rounded-2xl bg-white p-5 shadow-[0px_2px_16px_rgba(0,26,77,0.07)] md:p-6">
+              <div className="mb-3 flex items-center gap-3">
+                <img src={t.image} alt="" className="h-11 w-11 rounded-full object-cover" />
+                <div>
+                  <p className="font-sans text-[14px] font-semibold text-[#1a1b20]">{t.name}</p>
+                  <p className="font-sans text-[12px] text-[#757682]">{t.role}</p>
+                </div>
+              </div>
+              <p className="font-sans text-[13px] italic leading-relaxed text-[#444650]">"{t.quote}"</p>
+            </article>
+          ))}
+        </div>
+        <Link
+          to="/contact?intent=testimony"
+          className="mt-6 inline-flex font-sans text-[13px] font-semibold text-[#001a4d] hover:underline"
+        >
+          Share a testimony for review →
+        </Link>
       </section>
 
       <section className="mx-auto max-w-[1280px] px-4 pb-20 md:px-16 md:pb-28">
@@ -105,8 +144,8 @@ export default function AboutUs() {
           </p>
           <h2 className="mb-4 font-heading text-[28px] font-bold leading-tight text-white md:text-[40px]">Carry the Sound</h2>
           <p className="mx-auto mb-8 max-w-[480px] font-sans text-[14px] leading-relaxed text-[#b3c5ff] md:text-[16px]">
-            The Voice of the Mighty Angel continues to guide us as we reach frequencies globally through professional
-            content and community engagement.
+            The Voice of the Mighty Angel continues to guide this ministry as we reach frequencies globally through
+            professional content and community engagement.
           </p>
           <div className="flex flex-col items-center justify-center gap-3 sm:flex-row md:gap-4">
             <a

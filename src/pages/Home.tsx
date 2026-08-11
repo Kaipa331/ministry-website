@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { site, testimonials, videos, youtubeThumb, youtubeWatchUrl } from "../data/content";
+import { approvedTestimonials, site, videos, youtubeThumb, youtubeWatchUrl } from "../data/content";
 
 function StarRating() {
   return (
@@ -239,8 +239,15 @@ export default function Home() {
       </section>
 
       <section className="mx-auto max-w-[1280px] px-4 pb-20 md:px-16 md:pb-28">
+        <div className="mb-6 flex flex-col gap-2 md:mb-8">
+          <p className="font-sans text-[11px] font-semibold uppercase tracking-[2px] text-[#757682]">Reviewed voices</p>
+          <h2 className="font-heading text-[28px] font-bold text-[#001a4d] md:text-[36px]">Selected testimonies</h2>
+          <p className="max-w-[560px] font-sans text-[14px] text-[#444650]">
+            All comments are moderated. Only reviewed messages appear on this ministry website.
+          </p>
+        </div>
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 md:gap-6">
-          {testimonials.slice(0, 3).map((t) => (
+          {approvedTestimonials.map((t) => (
             <article key={t.name} className="rounded-2xl bg-white p-5 shadow-[0px_2px_16px_rgba(0,26,77,0.07)] md:p-7">
               <div className="mb-4 flex items-center gap-3">
                 <img
@@ -258,6 +265,12 @@ export default function Home() {
             </article>
           ))}
         </div>
+        <Link
+          to="/contact?intent=testimony"
+          className="mt-6 inline-flex font-sans text-[13px] font-semibold text-[#001a4d] hover:underline"
+        >
+          Share a testimony for review →
+        </Link>
       </section>
     </div>
   );

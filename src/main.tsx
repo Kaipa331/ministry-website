@@ -7,6 +7,7 @@ import AboutUs from "./pages/AboutUs";
 import Podcast from "./pages/Podcast";
 import ContactUs from "./pages/ContactUs";
 import Gallery from "./pages/Gallery";
+import News from "./pages/News";
 import { Privacy, Terms } from "./pages/Legal";
 import "./index.css";
 
@@ -18,6 +19,7 @@ createRoot(document.getElementById("root")!).render(
           <Route index element={<Home />} />
           <Route path="about" element={<AboutUs />} />
           <Route path="podcast" element={<Podcast />} />
+          <Route path="news" element={<News />} />
           <Route path="gallery" element={<Gallery />} />
           <Route path="contact" element={<ContactUs />} />
           <Route path="privacy" element={<Privacy />} />

@@ -1,7 +1,8 @@
-import { useMemo, useState } from "react";
+﻿import { useState } from "react";
+import { Link } from "react-router-dom";
 import {
+  approvedTestimonials,
   site,
-  testimonials,
   videos,
   youtubeThumb,
   youtubeWatchUrl,
@@ -28,15 +29,6 @@ export default function Podcast() {
   const [activeId, setActiveId] = useState(featured.id);
   const active = videos.find((v) => v.id === activeId) ?? featured;
   const side = videos.filter((v) => v.id !== active.id);
-
-  const [page, setPage] = useState(0);
-  const pageSize = 3;
-  const maxPage = Math.max(0, Math.ceil(testimonials.length / pageSize) - 1);
-
-  const visible = useMemo(() => {
-    const start = page * pageSize;
-    return testimonials.slice(start, start + pageSize);
-  }, [page]);
 
   return (
     <div className="w-full bg-page">
@@ -153,41 +145,19 @@ export default function Podcast() {
       </section>
 
       <section id="testimonies" className="mx-auto max-w-[1280px] scroll-mt-28 px-4 pb-20 md:px-16 md:pb-28">
-        <div className="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-center md:gap-0">
-          <div>
-            <p className="mb-1 font-sans text-[11px] font-semibold uppercase tracking-[2px] text-[#757682] md:text-[12px]">
-              Voices of Truth
-            </p>
-            <h2 className="font-heading text-[28px] font-bold text-[#001a4d] md:text-[36px]">Powerful Testimonies</h2>
-          </div>
-          <div className="flex gap-2">
-            <button
-              type="button"
-              disabled={page === 0}
-              onClick={() => setPage((p) => Math.max(0, p - 1))}
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-[#c5c6d2] transition-colors hover:border-[#001a4d] hover:bg-[#001a4d] hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
-              aria-label="Previous testimonies"
-            >
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden>
-                <path d="M7.5 2 3.5 6l4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-              </svg>
-            </button>
-            <button
-              type="button"
-              disabled={page >= maxPage}
-              onClick={() => setPage((p) => Math.min(maxPage, p + 1))}
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-[#c5c6d2] transition-colors hover:border-[#001a4d] hover:bg-[#001a4d] hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
-              aria-label="Next testimonies"
-            >
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden>
-                <path d="M4.5 2 8.5 6l-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-              </svg>
-            </button>
-          </div>
+        <div className="mb-6 max-w-[640px] md:mb-8">
+          <p className="mb-1 font-sans text-[11px] font-semibold uppercase tracking-[2px] text-[#757682] md:text-[12px]">
+            Reviewed voices
+          </p>
+          <h2 className="font-heading text-[28px] font-bold text-[#001a4d] md:text-[36px]">Selected testimonies</h2>
+          <p className="mt-2 font-sans text-[14px] text-[#444650]">
+            Comments are moderated. Only reviewed messages appear here — share yours via Contact for ministry review
+            before publishing.
+          </p>
         </div>
 
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 md:gap-6">
-          {visible.map((t) => (
+          {approvedTestimonials.map((t) => (
             <article key={t.name} className="rounded-2xl bg-white p-5 shadow-[0px_2px_16px_rgba(0,26,77,0.07)] md:p-7">
               <div className="mb-4 flex items-center gap-3">
                 <img
@@ -205,6 +175,12 @@ export default function Podcast() {
             </article>
           ))}
         </div>
+        <Link
+          to="/contact?intent=testimony"
+          className="mt-6 inline-flex font-sans text-[13px] font-semibold text-[#001a4d] hover:underline"
+        >
+          Share a testimony for review →
+        </Link>
       </section>
     </div>
   );

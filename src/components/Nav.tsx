@@ -7,6 +7,7 @@ const navLinks = [
   { label: "Home", to: "/" },
   { label: "About Us", to: "/about" },
   { label: "Watch", to: "/podcast" },
+  { label: "News & Events", to: "/news" },
   { label: "Gallery", to: "/gallery" },
   { label: "Contact Us", to: "/contact" },
 ] as const;
@@ -21,7 +22,7 @@ export default function Nav() {
           <BrandMark />
         </Link>
 
-        <nav className="hidden items-center gap-8 lg:flex" aria-label="Primary">
+        <nav className="hidden items-center gap-5 xl:flex" aria-label="Primary">
           {navLinks.map(({ label, to }) => (
             <NavLink
               key={to}
@@ -42,12 +43,12 @@ export default function Nav() {
           ))}
         </nav>
 
-        <div className="hidden lg:block">
+        <div className="hidden xl:block">
           <a
             href={site.social.youtube}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-full bg-[#001a4d] px-6 py-2 font-sans text-[14px] font-bold tracking-[1.4px] text-white transition-colors hover:bg-[#002a7a]"
+            className="rounded-full bg-[#001a4d] px-5 py-2 font-sans text-[13px] font-bold tracking-[1px] text-white transition-colors hover:bg-[#002a7a]"
           >
             Subscribe on YouTube
           </a>
@@ -55,7 +56,7 @@ export default function Nav() {
 
         <button
           type="button"
-          className="p-2 lg:hidden"
+          className="p-2 xl:hidden"
           aria-expanded={mobileMenuOpen}
           aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
           onClick={() => setMobileMenuOpen((o) => !o)}
@@ -71,7 +72,7 @@ export default function Nav() {
       </div>
 
       {mobileMenuOpen && (
-        <div className="border-t border-[rgba(197,198,210,0.3)] bg-[rgba(250,248,255,0.98)] backdrop-blur-[12px] lg:hidden">
+        <div className="border-t border-[rgba(197,198,210,0.3)] bg-[rgba(250,248,255,0.98)] backdrop-blur-[12px] xl:hidden">
           <div className="flex flex-col gap-4 px-4 py-4">
             {navLinks.map(({ label, to }) => (
               <NavLink

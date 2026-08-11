@@ -81,7 +81,15 @@ export function youtubeThumb(videoId: string) {
 /** @deprecated Prefer `videos` — kept as alias for older imports */
 export const episodes = videos;
 
-export const testimonials = [
+export const pillars = [
+  "Love for one another",
+  "Respect each other",
+  "Appreciate when others do well",
+  "Above all, respect the Creator",
+] as const;
+
+/** Only reviewed testimonies appear on the site — nothing is published without moderation. */
+export const approvedTestimonials = [
   {
     name: "Sarah M.",
     role: "Community Leader",
@@ -109,39 +117,73 @@ export const testimonials = [
     avatar: "JP",
     image: "/avatar-john.png",
   },
+] as const;
+
+/** @deprecated Use approvedTestimonials */
+export const testimonials = approvedTestimonials;
+
+export const newsItems = [
   {
-    name: "Grace Banda",
-    role: "Worship Leader",
-    location: "Lilongwe, Malawi",
-    quote:
-      "Every message carries weight and warmth. The ministry helped me lead with more courage and a deeper sense of divine purpose.",
-    avatar: "GB",
-    image: "/avatar-sarah.png",
+    id: "news-1",
+    category: "News" as const,
+    date: "10 Aug 2026",
+    title: "Latest Sunday service now on YouTube",
+    summary:
+      "The most recent Sunday service from Headstone Prophetic Ministry International is available to watch on our channel and on this ministry website.",
   },
   {
-    name: "Michael O.",
-    role: "Entrepreneur",
-    location: "Accra, Ghana",
-    quote:
-      "I watch before dawn. The teachings steady my week and remind me that clarity is possible even in pressure.",
-    avatar: "MO",
-    image: "/avatar-david.png",
-  },
-  {
-    name: "Thandiwe N.",
-    role: "Nurse",
-    location: "Johannesburg, SA",
-    quote:
-      "After long shifts, these messages restore me. The voice of this ministry feels like guidance wrapped in peace.",
-    avatar: "TN",
-    image: "/avatar-john.png",
+    id: "news-2",
+    category: "News" as const,
+    date: "2 Aug 2026",
+    title: "Lilongwe gathering recorded in two parts",
+    summary:
+      "Messages from the Lilongwe Sunday meeting are published for the wider ministry family who could not attend in person.",
   },
 ] as const;
 
-export const pillars = [
-  "Authentic Representation",
-  "Authoritative Clarity",
-  "Grounded Stewardship",
+export const upcomingMeetings = [
+  {
+    id: "meet-1",
+    category: "Upcoming" as const,
+    date: "Sundays · 9:00 PM (GMT+2)",
+    title: "Weekly live session",
+    summary:
+      "Join the ministry live on YouTube for teaching, prayer, and prophetic clarity every Sunday evening.",
+  },
+  {
+    id: "meet-2",
+    category: "Upcoming" as const,
+    date: "Announced on YouTube",
+    title: "Special ministry gatherings",
+    summary:
+      "Dates for city gatherings and special meetings are announced on the Headstone Prophetic Ministry International channel.",
+  },
+] as const;
+
+export const recentEvents = [
+  {
+    id: "event-1",
+    category: "Event" as const,
+    date: "26 Jul 2026",
+    title: "Moatize teaching — The Spirit of The Creator",
+    summary:
+      "A standout teaching on how the Spirit of the Creator has moved through different men in different dispensations.",
+  },
+  {
+    id: "event-2",
+    category: "Event" as const,
+    date: "25 Jul 2026",
+    title: "Moatize — Mphamvu Ya Namalenga",
+    summary:
+      "A powerful Chichewa message affirming that the Creator’s power alone is enough to accomplish the work.",
+  },
+  {
+    id: "event-3",
+    category: "Event" as const,
+    date: "2 Aug 2026",
+    title: "Lilongwe Sunday ministry",
+    summary: "A memorable Sunday gathering in Lilongwe — now available to rewatch in parts on YouTube.",
+  },
 ] as const;
 
 export const galleryImages = [
@@ -154,3 +196,4 @@ export const galleryImages = [
   { src: "/7.jpeg", alt: "Community celebration" },
   { src: "/8.jpeg", alt: "Worship and witness" },
 ] as const;
+

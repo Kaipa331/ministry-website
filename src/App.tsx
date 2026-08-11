@@ -6,13 +6,14 @@ import ScrollToTop from "./components/ScrollToTop";
 import { site } from "./data/content";
 
 const titles: Record<string, string> = {
-  "/": site.name,
-  "/about": `About · ${site.name}`,
-  "/podcast": `Watch · ${site.name}`,
-  "/gallery": `Gallery · ${site.name}`,
-  "/contact": `Contact · ${site.name}`,
-  "/privacy": `Privacy · ${site.name}`,
-  "/terms": `Terms · ${site.name}`,
+  "/": `${site.name} Ministry`,
+  "/about": `About · ${site.fullName}`,
+  "/podcast": `Watch · ${site.fullName}`,
+  "/news": `News & Events · ${site.fullName}`,
+  "/gallery": `Gallery · ${site.fullName}`,
+  "/contact": `Contact · ${site.fullName}`,
+  "/privacy": `Privacy · ${site.fullName}`,
+  "/terms": `Terms · ${site.fullName}`,
 };
 
 function DocumentTitle() {

@@ -25,8 +25,9 @@ export function Terms() {
   return (
     <LegalShell title="Terms of Service">
       <p>
-        Content on this website — including messages, testimonies, and imagery — is shared for spiritual edification and
-        ministry outreach by {site.fullName} / {site.organization}.
+        Content on this ministry website — including messages, testimonies, and imagery — is shared for spiritual
+        edification and ministry outreach by {site.fullName} / {site.organization}. This site represents a ministry, not
+        a church.
       </p>
       <p>
         You may view, share links, and engage for personal non-commercial use. Please do not redistribute media as your

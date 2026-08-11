@@ -19,6 +19,7 @@ function SocialIcon({ children, href, label }: { children: ReactNode; href: stri
 
 const explore = [
   { label: "Watch", to: "/podcast" },
+  { label: "News & Events", to: "/news" },
   { label: "Gallery", to: "/gallery" },
   { label: "About", to: "/about" },
 ] as const;
@@ -42,8 +43,8 @@ export default function Footer() {
           <div className="flex w-full flex-col gap-4 md:max-w-[384px]">
             <BrandMark light showWordmark markClassName="h-10 w-10" />
             <p className="font-sans text-[14px] leading-[1.6] text-[rgba(227,226,232,0.7)] md:text-[15px]">
-              {site.organization} — sharing divine frequencies and celestial messages through modern media. A place for
-              peace and spiritual clarity.
+              {site.organization} — a ministry website sharing divine frequencies and celestial messages. This is not a
+              church website; it is a ministry presence for peace and spiritual clarity.
             </p>
             <div className="mt-2 flex gap-4">
               <SocialIcon href={site.social.twitter} label="Twitter">

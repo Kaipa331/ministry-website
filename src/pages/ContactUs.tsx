@@ -21,6 +21,8 @@ function intentToSubject(intent: string | null): (typeof subjects)[number] {
       return "General Question";
     case "prayer":
       return "Prayer Request";
+    case "testimony":
+      return "Testimony";
     default:
       return "Ministry Inquiry";
   }
@@ -42,12 +44,15 @@ export default function ContactUs() {
       setMessage("I would like to support the vision of Lord Overtone Ministry.");
     } else if (intent === "partner") {
       setMessage("I am interested in partnering with the ministry.");
+    } else if (intent === "testimony") {
+      setMessage("I would like to share a testimony for ministry review before it is published.");
     }
   }, [intent]);
 
   const heading = useMemo(() => {
     if (intent === "donate") return "Support the Vision";
     if (intent === "partner") return "Partner With Us";
+    if (intent === "testimony") return "Share a Testimony";
     return "Divine Connection";
   }, [intent]);
 
@@ -72,8 +77,8 @@ export default function ContactUs() {
             {heading}
           </h1>
           <p className="font-sans text-[15px] leading-relaxed text-[#444650] md:text-[18px]">
-            Whether you have a testimony to share, a prayer request, or simply want to learn more about Lord Overtone
-            Ministry, our doors and hearts are open.
+            Whether you have a testimony to share, a prayer request, or simply want to learn more about this ministry,
+            our doors and hearts are open. Testimonies are reviewed before they appear on the website.
           </p>
         </div>
 
