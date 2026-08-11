@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import BrandMark from "./BrandMark";
+import { site } from "../data/content";
 
 const navLinks = [
   { label: "Home", to: "/" },
   { label: "About Us", to: "/about" },
-  { label: "Podcast", to: "/podcast" },
+  { label: "Watch", to: "/podcast" },
   { label: "Gallery", to: "/gallery" },
   { label: "Contact Us", to: "/contact" },
 ] as const;
@@ -42,12 +43,14 @@ export default function Nav() {
         </nav>
 
         <div className="hidden lg:block">
-          <Link
-            to="/contact?intent=signup"
+          <a
+            href={site.social.youtube}
+            target="_blank"
+            rel="noopener noreferrer"
             className="rounded-full bg-[#001a4d] px-6 py-2 font-sans text-[14px] font-bold tracking-[1.4px] text-white transition-colors hover:bg-[#002a7a]"
           >
-            Sign Up
-          </Link>
+            Subscribe
+          </a>
         </div>
 
         <button
@@ -84,13 +87,15 @@ export default function Nav() {
                 {label}
               </NavLink>
             ))}
-            <Link
-              to="/contact?intent=signup"
+            <a
+              href={site.social.youtube}
+              target="_blank"
+              rel="noopener noreferrer"
               onClick={() => setMobileMenuOpen(false)}
               className="w-fit rounded-full bg-[#001a4d] px-6 py-2.5 font-sans text-[14px] font-bold tracking-[1.4px] text-white transition-colors hover:bg-[#002a7a]"
             >
-              Sign Up
-            </Link>
+              Subscribe on YouTube
+            </a>
           </div>
         </div>
       )}

@@ -6,13 +6,10 @@ export function Privacy() {
   return (
     <LegalShell title="Privacy Policy">
       <p>
-        {site.fullName} respects your privacy. Information you share through our contact form, newsletter signup, or
-        chat request is used only to respond to your inquiry and improve our ministry communications.
+        {site.fullName} ({site.organization}) respects your privacy. This website is a public information site. If you
+        email us through the contact page, that message is sent from your own email app to {site.email}.
       </p>
-      <p>
-        We do not sell personal data. When the backend is connected, submissions will be stored securely and retained
-        only as long as needed for ministry follow-up.
-      </p>
+      <p>We do not collect accounts, payments, or form submissions on this website.</p>
       <p>
         Questions about this policy can be sent to{" "}
         <a className="text-[#001a4d] underline" href={`mailto:${site.email}`}>
@@ -28,16 +25,15 @@ export function Terms() {
   return (
     <LegalShell title="Terms of Service">
       <p>
-        Content on this website — including messages, podcasts, testimonies, and imagery — is shared for spiritual
-        edification and ministry outreach by {site.fullName}.
+        Content on this website — including messages, testimonies, and imagery — is shared for spiritual edification and
+        ministry outreach by {site.fullName} / {site.organization}.
       </p>
       <p>
-        You may listen, share links, and engage for personal non-commercial use. Please do not redistribute media as
-        your own without permission.
+        You may view, share links, and engage for personal non-commercial use. Please do not redistribute media as your
+        own without permission.
       </p>
       <p>
-        Podcast playback on this site is currently a frontend preview. Third-party platforms (Spotify, Apple Podcasts)
-        are governed by their own terms.
+        Video content is hosted on YouTube under {site.organization} and is governed by YouTube&apos;s terms of service.
       </p>
     </LegalShell>
   );

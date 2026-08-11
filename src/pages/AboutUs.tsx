@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { pillars } from "../data/content";
+import { pillars, site } from "../data/content";
 
 export default function AboutUs() {
   return (
@@ -50,7 +50,7 @@ export default function AboutUs() {
               to="/podcast"
               className="flex w-fit items-center gap-2 font-sans text-[13px] font-semibold text-[#001a4d] transition-all hover:gap-3 md:text-[14px]"
             >
-              Explore the Podcast
+              Watch Messages
               <svg width="16" height="8" viewBox="0 0 16 8" fill="none" aria-hidden>
                 <path d="M12.175 4H0V3H12.175L9.575 0.4L10.5 0L14 3.5L10.5 7L9.575 6.6L12.175 4Z" fill="#001A4D" />
               </svg>
@@ -101,7 +101,7 @@ export default function AboutUs() {
         <div className="relative overflow-hidden rounded-[24px] bg-[#001a4d] p-8 text-center md:p-16">
           <div className="absolute left-1/2 top-[-60px] h-[300px] w-[300px] -translate-x-1/2 rounded-full bg-[rgba(255,215,0,0.06)]" />
           <p className="mb-3 font-sans text-[11px] font-semibold uppercase tracking-[2px] text-[#b3c5ff] md:text-[12px]">
-            Our Calling
+            {site.organization}
           </p>
           <h2 className="mb-4 font-heading text-[28px] font-bold leading-tight text-white md:text-[40px]">Carry the Sound</h2>
           <p className="mx-auto mb-8 max-w-[480px] font-sans text-[14px] leading-relaxed text-[#b3c5ff] md:text-[16px]">
@@ -109,12 +109,14 @@ export default function AboutUs() {
             content and community engagement.
           </p>
           <div className="flex flex-col items-center justify-center gap-3 sm:flex-row md:gap-4">
-            <Link
-              to="/podcast"
+            <a
+              href={site.social.youtube}
+              target="_blank"
+              rel="noopener noreferrer"
               className="rounded-full bg-[#FFD700] px-8 py-3 font-sans text-[12px] font-bold tracking-[1.3px] text-[#001a4d] transition-colors hover:bg-[#ffca00] md:text-[13px]"
             >
-              EXPLORE PODCASTS
-            </Link>
+              WATCH ON YOUTUBE
+            </a>
             <Link
               to="/contact?intent=donate"
               className="rounded-full border border-white/40 px-8 py-3 font-sans text-[12px] tracking-[1px] text-white transition-colors hover:bg-white/10 md:text-[13px]"

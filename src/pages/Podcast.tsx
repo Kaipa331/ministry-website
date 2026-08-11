@@ -1,6 +1,12 @@
 import { useMemo, useState } from "react";
-import { episodes, testimonials } from "../data/content";
-import { usePlayer } from "../context/PlayerContext";
+import {
+  site,
+  testimonials,
+  videos,
+  youtubeThumb,
+  youtubeWatchUrl,
+} from "../data/content";
+import YouTubeEmbed from "../components/YouTubeEmbed";
 
 function Stars() {
   return (
@@ -18,9 +24,11 @@ function Stars() {
 }
 
 export default function Podcast() {
-  const { play, toggle, playing, current } = usePlayer();
-  const featured = episodes.find((e) => e.featured) ?? episodes[0];
-  const side = episodes.filter((e) => !e.featured);
+  const featured = videos.find((v) => v.featured) ?? videos[0];
+  const [activeId, setActiveId] = useState(featured.id);
+  const active = videos.find((v) => v.id === activeId) ?? featured;
+  const side = videos.filter((v) => v.id !== active.id);
+
   const [page, setPage] = useState(0);
   const pageSize = 3;
   const maxPage = Math.max(0, Math.ceil(testimonials.length / pageSize) - 1);
@@ -31,96 +39,121 @@ export default function Podcast() {
   }, [page]);
 
   return (
-    <div className="w-full bg-page pb-24">
+    <div className="w-full bg-page">
       <section className="mx-auto max-w-[1280px] px-4 pb-6 pt-[100px] md:px-16 md:pb-6 md:pt-[140px]">
         <div className="mb-8 text-center md:mb-12">
+          <p className="mb-2 font-sans text-[11px] font-semibold uppercase tracking-[2px] text-[#757682] md:text-[12px]">
+            {site.organization}
+          </p>
           <h1 className="mb-4 font-heading text-[36px] font-bold leading-tight tracking-[-1px] text-[#001a4d] md:text-[56px]">
-            Podcast &amp; Testimonies
+            Watch &amp; Testimonies
           </h1>
           <p className="mx-auto max-w-[560px] font-sans text-[15px] text-[#444650] md:text-[18px]">
-            Discover divine wisdom and inspiring life stories through our curated collection of spiritual discourses and
-            personal transformations.
+            Watch services and teachings directly from our YouTube channel — select a message below to play here.
           </p>
         </div>
       </section>
 
-      <section className="mx-auto grid max-w-[1280px] grid-cols-1 gap-8 px-4 pb-10 md:grid-cols-[1fr_320px] md:gap-8 md:px-16 md:pb-16">
+      <section className="mx-auto grid max-w-[1280px] grid-cols-1 gap-8 px-4 pb-10 md:grid-cols-[1fr_340px] md:gap-8 md:px-16 md:pb-16">
         <div className="flex flex-col gap-5 md:gap-6">
-          <div className="relative h-[240px] overflow-hidden rounded-[20px] shadow-[0px_8px_24px_rgba(0,26,77,0.12)] md:h-[320px]">
-            <img src={featured.image} alt="" className="h-full w-full object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <button
-                type="button"
-                onClick={() => toggle(featured)}
-                className="flex h-14 w-14 items-center justify-center rounded-full bg-[#FFD700] shadow-lg transition-transform hover:scale-105 hover:bg-[#ffca00] md:h-16 md:w-16"
-                aria-label={playing && current.id === featured.id ? "Pause featured episode" : "Play featured episode"}
-              >
-                {playing && current.id === featured.id ? (
-                  <svg width="22" height="22" viewBox="0 0 14 14" fill="none" aria-hidden>
-                    <rect x="3" y="2" width="2.5" height="10" rx="0.5" fill="#001A4D" />
-                    <rect x="8.5" y="2" width="2.5" height="10" rx="0.5" fill="#001A4D" />
-                  </svg>
-                ) : (
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden>
-                    <path d="M5 3L19 12L5 21V3Z" fill="#001A4D" />
-                  </svg>
-                )}
-              </button>
-            </div>
-          </div>
+          <YouTubeEmbed key={active.id} videoId={active.id} title={active.title} />
           <div className="flex flex-col gap-2">
             <p className="font-sans text-[10px] font-semibold uppercase tracking-[2px] text-[#FFD700] md:text-[11px]">
-              Featured Episode
+              Now Playing
             </p>
             <h2 className="font-heading text-[22px] font-bold leading-[1.2] text-[#001a4d] md:text-[28px]">
-              {featured.title}
+              {active.title}
             </h2>
-            <p className="font-sans text-[14px] leading-relaxed text-[#444650] md:text-[15px]">{featured.description}</p>
-            <button
-              type="button"
-              onClick={() => play(featured)}
+            <p className="font-sans text-[13px] text-[#757682] md:text-[14px]">{active.subtitle}</p>
+            <p className="font-sans text-[14px] leading-relaxed text-[#444650] md:text-[15px]">{active.description}</p>
+            <a
+              href={youtubeWatchUrl(active.id)}
+              target="_blank"
+              rel="noopener noreferrer"
               className="mt-2 flex w-fit items-center gap-2 font-sans text-[13px] font-semibold text-[#001a4d] transition-all hover:gap-3 md:text-[14px]"
             >
-              Listen Now
+              Open on YouTube
               <svg width="16" height="8" viewBox="0 0 16 8" fill="none" aria-hidden>
                 <path d="M12.175 4H0V3H12.175L9.575 0.4L10.5 0L14 3.5L10.5 7L9.575 6.6L12.175 4Z" fill="#001A4D" />
               </svg>
-            </button>
+            </a>
           </div>
         </div>
 
-        <div className="flex flex-col gap-4">
-          {side.map((ep) => {
-            const active = current.id === ep.id && playing;
-            return (
-              <article
-                key={ep.id}
-                className="flex flex-col gap-3 rounded-2xl bg-white p-5 shadow-[0px_2px_12px_rgba(0,26,77,0.07)]"
-              >
-                <div className="flex items-center gap-3">
-                  <img src={ep.image} alt="" className="h-10 w-10 shrink-0 rounded-[10px] object-cover" />
-                  <div>
-                    <p className="font-sans text-[14px] font-semibold text-[#001a4d]">{ep.title}</p>
-                    <p className="font-sans text-[12px] text-[#757682]">{ep.subtitle}</p>
-                  </div>
+        <div className="flex max-h-[640px] flex-col gap-3 overflow-y-auto pr-1">
+          <p className="font-sans text-[12px] font-semibold uppercase tracking-[1.5px] text-[#757682]">More messages</p>
+          {side.map((v) => (
+            <button
+              key={v.id}
+              type="button"
+              onClick={() => {
+                setActiveId(v.id);
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+              className="flex gap-3 rounded-2xl bg-white p-3 text-left shadow-[0px_2px_12px_rgba(0,26,77,0.07)] transition-colors hover:bg-[#f4f3f9]"
+            >
+              <img
+                src={youtubeThumb(v.id)}
+                alt=""
+                className="h-[72px] w-[128px] shrink-0 rounded-lg object-cover"
+              />
+              <div className="min-w-0 flex-1">
+                <p className="line-clamp-2 font-sans text-[13px] font-semibold text-[#001a4d]">{v.title}</p>
+                <p className="mt-1 font-sans text-[11px] text-[#757682]">{v.subtitle}</p>
+                <span className="mt-2 inline-block font-sans text-[11px] font-semibold tracking-[0.8px] text-[#735c00]">
+                  Play
+                </span>
+              </div>
+            </button>
+          ))}
+          <a
+            href={site.social.youtube}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded-2xl border border-dashed border-[#c5c6d2] px-4 py-4 text-center font-sans text-[13px] font-semibold text-[#001a4d] transition-colors hover:border-[#001a4d] hover:bg-white"
+          >
+            See all on YouTube →
+          </a>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-[1280px] px-4 pb-10 md:px-16">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {videos.slice(0, 3).map((v) => (
+            <button
+              key={`grid-${v.id}`}
+              type="button"
+              onClick={() => {
+                setActiveId(v.id);
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+              className="group overflow-hidden rounded-2xl bg-white text-left shadow-[0px_2px_16px_rgba(0,26,77,0.07)]"
+            >
+              <div className="relative aspect-video overflow-hidden">
+                <img
+                  src={youtubeThumb(v.id)}
+                  alt=""
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 transition-opacity group-hover:opacity-100">
+                  <span className="flex h-12 w-12 items-center justify-center rounded-full bg-[#FFD700]">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
+                      <path d="M5 3L19 12L5 21V3Z" fill="#001A4D" />
+                    </svg>
+                  </span>
                 </div>
-                <p className="font-sans text-[13px] leading-relaxed text-[#444650]">{ep.description}</p>
-                <button
-                  type="button"
-                  onClick={() => toggle(ep)}
-                  className="w-fit rounded-full border border-[#001a4d] px-5 py-2 font-sans text-[12px] font-semibold tracking-[1px] text-[#001a4d] transition-colors hover:bg-[#001a4d] hover:text-white"
-                >
-                  {active ? "Pause" : "Listen Now"}
-                </button>
-              </article>
-            );
-          })}
+              </div>
+              <div className="p-4">
+                <p className="line-clamp-2 font-sans text-[14px] font-semibold text-[#001a4d]">{v.title}</p>
+                <p className="mt-1 font-sans text-[12px] text-[#757682]">{v.subtitle}</p>
+              </div>
+            </button>
+          ))}
         </div>
       </section>
 
       <section id="testimonies" className="mx-auto max-w-[1280px] scroll-mt-28 px-4 pb-20 md:px-16 md:pb-28">
-        <div className="mb-8 flex flex-col justify-between gap-4 md:mb-8 md:flex-row md:items-center md:gap-0">
+        <div className="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-center md:gap-0">
           <div>
             <p className="mb-1 font-sans text-[11px] font-semibold uppercase tracking-[2px] text-[#757682] md:text-[12px]">
               Voices of Truth

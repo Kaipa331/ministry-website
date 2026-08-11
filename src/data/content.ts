@@ -1,6 +1,7 @@
 export const site = {
   name: "Lord Overtone",
   fullName: "Lord Overtone Ministry",
+  organization: "Headstone Prophetic Ministry International",
   tagline: "Divine Frequencies",
   email: "ministry@lordovertone.org",
   hours: {
@@ -11,54 +12,74 @@ export const site = {
   social: {
     twitter: "https://twitter.com",
     instagram: "https://instagram.com",
-    youtube: "https://youtube.com",
+    youtube: "https://www.youtube.com/channel/UC492MhKkjf0oerPCcy48fPQ",
     facebook: "https://facebook.com",
-  },
-  podcast: {
-    spotify: "https://open.spotify.com",
-    apple: "https://podcasts.apple.com",
   },
 } as const;
 
-export const episodes = [
+/** Curated messages from the official YouTube channel */
+export const videos = [
   {
-    id: "featured",
-    title: "Kupembedza Mulengi mwa chikhalidwe chathu",
-    subtitle: "Featured Episode · 42 min",
+    id: "TIK2av4Xy8Y",
+    title: "Sunday Service",
+    subtitle: "Latest · Headstone Prophetic Ministry International",
     description:
-      "An exploration of honoring the Creator through the rich tapestry of our cultural heritage. This deep dive into tradition and faith examines how our roots amplify our spiritual communication.",
-    duration: 42 * 60,
-    image: "/5.jpeg",
+      "Join the latest Sunday service with Lord Overtone — prophetic teaching and worship from Headstone Prophetic Ministry International.",
     featured: true,
   },
   {
-    id: "ep-42",
-    title: "The Quiet Voice",
-    subtitle: "Episode 42 · 16 min",
-    description: "Learning to discern the divine whisper amidst the noise of modern life.",
-    duration: 16 * 60,
-    image: "/2.jpeg",
+    id: "UzyAoVRcfrA",
+    title: "The Spirit of The Creator in Different Men in Different Dispensations",
+    subtitle: "Moatize · 26 July 2026",
+    description:
+      "A teaching on how the Spirit of the Creator has moved through different men across dispensations.",
     featured: false,
   },
   {
-    id: "ep-41",
-    title: "Faith in Action",
-    subtitle: "Episode 41 · 34 min",
-    description: "Real stories of community impact driven by deep-rooted spiritual conviction.",
-    duration: 34 * 60,
-    image: "/1.jpeg",
+    id: "YJOxTuHRfm4",
+    title: "Mphamvu Ya Namalenga Ndi Yokhayo Imeme Izigwira Ntchito Basi",
+    subtitle: "Moatize · 25 July 2026",
+    description:
+      "A Chichewa message on the power of the Creator — that His power alone is enough to accomplish the work.",
     featured: false,
   },
   {
-    id: "ep-40",
-    title: "Frequencies of Peace",
-    subtitle: "Episode 40 · 28 min",
-    description: "How celestial stillness restores clarity when the world feels loud and heavy.",
-    duration: 28 * 60,
-    image: "/6.jpeg",
+    id: "JyydcYFR33M",
+    title: "Lilongwe Sunday — 2nd August 2026",
+    subtitle: "Lilongwe Service",
+    description: "Sunday gathering in Lilongwe with teaching and ministry from Lord Overtone.",
+    featured: false,
+  },
+  {
+    id: "xY4WlPd2tdQ",
+    title: "Lilongwe Sunday — 2nd August 2026 (Part 2)",
+    subtitle: "Lilongwe Service · Part 2",
+    description: "Continuation of the Lilongwe Sunday service — part two of the message.",
+    featured: false,
+  },
+  {
+    id: "GxxCF10Xys4",
+    title: "Sunday Service",
+    subtitle: "Worship & Word",
+    description: "Another recent Sunday service from Headstone Prophetic Ministry International.",
     featured: false,
   },
 ] as const;
+
+export function youtubeWatchUrl(videoId: string) {
+  return `https://www.youtube.com/watch?v=${videoId}`;
+}
+
+export function youtubeEmbedUrl(videoId: string) {
+  return `https://www.youtube.com/embed/${videoId}`;
+}
+
+export function youtubeThumb(videoId: string) {
+  return `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
+}
+
+/** @deprecated Prefer `videos` — kept as alias for older imports */
+export const episodes = videos;
 
 export const testimonials = [
   {
@@ -66,7 +87,7 @@ export const testimonials = [
     role: "Community Leader",
     location: "Lagos, Nigeria",
     quote:
-      "The Lord Overtone podcasts have been a sanctuary for my soul. Listening to 'Kupembedza Mulengi' changed how I view my cultural identity within my faith.",
+      "The Lord Overtone messages have been a sanctuary for my soul. Listening to 'Kupembedza Mulengi' changed how I view my cultural identity within my faith.",
     avatar: "SM",
     image: "/avatar-sarah.png",
   },
@@ -84,7 +105,7 @@ export const testimonials = [
     role: "Student",
     location: "Blantyre, Malawi",
     quote:
-      "As a young seeker, I found clarity through the podcast episodes. The cultural perspective on faith is exactly what my generation needs to hear.",
+      "As a young seeker, I found clarity through these teachings. The cultural perspective on faith is exactly what my generation needs to hear.",
     avatar: "JP",
     image: "/avatar-john.png",
   },
@@ -102,7 +123,7 @@ export const testimonials = [
     role: "Entrepreneur",
     location: "Accra, Ghana",
     quote:
-      "I listen before dawn. The teachings steady my week and remind me that clarity is possible even in pressure.",
+      "I watch before dawn. The teachings steady my week and remind me that clarity is possible even in pressure.",
     avatar: "MO",
     image: "/avatar-david.png",
   },
@@ -111,7 +132,7 @@ export const testimonials = [
     role: "Nurse",
     location: "Johannesburg, SA",
     quote:
-      "After long shifts, these episodes restore me. The voice of this ministry feels like guidance wrapped in peace.",
+      "After long shifts, these messages restore me. The voice of this ministry feels like guidance wrapped in peace.",
     avatar: "TN",
     image: "/avatar-john.png",
   },
@@ -133,9 +154,3 @@ export const galleryImages = [
   { src: "/7.jpeg", alt: "Community celebration" },
   { src: "/8.jpeg", alt: "Worship and witness" },
 ] as const;
-
-export function formatTime(seconds: number) {
-  const m = Math.floor(seconds / 60);
-  const s = Math.floor(seconds % 60);
-  return `${m}:${s.toString().padStart(2, "0")}`;
-}

@@ -2,15 +2,13 @@ import { useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import Nav from "./components/Nav";
 import Footer from "./components/Footer";
-import MiniPlayer from "./components/MiniPlayer";
 import ScrollToTop from "./components/ScrollToTop";
-import { PlayerProvider } from "./context/PlayerContext";
 import { site } from "./data/content";
 
 const titles: Record<string, string> = {
   "/": site.name,
   "/about": `About · ${site.name}`,
-  "/podcast": `Podcast · ${site.name}`,
+  "/podcast": `Watch · ${site.name}`,
   "/gallery": `Gallery · ${site.name}`,
   "/contact": `Contact · ${site.name}`,
   "/privacy": `Privacy · ${site.name}`,
@@ -26,21 +24,17 @@ function DocumentTitle() {
 }
 
 export default function App() {
-  const { pathname } = useLocation();
-  const showPlayer = pathname === "/podcast" || pathname === "/";
-
   return (
-    <PlayerProvider>
+    <>
       <ScrollToTop />
       <DocumentTitle />
-      <div className={`flex min-h-screen flex-col bg-[#faf8ff] ${showPlayer ? "pb-16" : ""}`}>
+      <div className="flex min-h-screen flex-col bg-[#faf8ff]">
         <Nav />
         <main className="flex-1">
           <Outlet />
         </main>
         <Footer />
-        {showPlayer && <MiniPlayer />}
       </div>
-    </PlayerProvider>
+    </>
   );
 }

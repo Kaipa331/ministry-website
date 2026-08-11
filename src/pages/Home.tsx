@@ -1,8 +1,5 @@
-import { useState, type FormEvent } from "react";
 import { Link } from "react-router-dom";
-import { episodes, site, testimonials } from "../data/content";
-import { usePlayer } from "../context/PlayerContext";
-import Toast from "../components/Toast";
+import { site, testimonials, videos, youtubeThumb, youtubeWatchUrl } from "../data/content";
 
 function StarRating() {
   return (
@@ -20,26 +17,11 @@ function StarRating() {
 }
 
 export default function Home() {
-  const { play, playing, current, toggle } = usePlayer();
-  const featured = episodes.find((e) => e.featured) ?? episodes[0];
-  const quiet = episodes.find((e) => e.id === "ep-42") ?? episodes[1];
-  const [email, setEmail] = useState("");
-  const [toast, setToast] = useState<string | null>(null);
-  const [reminderSet, setReminderSet] = useState(false);
-
-  const onNewsletter = (e: FormEvent) => {
-    e.preventDefault();
-    if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setToast("Please enter a valid email address.");
-      return;
-    }
-    setEmail("");
-    setToast("You're on the list. Welcome to the frequency.");
-  };
+  const featured = videos.find((v) => v.featured) ?? videos[0];
+  const highlights = videos.slice(0, 3);
 
   return (
     <div className="w-full bg-page">
-      {/* Full-bleed hero */}
       <section className="relative min-h-[100svh] overflow-hidden">
         <img
           src="/2.jpeg"
@@ -52,7 +34,7 @@ export default function Home() {
         <div className="relative mx-auto flex min-h-[100svh] max-w-[1280px] flex-col justify-end px-4 pb-16 pt-28 md:justify-center md:px-16 md:pb-24 md:pt-32">
           <div className="max-w-[640px] animate-rise">
             <p className="mb-3 font-sans text-[11px] font-semibold uppercase tracking-[2.4px] text-[#ffd700] md:text-[13px]">
-              {site.tagline}
+              {site.organization}
             </p>
             <h1 className="font-heading text-[52px] font-bold leading-[0.95] tracking-[-1.5px] text-white md:text-[80px]">
               LORD
@@ -69,96 +51,119 @@ export default function Home() {
               >
                 DISCOVER THE MINISTRY
               </Link>
-              <Link
-                to="/podcast#testimonies"
+              <a
+                href={youtubeWatchUrl(featured.id)}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="rounded-full border-2 border-white/80 px-7 py-3 text-center font-sans text-[12px] font-bold tracking-[1.3px] text-white transition-colors hover:bg-white hover:text-[#001a4d] md:text-[13px]"
               >
-                WATCH TESTIMONIES
-              </Link>
+                WATCH LATEST SERVICE
+              </a>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Radio bar */}
       <section className="mx-auto max-w-[1280px] px-4 py-8 md:px-16 md:py-10">
         <div className="flex flex-col items-center gap-4 rounded-[20px] bg-white p-5 shadow-[0px_4px_24px_rgba(0,26,77,0.08)] md:flex-row md:gap-6 md:p-8">
-          <img src={quiet.image} alt="" className="h-16 w-16 shrink-0 rounded-xl object-cover md:h-20 md:w-20" />
+          <img
+            src={youtubeThumb(featured.id)}
+            alt=""
+            className="h-16 w-28 shrink-0 rounded-xl object-cover md:h-20 md:w-36"
+          />
           <div className="min-w-0 flex-1 text-center md:text-left">
             <p className="font-sans text-[16px] font-semibold leading-tight text-[#001a4d] md:text-[18px]">
-              Lord Overtone Radio
+              {featured.title}
             </p>
             <p className="mt-1 font-sans text-[13px] text-[#757682] md:text-[14px]">
-              Tune into the frequencies of the heavens — ministry, prophetic declarations, and celestial melodies.
+              Latest from {site.organization} — watch here or on YouTube.
             </p>
           </div>
           <div className="flex shrink-0 items-center gap-3 md:gap-4">
-            <button
-              type="button"
-              onClick={() => toggle(quiet)}
+            <Link
+              to="/podcast"
               className="flex h-11 w-11 items-center justify-center rounded-full bg-[#001a4d] transition-colors hover:bg-[#002a7a]"
-              aria-label={playing && current.id === quiet.id ? "Pause radio" : "Play radio"}
+              aria-label="Watch on site"
             >
-              {playing && current.id === quiet.id ? (
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>
-                  <rect x="3" y="2" width="2.5" height="10" rx="0.5" fill="white" />
-                  <rect x="8.5" y="2" width="2.5" height="10" rx="0.5" fill="white" />
-                </svg>
-              ) : (
-                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden>
-                  <path d="M3 2L13 8L3 14V2Z" fill="white" />
-                </svg>
-              )}
-            </button>
-            <div className="hidden items-center gap-1 md:flex" aria-hidden>
-              {[20, 32, 16, 28, 12].map((h, i) => (
-                <div
-                  key={h}
-                  className={`w-1 rounded-full ${i % 2 ? "bg-[#FFD700]" : "bg-[#001a4d]"} ${playing && current.id === quiet.id ? "animate-pulse" : ""}`}
-                  style={{ height: h, animationDelay: `${i * 0.15}s` }}
-                />
-              ))}
-            </div>
-            <span className="rounded-full border border-[#e74c3c] px-2.5 py-0.5 font-sans text-[11px] font-bold tracking-[1px] text-[#e74c3c] md:text-[12px]">
-              LIVE
-            </span>
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden>
+                <path d="M3 2L13 8L3 14V2Z" fill="white" />
+              </svg>
+            </Link>
+            <a
+              href={youtubeWatchUrl(featured.id)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full border border-[#e74c3c] px-2.5 py-0.5 font-sans text-[11px] font-bold tracking-[1px] text-[#e74c3c] transition-colors hover:bg-[#e74c3c] hover:text-white md:text-[12px]"
+            >
+              YOUTUBE
+            </a>
           </div>
         </div>
       </section>
 
-      {/* Podcast + sessions */}
+      <section className="mx-auto max-w-[1280px] px-4 py-4 md:px-16 md:py-6">
+        <div className="mb-5 flex items-end justify-between gap-4">
+          <div>
+            <p className="font-sans text-[11px] font-semibold uppercase tracking-[2px] text-[#757682]">On YouTube</p>
+            <h2 className="font-heading text-[24px] font-bold text-[#001a4d] md:text-[32px]">Recent messages</h2>
+          </div>
+          <Link to="/podcast" className="font-sans text-[13px] font-semibold text-[#001a4d] hover:underline">
+            Watch all
+          </Link>
+        </div>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+          {highlights.map((v) => (
+            <Link
+              key={v.id}
+              to="/podcast"
+              className="group overflow-hidden rounded-2xl bg-white shadow-[0px_2px_16px_rgba(0,26,77,0.07)]"
+            >
+              <div className="relative aspect-video overflow-hidden">
+                <img
+                  src={youtubeThumb(v.id)}
+                  alt=""
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 flex items-center justify-center bg-black/15 opacity-0 transition-opacity group-hover:opacity-100">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[#FFD700]">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
+                      <path d="M5 3L19 12L5 21V3Z" fill="#001A4D" />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+              <div className="p-4">
+                <p className="line-clamp-2 font-sans text-[14px] font-semibold text-[#001a4d]">{v.title}</p>
+                <p className="mt-1 font-sans text-[12px] text-[#757682]">{v.subtitle}</p>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
       <section className="mx-auto grid max-w-[1280px] grid-cols-1 gap-6 px-4 py-8 md:grid-cols-[2fr_1fr] md:px-16 md:py-10">
         <div className="relative overflow-hidden rounded-[20px] bg-[#001a4d] p-8 md:p-12">
           <div className="absolute right-[-40px] top-[-40px] h-[200px] w-[200px] rounded-full bg-[rgba(255,215,0,0.08)]" />
-          <p className="mb-3 font-sans text-[22px] font-bold leading-tight text-white md:text-[28px]">Join our Podcast</p>
-          <p className="mb-7 max-w-[380px] font-sans text-[14px] leading-relaxed text-[#b3c5ff] md:mb-7 md:text-[15px]">
-            Deep dive into the mysteries of the word. Subscribe to weekly sessions where Lord Overtone unravels celestial
-            truths for the modern seeker.
+          <p className="mb-3 font-sans text-[22px] font-bold leading-tight text-white md:text-[28px]">Watch the Ministry</p>
+          <p className="mb-7 max-w-[380px] font-sans text-[14px] leading-relaxed text-[#b3c5ff] md:text-[15px]">
+            Deep dive into the mysteries of the word. Subscribe on YouTube for teachings where Lord Overtone unravels
+            celestial truths for the modern seeker.
           </p>
           <div className="flex flex-col gap-3 sm:flex-row">
             <a
-              href={site.podcast.spotify}
+              href={site.social.youtube}
               target="_blank"
               rel="noopener noreferrer"
               className="rounded-full bg-[#FFD700] px-6 py-2.5 text-center font-sans text-[11px] font-bold tracking-[1.2px] text-[#001a4d] transition-colors hover:bg-[#ffca00] md:text-[12px]"
             >
-              LISTEN ON SPOTIFY
+              SUBSCRIBE ON YOUTUBE
             </a>
-            <a
-              href={site.podcast.apple}
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              to="/podcast"
               className="rounded-full border border-white/40 px-6 py-2.5 text-center font-sans text-[11px] tracking-[1.2px] text-white transition-colors hover:bg-white/10 md:text-[12px]"
             >
-              APPLE PODCASTS
-            </a>
-            <button
-              type="button"
-              onClick={() => play(featured)}
-              className="rounded-full border border-white/40 px-6 py-2.5 font-sans text-[11px] tracking-[1.2px] text-white transition-colors hover:bg-white/10 md:text-[12px]"
-            >
-              PLAY FEATURED
-            </button>
+              VIEW MESSAGES
+            </Link>
           </div>
         </div>
 
@@ -176,26 +181,23 @@ export default function Home() {
               Weekly Live Sessions
             </p>
             <p className="font-sans text-[13px] leading-relaxed text-[#444650] md:text-[14px]">
-              Participate in real-time Q&amp;A sessions {site.liveSession.toLowerCase()}.
+              Join live on YouTube {site.liveSession.toLowerCase()}.
             </p>
           </div>
-          <button
-            type="button"
-            onClick={() => {
-              setReminderSet(true);
-              setToast(reminderSet ? "Reminder already saved for this device." : "Reminder saved for Sunday 9:00 PM.");
-            }}
+          <a
+            href={site.social.youtube}
+            target="_blank"
+            rel="noopener noreferrer"
             className="mt-5 flex items-center gap-1.5 font-sans text-[12px] font-semibold text-[#001a4d] transition-all hover:gap-2.5 md:text-[13px]"
           >
-            {reminderSet ? "Reminder set" : "Set Reminder"}
+            Open YouTube channel
             <svg width="16" height="8" viewBox="0 0 16 8" fill="none" aria-hidden>
               <path d="M12.175 4H0V3H12.175L9.575 0.4L10.5 0L14 3.5L10.5 7L9.575 6.6L12.175 4Z" fill="#001A4D" />
             </svg>
-          </button>
+          </a>
         </div>
       </section>
 
-      {/* Newsletter */}
       <section className="mx-auto grid max-w-[1280px] grid-cols-1 items-start gap-8 px-4 py-8 md:grid-cols-2 md:gap-10 md:px-16 md:py-10">
         <div className="rounded-2xl bg-white p-5 shadow-[0px_2px_16px_rgba(0,26,77,0.07)] md:p-7">
           <div className="mb-4 flex items-center gap-3">
@@ -218,38 +220,24 @@ export default function Home() {
 
         <div className="flex flex-col gap-4">
           <h2 className="font-heading text-[22px] font-bold leading-tight text-[#001a4d] md:text-[28px]">
-            Spiritual
+            Stay Connected
             <br />
-            <span className="text-[#FFD700]">Enlightenment</span>
-            <br />
-            In Your Inbox
+            <span className="text-[#FFD700]">on YouTube</span>
           </h2>
           <p className="font-sans text-[13px] leading-relaxed text-[#444650] md:text-[14px]">
-            Subscribe to receive prophetic insights from the Lord Overtone Ministry.
+            Follow {site.organization} for prophetic insights, live sessions, and teachings from Lord Overtone.
           </p>
-          <form onSubmit={onNewsletter} className="flex flex-col gap-2 sm:flex-row">
-            <label className="sr-only" htmlFor="newsletter-email">
-              Email address
-            </label>
-            <input
-              id="newsletter-email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Email address"
-              className="flex-1 rounded-full border border-[#c5c6d2] px-5 py-2.5 font-sans text-[14px] text-[#1a1b20] outline-none transition-colors placeholder:text-[#c5c6d2] focus:border-[#001a4d]"
-            />
-            <button
-              type="submit"
-              className="rounded-full bg-[#001a4d] px-6 py-2.5 font-sans text-[13px] font-bold tracking-[1px] text-white transition-colors hover:bg-[#002a7a]"
-            >
-              JOIN
-            </button>
-          </form>
+          <a
+            href={site.social.youtube}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-fit rounded-full bg-[#001a4d] px-6 py-2.5 font-sans text-[13px] font-bold tracking-[1px] text-white transition-colors hover:bg-[#002a7a]"
+          >
+            SUBSCRIBE
+          </a>
         </div>
       </section>
 
-      {/* Testimonials */}
       <section className="mx-auto max-w-[1280px] px-4 pb-20 md:px-16 md:pb-28">
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 md:gap-6">
           {testimonials.slice(0, 3).map((t) => (
@@ -271,8 +259,6 @@ export default function Home() {
           ))}
         </div>
       </section>
-
-      {toast && <Toast message={toast} onClose={() => setToast(null)} />}
     </div>
   );
 }

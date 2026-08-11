@@ -18,13 +18,13 @@ function SocialIcon({ children, href, label }: { children: ReactNode; href: stri
 }
 
 const explore = [
-  { label: "Episodes", to: "/podcast" },
+  { label: "Watch", to: "/podcast" },
   { label: "Gallery", to: "/gallery" },
   { label: "About", to: "/about" },
 ] as const;
 
 const support = [
-  { label: "Help Center", to: "/contact?intent=help" },
+  { label: "Contact", to: "/contact" },
   { label: "Partner", to: "/contact?intent=partner" },
   { label: "Donate", to: "/contact?intent=donate", accent: true },
 ] as const;
@@ -42,8 +42,8 @@ export default function Footer() {
           <div className="flex w-full flex-col gap-4 md:max-w-[384px]">
             <BrandMark light showWordmark markClassName="h-10 w-10" />
             <p className="font-sans text-[14px] leading-[1.6] text-[rgba(227,226,232,0.7)] md:text-[15px]">
-              Sharing divine frequencies and celestial messages through modern media. A place for peace and spiritual
-              clarity.
+              {site.organization} — sharing divine frequencies and celestial messages through modern media. A place for
+              peace and spiritual clarity.
             </p>
             <div className="mt-2 flex gap-4">
               <SocialIcon href={site.social.twitter} label="Twitter">
@@ -64,7 +64,7 @@ export default function Footer() {
                   />
                 </svg>
               </SocialIcon>
-              <SocialIcon href={site.social.youtube} label="YouTube">
+              <SocialIcon href={site.social.youtube} label={`${site.organization} on YouTube`}>
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden>
                   <path
                     d="M19.58 5.2a2.5 2.5 0 0 0-1.76-1.77C16.25 3 10 3 10 3s-6.25 0-7.82.43A2.5 2.5 0 0 0 .42 5.2 26.2 26.2 0 0 0 0 10a26.2 26.2 0 0 0 .42 4.8 2.5 2.5 0 0 0 1.76 1.77C3.75 17 10 17 10 17s6.25 0 7.82-.43a2.5 2.5 0 0 0 1.76-1.77A26.2 26.2 0 0 0 20 10a26.2 26.2 0 0 0-.42-4.8ZM8 13V7l5.2 3L8 13Z"

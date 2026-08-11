@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { useSearchParams } from "react-router-dom";
 import { site } from "../data/content";
-import Toast from "../components/Toast";
 
 const subjects = [
   "Ministry Inquiry",
@@ -10,7 +9,6 @@ const subjects = [
   "General Question",
   "Partnership",
   "Donation",
-  "Newsletter Signup",
 ] as const;
 
 function intentToSubject(intent: string | null): (typeof subjects)[number] {
@@ -19,8 +17,6 @@ function intentToSubject(intent: string | null): (typeof subjects)[number] {
       return "Donation";
     case "partner":
       return "Partnership";
-    case "signup":
-      return "Newsletter Signup";
     case "help":
       return "General Question";
     case "prayer":
@@ -39,17 +35,11 @@ export default function ContactUs() {
   const [subject, setSubject] = useState<(typeof subjects)[number]>(intentToSubject(intent));
   const [message, setMessage] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [submitted, setSubmitted] = useState(false);
-  const [toast, setToast] = useState<string | null>(null);
-  const [chatOpen, setChatOpen] = useState(false);
-  const [chatNote, setChatNote] = useState("");
 
   useEffect(() => {
     setSubject(intentToSubject(intent));
     if (intent === "donate") {
       setMessage("I would like to support the vision of Lord Overtone Ministry.");
-    } else if (intent === "signup") {
-      setMessage("Please add me to the ministry newsletter and updates.");
     } else if (intent === "partner") {
       setMessage("I am interested in partnering with the ministry.");
     }
@@ -57,37 +47,21 @@ export default function ContactUs() {
 
   const heading = useMemo(() => {
     if (intent === "donate") return "Support the Vision";
-    if (intent === "signup") return "Join the Family";
     if (intent === "partner") return "Partner With Us";
     return "Divine Connection";
   }, [intent]);
 
-  const validate = () => {
+  const onSubmit = (e: FormEvent) => {
+    e.preventDefault();
     const next: Record<string, string> = {};
     if (!name.trim()) next.name = "Name is required.";
     if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) next.email = "A valid email is required.";
     if (!message.trim() || message.trim().length < 10) next.message = "Please share a bit more (at least 10 characters).";
     setErrors(next);
-    return Object.keys(next).length === 0;
-  };
+    if (Object.keys(next).length > 0) return;
 
-  const onSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    if (!validate()) return;
-    setSubmitted(true);
-    setToast("Message received. Our team will respond soon.");
-    setName("");
-    setEmail("");
-    setMessage("");
-    setSubject("Ministry Inquiry");
-  };
-
-  const onChat = (e: FormEvent) => {
-    e.preventDefault();
-    if (!chatNote.trim()) return;
-    setChatOpen(false);
-    setChatNote("");
-    setToast("Chat request noted. Reach us at " + site.email + " for now.");
+    const body = `Name: ${name.trim()}\nEmail: ${email.trim()}\n\n${message.trim()}`;
+    window.location.href = `mailto:${site.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   };
 
   return (
@@ -125,17 +99,18 @@ export default function ContactUs() {
             </div>
 
             <div className="relative overflow-hidden rounded-xl bg-[#001a4d] p-6 shadow-lg md:p-8">
-              <p className="font-heading text-[20px] font-bold text-[#ffd700] md:text-[24px]">Live Support</p>
+              <p className="font-heading text-[20px] font-bold text-[#ffd700] md:text-[24px]">Watch Live</p>
               <p className="mt-2 mb-4 font-sans text-[14px] text-[#b3c5ff] md:text-[16px]">
-                Connect with our ministry team for spiritual guidance.
+                {site.organization} — teachings and live sessions on YouTube.
               </p>
-              <button
-                type="button"
-                onClick={() => setChatOpen(true)}
-                className="rounded-full border-2 border-[#ffd700] px-6 py-2.5 font-sans text-[12px] font-bold tracking-[1.4px] text-[#ffd700] transition-colors hover:bg-[#ffd700] hover:text-[#001a4d] md:text-[14px]"
+              <a
+                href={site.social.youtube}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block rounded-full border-2 border-[#ffd700] px-6 py-2.5 font-sans text-[12px] font-bold tracking-[1.4px] text-[#ffd700] transition-colors hover:bg-[#ffd700] hover:text-[#001a4d] md:text-[14px]"
               >
-                Start Chat
-              </button>
+                Open YouTube
+              </a>
             </div>
           </aside>
 
@@ -144,103 +119,89 @@ export default function ContactUs() {
             <div className="pointer-events-none absolute -bottom-24 -left-24 size-64 rounded-full bg-[rgba(0,26,77,0.05)] blur-[32px]" />
 
             <h2 className="relative font-heading text-[24px] font-bold text-[#001a4d] md:text-[32px]">Send us a Message</h2>
+            <p className="relative mt-2 font-sans text-[14px] text-[#757682]">
+              Opens your email app so you can send us a note directly.
+            </p>
 
-            {submitted ? (
-              <div className="relative mt-8 rounded-2xl bg-[#f4f3f9] p-6">
-                <p className="font-heading text-[20px] font-bold text-[#001a4d]">Thank you</p>
-                <p className="mt-2 font-sans text-[15px] text-[#444650]">
-                  Your message is ready for our team. Backend delivery comes next — for now it is captured on this page
-                  and you can also email us directly.
-                </p>
-                <button
-                  type="button"
-                  onClick={() => setSubmitted(false)}
-                  className="mt-5 rounded-full bg-[#001a4d] px-6 py-3 font-sans text-[13px] font-bold tracking-[1px] text-white hover:bg-[#002a7a]"
-                >
-                  Send another
-                </button>
-              </div>
-            ) : (
-              <form className="relative mt-8 flex flex-col gap-7" onSubmit={onSubmit} noValidate>
-                <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
-                  <div className="flex flex-col gap-2">
-                    <label htmlFor="full-name" className="px-1 font-sans text-[11px] font-semibold tracking-[0.6px] text-[#757682] md:text-[12px]">
-                      FULL NAME
-                    </label>
-                    <input
-                      id="full-name"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      placeholder="John Doe"
-                      className="border-b border-[#c5c6d2] bg-transparent px-3 py-3 font-sans text-[15px] text-[#1a1b20] outline-none focus:border-[#001a4d] md:text-[16px]"
-                    />
-                    {errors.name && <p className="px-1 text-[12px] text-[#c0392b]">{errors.name}</p>}
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <label htmlFor="email" className="px-1 font-sans text-[11px] font-semibold tracking-[0.6px] text-[#757682] md:text-[12px]">
-                      EMAIL ADDRESS
-                    </label>
-                    <input
-                      id="email"
-                      type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="john@example.com"
-                      className="border-b border-[#c5c6d2] bg-transparent px-3 py-3 font-sans text-[15px] text-[#1a1b20] outline-none focus:border-[#001a4d] md:text-[16px]"
-                    />
-                    {errors.email && <p className="px-1 text-[12px] text-[#c0392b]">{errors.email}</p>}
-                  </div>
-                </div>
-
+            <form className="relative mt-8 flex flex-col gap-7" onSubmit={onSubmit} noValidate>
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
                 <div className="flex flex-col gap-2">
-                  <label htmlFor="subject" className="px-1 font-sans text-[11px] font-semibold tracking-[0.6px] text-[#757682] md:text-[12px]">
-                    SUBJECT
+                  <label htmlFor="full-name" className="px-1 font-sans text-[11px] font-semibold tracking-[0.6px] text-[#757682] md:text-[12px]">
+                    FULL NAME
                   </label>
-                  <div className="relative border-b border-[#c5c6d2]">
-                    <select
-                      id="subject"
-                      value={subject}
-                      onChange={(e) => setSubject(e.target.value as (typeof subjects)[number])}
-                      className="w-full appearance-none bg-transparent py-3 pl-3 pr-10 font-sans text-[15px] text-[#1a1b20] outline-none md:text-[16px]"
-                    >
-                      {subjects.map((s) => (
-                        <option key={s} value={s}>
-                          {s}
-                        </option>
-                      ))}
-                    </select>
-                    <svg className="pointer-events-none absolute right-2 top-1/2 h-5 w-5 -translate-y-1/2" viewBox="0 0 24 24" fill="none" aria-hidden>
-                      <path d="M7.2 9.6L12 14.4L16.8 9.6" stroke="#6B7280" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" />
-                    </svg>
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="message" className="px-1 font-sans text-[11px] font-semibold tracking-[0.6px] text-[#757682] md:text-[12px]">
-                    YOUR MESSAGE
-                  </label>
-                  <textarea
-                    id="message"
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    placeholder="Share your thoughts or heart with us..."
-                    rows={5}
-                    className="resize-none border-b border-[#c5c6d2] bg-transparent px-3 py-3 font-sans text-[15px] text-[#1a1b20] outline-none focus:border-[#001a4d] md:text-[16px]"
+                  <input
+                    id="full-name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="John Doe"
+                    className="border-b border-[#c5c6d2] bg-transparent px-3 py-3 font-sans text-[15px] text-[#1a1b20] outline-none focus:border-[#001a4d] md:text-[16px]"
                   />
-                  {errors.message && <p className="px-1 text-[12px] text-[#c0392b]">{errors.message}</p>}
+                  {errors.name && <p className="px-1 text-[12px] text-[#c0392b]">{errors.name}</p>}
                 </div>
+                <div className="flex flex-col gap-2">
+                  <label htmlFor="email" className="px-1 font-sans text-[11px] font-semibold tracking-[0.6px] text-[#757682] md:text-[12px]">
+                    EMAIL ADDRESS
+                  </label>
+                  <input
+                    id="email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="john@example.com"
+                    className="border-b border-[#c5c6d2] bg-transparent px-3 py-3 font-sans text-[15px] text-[#1a1b20] outline-none focus:border-[#001a4d] md:text-[16px]"
+                  />
+                  {errors.email && <p className="px-1 text-[12px] text-[#c0392b]">{errors.email}</p>}
+                </div>
+              </div>
 
-                <button
-                  type="submit"
-                  className="inline-flex w-fit items-center gap-3 rounded-full bg-[#001a4d] px-8 py-4 font-sans text-[12px] font-bold tracking-[1.4px] text-white transition-colors hover:bg-[#002a7a] md:text-[14px]"
-                >
-                  Send Message
-                  <svg width="19" height="16" viewBox="0 0 19 16" fill="none" aria-hidden>
-                    <path d="M0 16V0l19 8-19 8Zm2-3 11.85-5L2 3v3.5L8 8l-6 1.5V13Z" fill="#FFD700" />
+              <div className="flex flex-col gap-2">
+                <label htmlFor="subject" className="px-1 font-sans text-[11px] font-semibold tracking-[0.6px] text-[#757682] md:text-[12px]">
+                  SUBJECT
+                </label>
+                <div className="relative border-b border-[#c5c6d2]">
+                  <select
+                    id="subject"
+                    value={subject}
+                    onChange={(e) => setSubject(e.target.value as (typeof subjects)[number])}
+                    className="w-full appearance-none bg-transparent py-3 pl-3 pr-10 font-sans text-[15px] text-[#1a1b20] outline-none md:text-[16px]"
+                  >
+                    {subjects.map((s) => (
+                      <option key={s} value={s}>
+                        {s}
+                      </option>
+                    ))}
+                  </select>
+                  <svg className="pointer-events-none absolute right-2 top-1/2 h-5 w-5 -translate-y-1/2" viewBox="0 0 24 24" fill="none" aria-hidden>
+                    <path d="M7.2 9.6L12 14.4L16.8 9.6" stroke="#6B7280" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" />
                   </svg>
-                </button>
-              </form>
-            )}
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-2">
+                <label htmlFor="message" className="px-1 font-sans text-[11px] font-semibold tracking-[0.6px] text-[#757682] md:text-[12px]">
+                  YOUR MESSAGE
+                </label>
+                <textarea
+                  id="message"
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  placeholder="Share your thoughts or heart with us..."
+                  rows={5}
+                  className="resize-none border-b border-[#c5c6d2] bg-transparent px-3 py-3 font-sans text-[15px] text-[#1a1b20] outline-none focus:border-[#001a4d] md:text-[16px]"
+                />
+                {errors.message && <p className="px-1 text-[12px] text-[#c0392b]">{errors.message}</p>}
+              </div>
+
+              <button
+                type="submit"
+                className="inline-flex w-fit items-center gap-3 rounded-full bg-[#001a4d] px-8 py-4 font-sans text-[12px] font-bold tracking-[1.4px] text-white transition-colors hover:bg-[#002a7a] md:text-[14px]"
+              >
+                Open Email
+                <svg width="19" height="16" viewBox="0 0 19 16" fill="none" aria-hidden>
+                  <path d="M0 16V0l19 8-19 8Zm2-3 11.85-5L2 3v3.5L8 8l-6 1.5V13Z" fill="#FFD700" />
+                </svg>
+              </button>
+            </form>
           </div>
         </div>
 
@@ -258,38 +219,6 @@ export default function ContactUs() {
           </div>
         </div>
       </div>
-
-      {chatOpen && (
-        <div className="fixed inset-0 z-[60] flex items-end justify-center bg-black/40 p-4 sm:items-center" role="dialog" aria-modal aria-labelledby="chat-title">
-          <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl animate-rise">
-            <div className="mb-4 flex items-start justify-between gap-4">
-              <div>
-                <h3 id="chat-title" className="font-heading text-[22px] font-bold text-[#001a4d]">
-                  Live Support
-                </h3>
-                <p className="mt-1 font-sans text-[14px] text-[#444650]">Leave a short note and we will follow up.</p>
-              </div>
-              <button type="button" onClick={() => setChatOpen(false)} className="text-[#757682] hover:text-[#001a4d]" aria-label="Close">
-                ✕
-              </button>
-            </div>
-            <form onSubmit={onChat} className="flex flex-col gap-3">
-              <textarea
-                value={chatNote}
-                onChange={(e) => setChatNote(e.target.value)}
-                rows={4}
-                placeholder="How can we pray with you or help?"
-                className="rounded-xl border border-[#c5c6d2] px-4 py-3 font-sans text-[14px] outline-none focus:border-[#001a4d]"
-              />
-              <button type="submit" className="rounded-full bg-[#001a4d] px-5 py-3 font-sans text-[13px] font-bold tracking-[1px] text-white hover:bg-[#002a7a]">
-                Send request
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {toast && <Toast message={toast} onClose={() => setToast(null)} />}
     </div>
   );
 }
