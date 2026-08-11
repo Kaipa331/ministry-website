@@ -233,7 +233,7 @@ export default function Home() {
             rel="noopener noreferrer"
             className="w-fit rounded-full bg-[#001a4d] px-6 py-2.5 font-sans text-[13px] font-bold tracking-[1px] text-white transition-colors hover:bg-[#002a7a]"
           >
-            SUBSCRIBE
+            SUBSCRIBE ON YOUTUBE
           </a>
         </div>
       </section>

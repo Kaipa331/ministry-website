@@ -49,7 +49,7 @@ export default function Nav() {
             rel="noopener noreferrer"
             className="rounded-full bg-[#001a4d] px-6 py-2 font-sans text-[14px] font-bold tracking-[1.4px] text-white transition-colors hover:bg-[#002a7a]"
           >
-            Subscribe
+            Subscribe on YouTube
           </a>
         </div>
 
