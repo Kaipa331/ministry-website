@@ -5,11 +5,11 @@ import { site } from "../data/content";
 
 const navLinks = [
   { label: "Home", to: "/" },
-  { label: "About Us", to: "/about" },
+  { label: "About", to: "/about" },
   { label: "Watch", to: "/podcast" },
-  { label: "News & Events", to: "/news" },
+  { label: "News", to: "/news" },
   { label: "Gallery", to: "/gallery" },
-  { label: "Contact Us", to: "/contact" },
+  { label: "Contact", to: "/contact" },
 ] as const;
 
 export default function Nav() {
@@ -17,18 +17,22 @@ export default function Nav() {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 border-b border-[rgba(197,198,210,0.3)] bg-[rgba(250,248,255,0.88)] shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)] backdrop-blur-[12px]">
-      <div className="mx-auto flex max-w-[1280px] items-center justify-between px-4 py-4 md:px-16">
-        <Link to="/" className="transition-opacity hover:opacity-80" onClick={() => setMobileMenuOpen(false)}>
-          <BrandMark />
+      <div className="mx-auto flex max-w-[1280px] items-center justify-between gap-4 px-4 py-3 md:px-8 lg:px-10 xl:px-16">
+        <Link
+          to="/"
+          className="min-w-0 shrink transition-opacity hover:opacity-80"
+          onClick={() => setMobileMenuOpen(false)}
+        >
+          <BrandMark markClassName="h-8 w-8 md:h-9 md:w-9" />
         </Link>
 
-        <nav className="hidden items-center gap-5 xl:flex" aria-label="Primary">
+        <nav className="hidden items-center gap-4 lg:flex xl:gap-6" aria-label="Primary">
           {navLinks.map(({ label, to }) => (
             <NavLink
               key={to}
               to={to}
               className={({ isActive }) =>
-                `relative pb-0.5 font-sans text-[15px] transition-colors ${
+                `relative whitespace-nowrap pb-0.5 font-sans text-[14px] transition-colors xl:text-[15px] ${
                   isActive ? "font-bold text-[#735c00]" : "font-normal text-[#444650] hover:text-[#001a4d]"
                 }`
               }
@@ -43,12 +47,12 @@ export default function Nav() {
           ))}
         </nav>
 
-        <div className="hidden xl:block">
+        <div className="hidden shrink-0 lg:block">
           <a
             href={site.social.youtube}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-full bg-[#001a4d] px-5 py-2 font-sans text-[13px] font-bold tracking-[1px] text-white transition-colors hover:bg-[#002a7a]"
+            className="rounded-full bg-[#001a4d] px-4 py-2 font-sans text-[12px] font-bold tracking-[0.8px] text-white transition-colors hover:bg-[#002a7a] xl:px-5 xl:text-[13px] xl:tracking-[1px]"
           >
             Subscribe on YouTube
           </a>
@@ -56,7 +60,7 @@ export default function Nav() {
 
         <button
           type="button"
-          className="p-2 xl:hidden"
+          className="p-2 lg:hidden"
           aria-expanded={mobileMenuOpen}
           aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
           onClick={() => setMobileMenuOpen((o) => !o)}
@@ -72,7 +76,7 @@ export default function Nav() {
       </div>
 
       {mobileMenuOpen && (
-        <div className="border-t border-[rgba(197,198,210,0.3)] bg-[rgba(250,248,255,0.98)] backdrop-blur-[12px] xl:hidden">
+        <div className="border-t border-[rgba(197,198,210,0.3)] bg-[rgba(250,248,255,0.98)] backdrop-blur-[12px] lg:hidden">
           <div className="flex flex-col gap-4 px-4 py-4">
             {navLinks.map(({ label, to }) => (
               <NavLink
