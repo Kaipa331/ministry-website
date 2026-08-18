@@ -1,5 +1,45 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { approvedTestimonials, site, videos, youtubeThumb, youtubeWatchUrl } from "../data/content";
+import { approvedTestimonials, site, youtubeThumb, youtubeWatchUrl } from "../data/content";
+import { useVideos } from "../hooks/usePublicContent";
+
+function LiveBanner({ title, videoId }: { title: string; videoId: string }) {
+  const [dismissed, setDismissed] = useState(false);
+  if (dismissed) return null;
+
+  return (
+    <div className="fixed inset-x-0 bottom-0 z-40 border-t border-white/20 bg-[#e74c3c] shadow-[0_-4px_24px_rgba(0,0,0,0.18)]">
+      <div className="mx-auto flex max-w-[1280px] items-center gap-3 px-4 py-3 md:gap-5 md:px-16">
+        <span className="relative flex h-3 w-3 shrink-0" aria-hidden>
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-75" />
+          <span className="relative inline-flex h-3 w-3 rounded-full bg-white" />
+        </span>
+        <div className="min-w-0 flex-1">
+          <p className="font-sans text-[11px] font-bold uppercase tracking-[1.6px] text-white/80">Live now</p>
+          <p className="truncate font-sans text-[14px] font-semibold text-white md:text-[15px]">{title}</p>
+        </div>
+        <a
+          href={youtubeWatchUrl(videoId)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="shrink-0 rounded-full bg-white px-5 py-2 font-sans text-[12px] font-bold tracking-[1px] text-[#e74c3c] transition-colors hover:bg-[#ffe9e6] md:text-[13px]"
+        >
+          WATCH LIVE
+        </a>
+        <button
+          type="button"
+          onClick={() => setDismissed(true)}
+          aria-label="Dismiss live notice"
+          className="shrink-0 rounded-full p-1.5 text-white/80 transition-colors hover:bg-white/15 hover:text-white"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
+            <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  );
+}
 
 function StarRating() {
   return (
@@ -17,11 +57,15 @@ function StarRating() {
 }
 
 export default function Home() {
-  const featured = videos.find((v) => v.featured) ?? videos[0];
+  const { videos, featured, live } = useVideos();
   const highlights = videos.slice(0, 3);
+
+  if (!featured) return null;
 
   return (
     <div className="w-full bg-page">
+      {live && <LiveBanner title={live.title} videoId={live.id} />}
+
       <section className="relative min-h-[100svh] overflow-hidden">
         <img
           src="/2.jpeg"
@@ -114,7 +158,7 @@ export default function Home() {
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           {highlights.map((v) => (
             <Link
-              key={v.id}
+              key={v.key}
               to="/podcast"
               className="group overflow-hidden rounded-2xl bg-white shadow-[0px_2px_16px_rgba(0,26,77,0.07)]"
             >

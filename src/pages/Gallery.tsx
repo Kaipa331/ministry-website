@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { galleryImages } from "../data/content";
+import { useGallery } from "../hooks/usePublicContent";
 
 export default function Gallery() {
+  const { images: galleryImages } = useGallery();
   const [active, setActive] = useState<number | null>(null);
 
   return (
@@ -20,7 +21,7 @@ export default function Gallery() {
         <div className="columns-1 gap-4 sm:columns-2 lg:columns-3">
           {galleryImages.map((img, i) => (
             <button
-              key={img.src}
+              key={img.key}
               type="button"
               onClick={() => setActive(i)}
               className="mb-4 block w-full break-inside-avoid overflow-hidden rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[#001a4d]"
@@ -36,7 +37,7 @@ export default function Gallery() {
         </div>
       </section>
 
-      {active !== null && (
+      {active !== null && galleryImages[active] && (
         <div
           className="fixed inset-0 z-[60] flex items-center justify-center bg-black/80 p-4"
           role="dialog"

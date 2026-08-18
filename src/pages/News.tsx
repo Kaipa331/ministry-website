@@ -1,25 +1,27 @@
 import { Link } from "react-router-dom";
-import { newsItems, upcomingMeetings, recentEvents, site } from "../data/content";
+import { site } from "../data/content";
+import { useAnnouncements } from "../hooks/usePublicContent";
+import type { AnnouncementCategory, PublicAnnouncement } from "../lib/types";
 
-type Item = {
-  id: string;
-  category: string;
-  date: string;
-  title: string;
-  summary: string;
+type Item = PublicAnnouncement;
+
+const categoryLabels: Record<AnnouncementCategory, string> = {
+  news: "News",
+  upcoming: "Upcoming",
+  event: "Event",
 };
 
-function CategoryBadge({ category }: { category: string }) {
+function CategoryBadge({ category }: { category: AnnouncementCategory }) {
   const styles =
-    category === "Upcoming"
+    category === "upcoming"
       ? "bg-[#FFD700]/20 text-[#735c00]"
-      : category === "Event"
+      : category === "event"
         ? "bg-[#001a4d]/10 text-[#001a4d]"
         : "bg-[#f4f3f9] text-[#444650]";
 
   return (
     <span className={`rounded-full px-2.5 py-0.5 font-sans text-[10px] font-bold uppercase tracking-[1px] ${styles}`}>
-      {category}
+      {categoryLabels[category]}
     </span>
   );
 }
@@ -29,7 +31,7 @@ function ItemCard({ item }: { item: Item }) {
     <article className="flex flex-col gap-3 rounded-2xl bg-white p-5 shadow-[0px_2px_16px_rgba(0,26,77,0.07)] md:p-6">
       <div className="flex items-center justify-between gap-3">
         <CategoryBadge category={item.category} />
-        <p className="font-sans text-[12px] text-[#757682]">{item.date}</p>
+        {item.date && <p className="font-sans text-[12px] text-[#757682]">{item.date}</p>}
       </div>
       <h3 className="font-heading text-[22px] font-bold leading-tight text-[#001a4d]">{item.title}</h3>
       <p className="font-sans text-[14px] leading-relaxed text-[#444650]">{item.summary}</p>
@@ -48,6 +50,8 @@ function Section({
   intro: string;
   items: readonly Item[];
 }) {
+  if (items.length === 0) return null;
+
   return (
     <section className="mb-14 md:mb-20">
       <div className="mb-6 max-w-[640px] md:mb-8">
@@ -57,7 +61,7 @@ function Section({
       </div>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 md:gap-5">
         {items.map((item) => (
-          <ItemCard key={item.id} item={item} />
+          <ItemCard key={item.key} item={item} />
         ))}
       </div>
     </section>
@@ -65,6 +69,8 @@ function Section({
 }
 
 export default function News() {
+  const { news, upcoming, events } = useAnnouncements();
+
   return (
     <div className="w-full bg-page">
       <section className="mx-auto max-w-[1280px] px-4 pb-8 pt-[120px] md:px-16 md:pb-10 md:pt-[160px]">
@@ -85,19 +91,19 @@ export default function News() {
           eyebrow="Announcements"
           title="Ministry news"
           intro="What is happening across Headstone Prophetic Ministry International."
-          items={newsItems}
+          items={news}
         />
         <Section
           eyebrow="Gather with us"
           title="Upcoming meetings"
           intro="Times and gatherings to mark on your calendar."
-          items={upcomingMeetings}
+          items={upcoming}
         />
         <Section
           eyebrow="Highlights"
           title="Recent outstanding events"
           intro="Moments and messages that stood out in recent weeks."
-          items={recentEvents}
+          items={events}
         />
 
         <div className="rounded-[20px] bg-[#001a4d] p-8 text-center md:p-12">

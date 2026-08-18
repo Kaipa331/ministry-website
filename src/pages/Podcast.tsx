@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 import {
   approvedTestimonials,
   site,
-  videos,
   youtubeThumb,
   youtubeWatchUrl,
 } from "../data/content";
 import YouTubeEmbed from "../components/YouTubeEmbed";
+import { useAudioSessions, useVideos } from "../hooks/usePublicContent";
 
 function Stars() {
   return (
@@ -25,10 +25,19 @@ function Stars() {
 }
 
 export default function Podcast() {
-  const featured = videos.find((v) => v.featured) ?? videos[0];
-  const [activeId, setActiveId] = useState(featured.id);
-  const active = videos.find((v) => v.id === activeId) ?? featured;
-  const side = videos.filter((v) => v.id !== active.id);
+  const { videos, featured, live } = useVideos();
+  const { audio } = useAudioSessions();
+  const [activeKey, setActiveKey] = useState<string | null>(null);
+
+  const active = videos.find((v) => v.key === activeKey) ?? live ?? featured;
+  if (!active) return null;
+
+  const side = videos.filter((v) => v.key !== active.key);
+
+  const play = (key: string) => {
+    setActiveKey(key);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <div className="w-full bg-page">
@@ -48,11 +57,21 @@ export default function Podcast() {
 
       <section className="mx-auto grid max-w-[1280px] grid-cols-1 gap-8 px-4 pb-10 md:grid-cols-[1fr_340px] md:gap-8 md:px-16 md:pb-16">
         <div className="flex flex-col gap-5 md:gap-6">
-          <YouTubeEmbed key={active.id} videoId={active.id} title={active.title} />
+          <YouTubeEmbed key={active.key} videoId={active.id} title={active.title} />
           <div className="flex flex-col gap-2">
-            <p className="font-sans text-[10px] font-semibold uppercase tracking-[2px] text-[#FFD700] md:text-[11px]">
-              Now Playing
-            </p>
+            {active.isLive ? (
+              <p className="flex items-center gap-2 font-sans text-[10px] font-bold uppercase tracking-[2px] text-[#e74c3c] md:text-[11px]">
+                <span className="relative flex h-2 w-2" aria-hidden>
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#e74c3c] opacity-75" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-[#e74c3c]" />
+                </span>
+                Live now
+              </p>
+            ) : (
+              <p className="font-sans text-[10px] font-semibold uppercase tracking-[2px] text-[#FFD700] md:text-[11px]">
+                Now Playing
+              </p>
+            )}
             <h2 className="font-heading text-[22px] font-bold leading-[1.2] text-[#001a4d] md:text-[28px]">
               {active.title}
             </h2>
@@ -76,12 +95,9 @@ export default function Podcast() {
           <p className="font-sans text-[12px] font-semibold uppercase tracking-[1.5px] text-[#757682]">More messages</p>
           {side.map((v) => (
             <button
-              key={v.id}
+              key={v.key}
               type="button"
-              onClick={() => {
-                setActiveId(v.id);
-                window.scrollTo({ top: 0, behavior: "smooth" });
-              }}
+              onClick={() => play(v.key)}
               className="flex gap-3 rounded-2xl bg-white p-3 text-left shadow-[0px_2px_12px_rgba(0,26,77,0.07)] transition-colors hover:bg-[#f4f3f9]"
             >
               <img
@@ -92,8 +108,12 @@ export default function Podcast() {
               <div className="min-w-0 flex-1">
                 <p className="line-clamp-2 font-sans text-[13px] font-semibold text-[#001a4d]">{v.title}</p>
                 <p className="mt-1 font-sans text-[11px] text-[#757682]">{v.subtitle}</p>
-                <span className="mt-2 inline-block font-sans text-[11px] font-semibold tracking-[0.8px] text-[#735c00]">
-                  Play
+                <span
+                  className={`mt-2 inline-block font-sans text-[11px] font-semibold tracking-[0.8px] ${
+                    v.isLive ? "text-[#e74c3c]" : "text-[#735c00]"
+                  }`}
+                >
+                  {v.isLive ? "Live now" : "Play"}
                 </span>
               </div>
             </button>
@@ -113,12 +133,9 @@ export default function Podcast() {
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {videos.slice(0, 3).map((v) => (
             <button
-              key={`grid-${v.id}`}
+              key={`grid-${v.key}`}
               type="button"
-              onClick={() => {
-                setActiveId(v.id);
-                window.scrollTo({ top: 0, behavior: "smooth" });
-              }}
+              onClick={() => play(v.key)}
               className="group overflow-hidden rounded-2xl bg-white text-left shadow-[0px_2px_16px_rgba(0,26,77,0.07)]"
             >
               <div className="relative aspect-video overflow-hidden">
@@ -143,6 +160,42 @@ export default function Podcast() {
           ))}
         </div>
       </section>
+
+      {audio.length > 0 && (
+        <section id="audio" className="mx-auto max-w-[1280px] scroll-mt-28 px-4 pb-14 md:px-16 md:pb-20">
+          <div className="mb-6 max-w-[640px] md:mb-8">
+            <p className="mb-1 font-sans text-[11px] font-semibold uppercase tracking-[2px] text-[#757682] md:text-[12px]">
+              Listen
+            </p>
+            <h2 className="font-heading text-[28px] font-bold text-[#001a4d] md:text-[36px]">Audio sessions</h2>
+            <p className="mt-2 font-sans text-[14px] text-[#444650]">
+              Recorded teachings and prayer sessions you can listen to right here.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5">
+            {audio.map((a) => (
+              <article key={a.key} className="rounded-2xl bg-white p-5 shadow-[0px_2px_16px_rgba(0,26,77,0.07)] md:p-6">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <h3 className="font-heading text-[18px] font-bold leading-tight text-[#001a4d]">{a.title}</h3>
+                    {a.subtitle && <p className="mt-1 font-sans text-[13px] text-[#757682]">{a.subtitle}</p>}
+                  </div>
+                  {a.recordedOn && (
+                    <p className="shrink-0 font-sans text-[12px] text-[#757682]">{a.recordedOn}</p>
+                  )}
+                </div>
+                {a.description && (
+                  <p className="mt-3 font-sans text-[14px] leading-relaxed text-[#444650]">{a.description}</p>
+                )}
+                <audio controls preload="none" src={a.url} className="mt-4 w-full">
+                  Your browser does not support audio playback.
+                </audio>
+              </article>
+            ))}
+          </div>
+        </section>
+      )}
 
       <section id="testimonies" className="mx-auto max-w-[1280px] scroll-mt-28 px-4 pb-20 md:px-16 md:pb-28">
         <div className="mb-6 max-w-[640px] md:mb-8">

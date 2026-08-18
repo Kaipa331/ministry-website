@@ -24,11 +24,11 @@ const explore = [
   { label: "About", to: "/about" },
 ] as const;
 
-const support = [
+const support: { label: string; to: string; accent?: boolean }[] = [
   { label: "Contact", to: "/contact" },
   { label: "Partner", to: "/contact?intent=partner" },
   { label: "Donate", to: "/contact?intent=donate", accent: true },
-] as const;
+];
 
 const legal = [
   { label: "Privacy Policy", to: "/privacy" },
@@ -134,6 +134,12 @@ export default function Footer() {
                 {l.label}
               </Link>
             ))}
+            <Link
+              to="/admin"
+              className="font-sans text-[13px] text-[rgba(227,226,232,0.35)] transition-colors hover:text-white md:text-[14px]"
+            >
+              Admin
+            </Link>
           </div>
         </div>
       </div>
