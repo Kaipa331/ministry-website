@@ -1,0 +1,2 @@
+[functions.admins]
+verify_jwt = true

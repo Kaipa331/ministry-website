@@ -2,17 +2,33 @@ import { useEffect } from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "./AuthProvider";
 import { Button } from "./ui";
+import { IconAnnounce, IconAudio, IconExternal, IconGallery, IconOverview, IconTeam, IconVideo } from "./icons";
 import BrandMark from "../components/BrandMark";
 import Login from "../pages/admin/Login";
 import { site } from "../data/content";
 
 const sections = [
-  { to: "/admin", label: "Overview", end: true },
-  { to: "/admin/videos", label: "Videos & Live", end: false },
-  { to: "/admin/audio", label: "Audio Sessions", end: false },
-  { to: "/admin/announcements", label: "Announcements", end: false },
-  { to: "/admin/gallery", label: "Gallery", end: false },
+  { to: "/admin", label: "Overview", end: true, icon: IconOverview },
+  { to: "/admin/videos", label: "Videos & Live", end: false, icon: IconVideo },
+  { to: "/admin/audio", label: "Audio Sessions", end: false, icon: IconAudio },
+  { to: "/admin/announcements", label: "Announcements", end: false, icon: IconAnnounce },
+  { to: "/admin/gallery", label: "Gallery", end: false, icon: IconGallery },
+  { to: "/admin/team", label: "Team & Password", end: false, icon: IconTeam },
 ];
+
+const titles: Record<string, string> = {
+  "/admin": "Overview",
+  "/admin/videos": "Videos & Live",
+  "/admin/audio": "Audio Sessions",
+  "/admin/announcements": "Announcements",
+  "/admin/gallery": "Gallery",
+  "/admin/team": "Team & Password",
+};
+
+function initials(email: string | null) {
+  if (!email) return "A";
+  return email.slice(0, 1).toUpperCase();
+}
 
 export default function AdminLayout() {
   const { session, email, loading, configured, signOut } = useAuth();
@@ -26,62 +42,118 @@ export default function AdminLayout() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#faf8ff]">
-        <p className="font-sans text-[14px] text-[#757682]">Checking your session…</p>
+      <div className="flex min-h-screen items-center justify-center bg-[#f3f4f8]">
+        <p className="font-sans text-[13px] text-[#7a8194]">Checking your session…</p>
       </div>
     );
   }
 
   if (!session) return <Login />;
 
-  return (
-    <div className="flex min-h-screen flex-col bg-[#faf8ff]">
-      <header className="border-b border-[rgba(197,198,210,0.4)] bg-white">
-        <div className="mx-auto flex max-w-[1180px] items-center justify-between gap-4 px-4 py-3 md:px-8">
-          <div className="flex min-w-0 items-center gap-3">
-            <BrandMark markClassName="h-8 w-8" />
-            <span className="hidden font-sans text-[13px] font-bold tracking-[1px] text-[#735c00] uppercase sm:block">
-              Admin
-            </span>
-          </div>
-          <div className="flex items-center gap-3">
-            <span className="hidden max-w-[200px] truncate font-sans text-[13px] text-[#757682] md:block">{email}</span>
-            <Link
-              to="/"
-              className="font-sans text-[13px] font-semibold text-[#001a4d] hover:underline"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              View site
-            </Link>
-            <Button variant="ghost" onClick={() => void signOut()}>
-              Sign out
-            </Button>
-          </div>
-        </div>
-      </header>
+  const pageTitle = titles[pathname] ?? "Console";
 
-      <div className="mx-auto flex w-full max-w-[1180px] flex-1 flex-col gap-6 px-4 py-6 md:flex-row md:gap-10 md:px-8 md:py-10">
-        <nav className="flex gap-2 overflow-x-auto pb-1 md:w-[210px] md:shrink-0 md:flex-col md:overflow-visible md:pb-0">
-          {sections.map((s) => (
-            <NavLink
-              key={s.to}
-              to={s.to}
-              end={s.end}
-              className={({ isActive }) =>
-                `whitespace-nowrap rounded-xl px-4 py-2.5 font-sans text-[14px] transition-colors ${
-                  isActive
-                    ? "bg-[#001a4d] font-bold text-white"
-                    : "font-medium text-[#444650] hover:bg-white hover:text-[#001a4d]"
-                }`
-              }
-            >
-              {s.label}
-            </NavLink>
-          ))}
+  return (
+    <div className="min-h-screen bg-[#f3f4f8] lg:flex">
+      <aside className="hidden lg:flex lg:w-[248px] lg:shrink-0 lg:flex-col lg:bg-[#001a4d]">
+        <div className="border-b border-white/10 px-5 py-5">
+          <BrandMark light markClassName="h-8 w-8" />
+          <p className="mt-3 font-sans text-[11px] font-semibold uppercase tracking-[1.8px] text-[#ffd700]/80">
+            Ministry console
+          </p>
+        </div>
+
+        <nav className="flex flex-1 flex-col gap-1 px-3 py-4" aria-label="Admin">
+          {sections.map((s) => {
+            const Icon = s.icon;
+            return (
+              <NavLink
+                key={s.to}
+                to={s.to}
+                end={s.end}
+                className={({ isActive }) =>
+                  `flex items-center gap-3 rounded-lg px-3 py-2.5 font-sans text-[13px] transition-colors ${
+                    isActive
+                      ? "bg-white/10 font-semibold text-white"
+                      : "font-medium text-white/65 hover:bg-white/5 hover:text-white"
+                  }`
+                }
+              >
+                {({ isActive }) => (
+                  <>
+                    <Icon className={`h-4 w-4 ${isActive ? "text-[#ffd700]" : "text-white/55"}`} />
+                    {s.label}
+                  </>
+                )}
+              </NavLink>
+            );
+          })}
         </nav>
 
-        <main className="min-w-0 flex-1 pb-10">
+        <div className="border-t border-white/10 px-4 py-4">
+          <div className="flex items-center gap-3">
+            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#ffd700] font-sans text-[12px] font-bold text-[#001a4d]">
+              {initials(email)}
+            </span>
+            <div className="min-w-0">
+              <p className="truncate font-sans text-[12px] font-semibold text-white">{email ?? "Admin"}</p>
+              <p className="font-sans text-[11px] text-white/50">Signed in</p>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <div className="flex min-w-0 flex-1 flex-col">
+        <header className="sticky top-0 z-20 border-b border-[#e6e8ef] bg-white/92 backdrop-blur-md">
+          <div className="flex items-center justify-between gap-3 px-4 py-3 lg:px-8">
+            <div className="flex min-w-0 items-center gap-3">
+              <div className="lg:hidden">
+                <BrandMark showWordmark={false} markClassName="h-8 w-8" />
+              </div>
+              <div className="min-w-0">
+                <p className="hidden font-sans text-[11px] font-semibold uppercase tracking-[1.6px] text-[#8a6d00] lg:block">
+                  {site.organization}
+                </p>
+                <p className="truncate font-sans text-[14px] font-semibold text-[#001a4d] lg:text-[15px]">{pageTitle}</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <Link
+                to="/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 rounded-lg px-3 py-2 font-sans text-[12px] font-semibold text-[#001a4d] transition-colors hover:bg-[#f3f4f8]"
+              >
+                View site
+                <IconExternal className="h-3.5 w-3.5" />
+              </Link>
+              <Button variant="ghost" size="sm" onClick={() => void signOut()}>
+                Sign out
+              </Button>
+            </div>
+          </div>
+
+          <nav className="flex gap-1 overflow-x-auto border-t border-[#eef0f5] px-3 py-2 lg:hidden" aria-label="Admin">
+            {sections.map((s) => (
+              <NavLink
+                key={s.to}
+                to={s.to}
+                end={s.end}
+                className={({ isActive }) =>
+                  `whitespace-nowrap rounded-md px-3 py-1.5 font-sans text-[12px] transition-colors ${
+                    isActive
+                      ? "bg-[#001a4d] font-semibold text-white"
+                      : "font-medium text-[#5d6478] hover:bg-[#f3f4f8] hover:text-[#001a4d]"
+                  }`
+                }
+              >
+                {s.label}
+              </NavLink>
+            ))}
+          </nav>
+        </header>
+
+        <main className="mx-auto w-full max-w-[1080px] flex-1 px-4 py-6 lg:px-10 lg:py-9">
           <Outlet />
         </main>
       </div>
@@ -91,34 +163,34 @@ export default function AdminLayout() {
 
 function SetupNotice() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#faf8ff] px-4 py-16">
-      <div className="w-full max-w-[560px] rounded-2xl bg-white p-6 shadow-[0px_4px_24px_rgba(0,26,77,0.08)] md:p-9">
-        <BrandMark markClassName="mb-4 h-10 w-10" />
-        <h1 className="font-heading text-[26px] font-bold text-[#001a4d]">Connect Supabase to finish setup</h1>
-        <p className="mt-3 font-sans text-[14px] leading-relaxed text-[#444650]">
+    <div className="flex min-h-screen items-center justify-center bg-[#f3f4f8] px-4 py-16">
+      <div className="w-full max-w-[520px] rounded-[12px] border border-[#e6e8ef] bg-white p-7 shadow-[0_1px_2px_rgba(16,24,40,0.04)] md:p-9">
+        <BrandMark markClassName="mb-5 h-9 w-9" />
+        <p className="font-sans text-[11px] font-semibold uppercase tracking-[1.8px] text-[#8a6d00]">Setup</p>
+        <h1 className="mt-1 font-sans text-[24px] font-semibold tracking-[-0.3px] text-[#001a4d]">
+          Connect Supabase to finish setup
+        </h1>
+        <p className="mt-3 font-sans text-[14px] leading-relaxed text-[#5d6478]">
           The dashboard is built and ready, but it needs the ministry&apos;s Supabase project keys before it can sign
           anyone in. The public website keeps working normally in the meantime.
         </p>
-        <ol className="mt-5 flex list-decimal flex-col gap-2 pl-5 font-sans text-[14px] leading-relaxed text-[#444650]">
+        <ol className="mt-5 flex list-decimal flex-col gap-2 pl-5 font-sans text-[14px] leading-relaxed text-[#5d6478]">
           <li>
-            Create a free project at <span className="font-semibold">supabase.com</span>.
+            Create a free project at <span className="font-semibold text-[#001a4d]">supabase.com</span>.
           </li>
           <li>
-            Run <span className="font-semibold">supabase/schema.sql</span> in the project&apos;s SQL Editor.
+            Run <span className="font-semibold text-[#001a4d]">supabase/schema.sql</span> in the project&apos;s SQL Editor.
           </li>
           <li>
-            Copy <span className="font-semibold">.env.example</span> to <span className="font-semibold">.env.local</span>{" "}
-            and paste in the project URL and anon key.
+            Copy <span className="font-semibold text-[#001a4d]">.env.example</span> to{" "}
+            <span className="font-semibold text-[#001a4d]">.env.local</span> and paste in the project URL and anon key.
           </li>
           <li>Add the admin user under Authentication → Users, then restart the site.</li>
         </ol>
-        <p className="mt-5 font-sans text-[13px] text-[#757682]">
+        <p className="mt-5 font-sans text-[13px] text-[#7a8194]">
           Full instructions are in <span className="font-semibold">ADMIN_SETUP.md</span> in the project folder.
         </p>
-        <Link
-          to="/"
-          className="mt-6 inline-block font-sans text-[14px] font-semibold text-[#001a4d] hover:underline"
-        >
+        <Link to="/" className="mt-6 inline-block font-sans text-[13px] font-semibold text-[#001a4d] hover:underline">
           ← Back to the website
         </Link>
       </div>

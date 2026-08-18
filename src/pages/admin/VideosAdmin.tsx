@@ -2,7 +2,7 @@ import { useState, type FormEvent } from "react";
 import { clearVideoFlag, deleteRow, fetchVideos, insertRow, parseYouTubeId, updateRow } from "../../lib/api";
 import type { VideoRow } from "../../lib/types";
 import { useAdminResource } from "../../admin/useAdminResource";
-import { Badge, Banner, Button, Card, EmptyState, Field, SectionHeader, TextArea, TextInput, Toggle } from "../../admin/ui";
+import { Badge, Banner, Button, Card, EmptyState, Field, LoadingLine, Panel, SectionHeader, TextArea, TextInput, Toggle } from "../../admin/ui";
 import { youtubeThumb } from "../../data/content";
 
 interface Draft {
@@ -106,6 +106,7 @@ export default function VideosAdmin() {
   return (
     <div>
       <SectionHeader
+        eyebrow="Broadcast"
         title="Videos & Live Sessions"
         description="Services stay on YouTube — paste the link here and it appears on the website. Mark a link as live and a red Watch Live banner shows on the home page until you turn it off."
       />
@@ -113,10 +114,7 @@ export default function VideosAdmin() {
       {error && <Banner tone="error">{error}</Banner>}
       {notice && <Banner tone="success">{notice}</Banner>}
 
-      <Card className="mb-8">
-        <h2 className="mb-4 font-heading text-[18px] font-bold text-[#001a4d]">
-          {editingId ? "Edit message" : "Add a message or live session"}
-        </h2>
+      <Panel className="mb-8" title={editingId ? "Edit message" : "Add a message or live session"}>
         {formError && <Banner tone="error">{formError}</Banner>}
 
         <form className="flex flex-col gap-4" onSubmit={onSubmit}>
@@ -166,10 +164,10 @@ export default function VideosAdmin() {
             )}
           </div>
         </form>
-      </Card>
+      </Panel>
 
       {loading ? (
-        <p className="font-sans text-[14px] text-[#757682]">Loading messages…</p>
+        <LoadingLine>Loading messages…</LoadingLine>
       ) : rows.length === 0 ? (
         <EmptyState
           title="No messages yet"
@@ -182,7 +180,7 @@ export default function VideosAdmin() {
               <img
                 src={youtubeThumb(row.youtube_id)}
                 alt=""
-                className="h-[90px] w-full shrink-0 rounded-xl object-cover sm:w-[160px]"
+                className="h-[90px] w-full shrink-0 rounded-lg object-cover sm:w-[160px]"
               />
               <div className="min-w-0 flex-1">
                 <div className="mb-1.5 flex flex-wrap items-center gap-2">
@@ -212,10 +210,10 @@ export default function VideosAdmin() {
                 </div>
               </div>
               <div className="flex shrink-0 gap-2">
-                <Button variant="ghost" onClick={() => startEdit(row)}>
+                <Button variant="ghost" size="sm" onClick={() => startEdit(row)}>
                   Edit
                 </Button>
-                <Button variant="danger" onClick={() => onDelete(row)}>
+                <Button variant="danger" size="sm" onClick={() => onDelete(row)}>
                   Delete
                 </Button>
               </div>

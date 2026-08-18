@@ -9,6 +9,8 @@ import {
   Card,
   EmptyState,
   Field,
+  LoadingLine,
+  Panel,
   SectionHeader,
   Select,
   TextArea,
@@ -96,6 +98,7 @@ export default function AnnouncementsAdmin() {
   return (
     <div>
       <SectionHeader
+        eyebrow="Programs"
         title="Announcements"
         description="Post ministry news, upcoming programs and meetings, and outstanding events that have already taken place. Everything here shows on the News & Events page."
       />
@@ -103,10 +106,7 @@ export default function AnnouncementsAdmin() {
       {error && <Banner tone="error">{error}</Banner>}
       {notice && <Banner tone="success">{notice}</Banner>}
 
-      <Card className="mb-8">
-        <h2 className="mb-4 font-heading text-[18px] font-bold text-[#001a4d]">
-          {editingId ? "Edit announcement" : "New announcement"}
-        </h2>
+      <Panel className="mb-8" title={editingId ? "Edit announcement" : "New announcement"}>
         {formError && <Banner tone="error">{formError}</Banner>}
 
         <form className="flex flex-col gap-4" onSubmit={onSubmit}>
@@ -161,18 +161,18 @@ export default function AnnouncementsAdmin() {
             )}
           </div>
         </form>
-      </Card>
+      </Panel>
 
-      <div className="mb-4 flex flex-wrap gap-2">
+      <div className="mb-4 flex flex-wrap gap-1.5">
         {(["all", ...announcementCategories.map((c) => c.value)] as const).map((value) => (
           <button
             key={value}
             type="button"
             onClick={() => setFilter(value)}
-            className={`rounded-full px-4 py-1.5 font-sans text-[13px] transition-colors ${
+            className={`rounded-md px-3 py-1.5 font-sans text-[12px] font-medium transition-colors ${
               filter === value
-                ? "bg-[#001a4d] font-bold text-white"
-                : "border border-[#d9dae4] bg-white font-medium text-[#444650] hover:border-[#001a4d]"
+                ? "bg-[#001a4d] font-semibold text-white"
+                : "border border-[#d8dbe4] bg-white text-[#5d6478] hover:border-[#001a4d]/50 hover:text-[#001a4d]"
             }`}
           >
             {value === "all" ? "All" : categoryLabel(value)}
@@ -181,7 +181,7 @@ export default function AnnouncementsAdmin() {
       </div>
 
       {loading ? (
-        <p className="font-sans text-[14px] text-[#757682]">Loading announcements…</p>
+        <LoadingLine>Loading announcements…</LoadingLine>
       ) : visible.length === 0 ? (
         <EmptyState
           title="Nothing here yet"
@@ -201,10 +201,10 @@ export default function AnnouncementsAdmin() {
                 {row.summary && <p className="mt-1 font-sans text-[13px] leading-relaxed text-[#757682]">{row.summary}</p>}
               </div>
               <div className="flex shrink-0 gap-2">
-                <Button variant="ghost" onClick={() => startEdit(row)}>
+                <Button variant="ghost" size="sm" onClick={() => startEdit(row)}>
                   Edit
                 </Button>
-                <Button variant="danger" onClick={() => onDelete(row)}>
+                <Button variant="danger" size="sm" onClick={() => onDelete(row)}>
                   Delete
                 </Button>
               </div>

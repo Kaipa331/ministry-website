@@ -3,7 +3,7 @@ import { deleteRow, fetchGallery, insertRow, removeFile, updateRow, uploadFile }
 import type { GalleryRow } from "../../lib/types";
 import { GALLERY_BUCKET, publicFileUrl } from "../../lib/supabase";
 import { useAdminResource } from "../../admin/useAdminResource";
-import { Badge, Banner, Button, Card, EmptyState, Field, SectionHeader, TextInput } from "../../admin/ui";
+import { Badge, Banner, Button, EmptyState, Field, fileInputClass, LoadingLine, Panel, SectionHeader, TextInput } from "../../admin/ui";
 
 export default function GalleryAdmin() {
   const { rows, loading, busy, error, notice, run } = useAdminResource<GalleryRow>(fetchGallery);
@@ -56,6 +56,7 @@ export default function GalleryAdmin() {
   return (
     <div>
       <SectionHeader
+        eyebrow="Moments"
         title="Gallery"
         description="Upload photos from ministry gatherings. You can select several at once, and they appear on the Gallery page in the order they were added."
       />
@@ -63,8 +64,7 @@ export default function GalleryAdmin() {
       {error && <Banner tone="error">{error}</Banner>}
       {notice && <Banner tone="success">{notice}</Banner>}
 
-      <Card className="mb-8">
-        <h2 className="mb-4 font-heading text-[18px] font-bold text-[#001a4d]">Add photos</h2>
+      <Panel className="mb-8" title="Add photos">
         {formError && <Banner tone="error">{formError}</Banner>}
 
         <form className="flex flex-col gap-4" onSubmit={onSubmit}>
@@ -74,7 +74,7 @@ export default function GalleryAdmin() {
               type="file"
               accept="image/*"
               multiple
-              className="w-full rounded-xl border border-dashed border-[#c5c6d2] bg-white px-4 py-3 font-sans text-[13px] text-[#444650] file:mr-3 file:rounded-full file:border-0 file:bg-[#001a4d] file:px-4 file:py-2 file:font-sans file:text-[12px] file:font-bold file:text-white hover:file:bg-[#002a7a]"
+              className={fileInputClass}
             />
           </Field>
 
@@ -92,19 +92,22 @@ export default function GalleryAdmin() {
             </Button>
           </div>
         </form>
-      </Card>
+      </Panel>
 
       {loading ? (
-        <p className="font-sans text-[14px] text-[#757682]">Loading photos…</p>
+        <LoadingLine>Loading photos…</LoadingLine>
       ) : rows.length === 0 ? (
         <EmptyState
           title="No photos uploaded yet"
           description="Until you add photos here, the Gallery page shows the original set that shipped with the website."
         />
       ) : (
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:gap-4">
           {rows.map((row) => (
-            <div key={row.id} className="overflow-hidden rounded-2xl bg-white shadow-[0px_2px_16px_rgba(0,26,77,0.07)]">
+            <div
+              key={row.id}
+              className="overflow-hidden rounded-[12px] border border-[#e6e8ef] bg-white shadow-[0_1px_2px_rgba(16,24,40,0.04)]"
+            >
               <div className="relative aspect-square">
                 <img
                   src={publicFileUrl(GALLERY_BUCKET, row.image_path)}
@@ -120,10 +123,10 @@ export default function GalleryAdmin() {
               <div className="flex flex-col gap-2 p-3">
                 <p className="line-clamp-2 font-sans text-[12px] text-[#757682]">{row.alt || "No description"}</p>
                 <div className="flex gap-2">
-                  <Button variant="ghost" className="flex-1 !px-3 !text-[12px]" onClick={() => toggleVisible(row)}>
+                  <Button variant="ghost" size="sm" className="flex-1" onClick={() => toggleVisible(row)}>
                     {row.published ? "Hide" : "Show"}
                   </Button>
-                  <Button variant="danger" className="flex-1 !px-3 !text-[12px]" onClick={() => onDelete(row)}>
+                  <Button variant="danger" size="sm" className="flex-1" onClick={() => onDelete(row)}>
                     Delete
                   </Button>
                 </div>

@@ -26,52 +26,72 @@ export default function Login() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#faf8ff] px-4 py-16">
-      <div className="w-full max-w-[420px]">
-        <div className="mb-8 flex flex-col items-center gap-3 text-center">
-          <BrandMark markClassName="h-11 w-11" />
-          <h1 className="font-heading text-[28px] font-bold text-[#001a4d]">Ministry Admin</h1>
-          <p className="font-sans text-[14px] text-[#757682]">
-            Sign in to publish messages, audio, announcements, and photos for {site.organization}.
+    <div className="min-h-screen lg:grid lg:grid-cols-2">
+      <aside className="relative hidden overflow-hidden bg-[#001a4d] lg:flex lg:flex-col lg:justify-between lg:px-12 lg:py-12">
+        <div className="pointer-events-none absolute -right-16 -top-16 h-72 w-72 rounded-full bg-[#ffd700]/10" />
+        <div className="pointer-events-none absolute -bottom-20 left-10 h-80 w-80 rounded-full bg-white/5" />
+        <BrandMark light markClassName="h-10 w-10" />
+        <div className="relative max-w-[420px]">
+          <p className="font-sans text-[11px] font-semibold uppercase tracking-[2px] text-[#ffd700]">Ministry console</p>
+          <h1 className="mt-3 font-heading text-[42px] font-bold leading-[1.05] tracking-[-0.8px] text-white">
+            Publish the work of the ministry.
+          </h1>
+          <p className="mt-4 font-sans text-[15px] leading-relaxed text-white/70">
+            Live sessions, audio recordings, announcements, and gallery photos — all from one signed-in workspace for{" "}
+            {site.organization}.
           </p>
         </div>
+        <p className="relative font-sans text-[12px] text-white/40">Restricted access · authorised staff only</p>
+      </aside>
 
-        <div className="rounded-2xl bg-white p-6 shadow-[0px_4px_24px_rgba(0,26,77,0.08)] md:p-8">
-          {error && <Banner tone="error">{error}</Banner>}
+      <div className="flex min-h-screen items-center justify-center bg-[#f3f4f8] px-4 py-16">
+        <div className="w-full max-w-[400px]">
+          <div className="mb-8 lg:hidden">
+            <BrandMark markClassName="h-10 w-10" />
+          </div>
+          <p className="font-sans text-[11px] font-semibold uppercase tracking-[1.8px] text-[#8a6d00]">Sign in</p>
+          <h2 className="mt-1 font-sans text-[26px] font-semibold tracking-[-0.3px] text-[#001a4d]">Ministry Admin</h2>
+          <p className="mt-2 font-sans text-[14px] leading-relaxed text-[#5d6478]">
+            Use the account created for you in Supabase. Sign-ups are closed.
+          </p>
 
-          <form className="flex flex-col gap-5" onSubmit={onSubmit}>
-            <Field label="Email">
-              <TextInput
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                autoComplete="username"
-                required
-                placeholder="admin@ministry.org"
-              />
-            </Field>
-            <Field label="Password">
-              <TextInput
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                autoComplete="current-password"
-                required
-                placeholder="••••••••"
-              />
-            </Field>
-            <Button type="submit" disabled={busy}>
-              {busy ? "Signing in…" : "Sign in"}
-            </Button>
-          </form>
+          <div className="mt-7 rounded-[12px] border border-[#e6e8ef] bg-white p-6 shadow-[0_1px_2px_rgba(16,24,40,0.04)]">
+            {error && <Banner tone="error">{error}</Banner>}
+
+            <form className="flex flex-col gap-4" onSubmit={onSubmit}>
+              <Field label="Email">
+                <TextInput
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  autoComplete="username"
+                  required
+                  placeholder="admin@ministry.org"
+                />
+              </Field>
+              <Field label="Password">
+                <TextInput
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  autoComplete="current-password"
+                  required
+                  placeholder="••••••••"
+                />
+              </Field>
+              <Button type="submit" disabled={busy} className="mt-1 w-full">
+                {busy ? "Signing in…" : "Sign in"}
+              </Button>
+            </form>
+          </div>
+
+          <Link
+            to="/"
+            className="mt-6 block text-center font-sans text-[13px] font-semibold text-[#001a4d] hover:underline"
+          >
+            ← Back to the website
+          </Link>
         </div>
-
-        <Link
-          to="/"
-          className="mt-6 block text-center font-sans text-[13px] font-semibold text-[#001a4d] hover:underline"
-        >
-          ← Back to the website
-        </Link>
       </div>
     </div>
   );

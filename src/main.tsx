@@ -20,6 +20,7 @@ const VideosAdmin = lazy(() => import("./pages/admin/VideosAdmin"));
 const AudioAdmin = lazy(() => import("./pages/admin/AudioAdmin"));
 const AnnouncementsAdmin = lazy(() => import("./pages/admin/AnnouncementsAdmin"));
 const GalleryAdmin = lazy(() => import("./pages/admin/GalleryAdmin"));
+const TeamAdmin = lazy(() => import("./pages/admin/TeamAdmin"));
 
 const adminFallback = (
   <div className="flex min-h-screen items-center justify-center bg-[#faf8ff]">
@@ -46,6 +47,7 @@ createRoot(document.getElementById("root")!).render(
           <Route path="audio" element={<AudioAdmin />} />
           <Route path="announcements" element={<AnnouncementsAdmin />} />
           <Route path="gallery" element={<GalleryAdmin />} />
+          <Route path="team" element={<TeamAdmin />} />
         </Route>
 
         <Route element={<App />}>

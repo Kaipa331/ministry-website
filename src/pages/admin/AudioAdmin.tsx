@@ -3,7 +3,7 @@ import { deleteRow, fetchAudio, insertRow, removeFile, updateRow, uploadFile } f
 import type { AudioRow } from "../../lib/types";
 import { AUDIO_BUCKET, publicFileUrl } from "../../lib/supabase";
 import { useAdminResource } from "../../admin/useAdminResource";
-import { Badge, Banner, Button, Card, EmptyState, Field, SectionHeader, TextArea, TextInput, Toggle } from "../../admin/ui";
+import { Badge, Banner, Button, Card, EmptyState, Field, fileInputClass, LoadingLine, Panel, SectionHeader, TextArea, TextInput, Toggle } from "../../admin/ui";
 
 interface Draft {
   title: string;
@@ -102,6 +102,7 @@ export default function AudioAdmin() {
   return (
     <div>
       <SectionHeader
+        eyebrow="Listen"
         title="Audio Sessions"
         description="Upload recorded teachings and prayer sessions straight from your computer. They appear on the Watch page with a player, and visitors can listen without leaving the site."
       />
@@ -109,10 +110,7 @@ export default function AudioAdmin() {
       {error && <Banner tone="error">{error}</Banner>}
       {notice && <Banner tone="success">{notice}</Banner>}
 
-      <Card className="mb-8">
-        <h2 className="mb-4 font-heading text-[18px] font-bold text-[#001a4d]">
-          {editingId ? "Edit session" : "Upload an audio session"}
-        </h2>
+      <Panel className="mb-8" title={editingId ? "Edit session" : "Upload an audio session"}>
         {formError && <Banner tone="error">{formError}</Banner>}
 
         <form className="flex flex-col gap-4" onSubmit={onSubmit}>
@@ -124,7 +122,7 @@ export default function AudioAdmin() {
               ref={fileRef}
               type="file"
               accept="audio/*"
-              className="w-full rounded-xl border border-dashed border-[#c5c6d2] bg-white px-4 py-3 font-sans text-[13px] text-[#444650] file:mr-3 file:rounded-full file:border-0 file:bg-[#001a4d] file:px-4 file:py-2 file:font-sans file:text-[12px] file:font-bold file:text-white hover:file:bg-[#002a7a]"
+              className={fileInputClass}
             />
           </Field>
 
@@ -170,10 +168,10 @@ export default function AudioAdmin() {
             )}
           </div>
         </form>
-      </Card>
+      </Panel>
 
       {loading ? (
-        <p className="font-sans text-[14px] text-[#757682]">Loading sessions…</p>
+        <LoadingLine>Loading sessions…</LoadingLine>
       ) : rows.length === 0 ? (
         <EmptyState
           title="No audio sessions yet"
@@ -193,10 +191,10 @@ export default function AudioAdmin() {
                   <p className="mt-0.5 font-sans text-[13px] text-[#757682]">{row.subtitle || "No subtitle"}</p>
                 </div>
                 <div className="flex shrink-0 gap-2">
-                  <Button variant="ghost" onClick={() => startEdit(row)}>
+                  <Button variant="ghost" size="sm" onClick={() => startEdit(row)}>
                     Edit
                   </Button>
-                  <Button variant="danger" onClick={() => onDelete(row)}>
+                  <Button variant="danger" size="sm" onClick={() => onDelete(row)}>
                     Delete
                   </Button>
                 </div>

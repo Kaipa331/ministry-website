@@ -52,10 +52,28 @@ content. Never put the `service_role` key in this project.
 2. Enter the ministry email and a strong password, and tick **Auto Confirm User**.
 3. Go to **Authentication → Providers → Email** and turn **Enable sign ups** _off_.
 
-That last step matters: it means nobody can create their own account. Only the users you add by hand
-can sign in. To add another leader later, repeat step 1.
+That last step matters: it means nobody can create their own account from the public website.
+Additional admins are added from **Team & Password** inside the dashboard.
 
-### 5. Deploy
+### 5. Deploy the admin function (needed to add other admins)
+
+Creating another admin account has to happen on the server, otherwise the current login would be
+replaced. Deploy the function in the repo at `supabase/functions/admins`:
+
+1. In the Supabase dashboard open **Edge Functions → Deploy a new function**.
+2. Name it exactly `admins`.
+3. Paste the contents of `supabase/functions/admins/index.ts` and deploy.
+
+Or, if the Supabase CLI is installed and the project is linked:
+
+```
+supabase functions deploy admins
+```
+
+Password changes work without this function. Adding or removing other admins does not, until it is
+deployed.
+
+### 6. Deploy the website
 
 When hosting the site (Netlify, Vercel, Cloudflare Pages, etc.), add the same two variables
 `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` in the host's environment variable settings.
@@ -105,6 +123,12 @@ Upload one or several photos at once. They show on the Gallery page.
 Every item has a **Visible** switch. Turning it off removes the item from the public website but
 keeps it in the dashboard, so you can bring it back later. Delete is permanent, and for audio and
 photos it removes the uploaded file too.
+
+### Team & Password
+
+Signed-in admins can change their own password, add another admin with an email and temporary
+password, and remove someone else’s access. Keep **Enable sign ups** turned off in Supabase so
+visitors cannot register themselves.
 
 ---
 
