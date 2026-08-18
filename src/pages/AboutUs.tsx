@@ -43,7 +43,7 @@ export default function AboutUs() {
             <div className="flex flex-col gap-4 font-sans text-[14px] leading-[1.7] text-[#444650] md:gap-5 md:text-[16px]">
               <p>
                 Alone in Soche, a suburb of Blantyre, Malawi, Lord Overtone was visited by a Man — olive skinned, not so
-                tall, wearing a robe and barefooted. The Voice was surprisingly familiar: the same Voice that from
+                tall, wearing a normal attire and barefooted. The Voice was surprisingly familiar: the same Voice that from
                 childhood had spoken of the past, present, future, and the hidden secrets of the hearts of men.
               </p>
               <p>
