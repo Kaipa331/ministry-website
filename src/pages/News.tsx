@@ -30,7 +30,9 @@ function ItemCard({ item }: { item: Item }) {
   return (
     <article className="flex flex-col overflow-hidden rounded-2xl bg-white shadow-[0px_2px_16px_rgba(0,26,77,0.07)]">
       {item.image && (
-        <img src={item.image} alt="" className="aspect-[16/10] w-full object-cover" />
+        <div className="bg-[#f4f3f9]">
+          <img src={item.image} alt="" className="mx-auto max-h-[420px] w-full object-contain" />
+        </div>
       )}
       <div className="flex flex-col gap-3 p-5 md:p-6">
         <div className="flex items-center justify-between gap-3">

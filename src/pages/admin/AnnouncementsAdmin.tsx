@@ -57,13 +57,10 @@ export default function AnnouncementsAdmin() {
     return () => URL.revokeObjectURL(url);
   }, [imageFile]);
 
-  const shownPhoto =
-    draft.category === "event"
-      ? imageFile
-        ? previewUrl
-        : existingImage && !removeImage
-          ? publicFileUrl(GALLERY_BUCKET, existingImage)
-          : ""
+  const shownPhoto = imageFile
+    ? previewUrl
+    : existingImage && !removeImage
+      ? publicFileUrl(GALLERY_BUCKET, existingImage)
       : "";
 
   const reset = () => {
@@ -103,16 +100,16 @@ export default function AnnouncementsAdmin() {
     }
 
     if (imageFile && !imageFile.type.startsWith("image/")) {
-      setFormError("Only image files can be attached to an event.");
+      setFormError("Only image files can be attached.");
       return;
     }
 
     const ok = await run(
       async () => {
-        let imagePath = draft.category === "event" ? existingImage : "";
-        if (draft.category === "event" && imageFile) {
-          imagePath = await uploadFile(GALLERY_BUCKET, imageFile, "events");
-        } else if (draft.category !== "event" || removeImage) {
+        let imagePath = existingImage;
+        if (imageFile) {
+          imagePath = await uploadFile(GALLERY_BUCKET, imageFile, "announcements");
+        } else if (removeImage) {
           imagePath = "";
         }
 
@@ -203,41 +200,39 @@ export default function AnnouncementsAdmin() {
             />
           </Field>
 
-          {draft.category === "event" && (
-            <Field
-              label="Event photo"
-              hint="Optional. Shown on the News & Events page with this gathering."
-            >
-              <input
-                ref={fileRef}
-                type="file"
-                accept="image/*"
-                className={fileInputClass}
-                onChange={(e) => {
-                  setImageFile(e.target.files?.[0] ?? null);
-                  setRemoveImage(false);
+          <Field
+            label="Picture or flyer"
+            hint="Optional. Add a photo or a flyer if you have one — it will show with this post on the News & Events page."
+          >
+            <input
+              ref={fileRef}
+              type="file"
+              accept="image/*"
+              className={fileInputClass}
+              onChange={(e) => {
+                setImageFile(e.target.files?.[0] ?? null);
+                setRemoveImage(false);
+              }}
+            />
+            {shownPhoto && (
+              <div className="mt-3 overflow-hidden rounded-lg border border-[#e6e8ef] bg-[#f7f8fb]">
+                <img src={shownPhoto} alt="" className="mx-auto max-h-56 w-full object-contain" />
+              </div>
+            )}
+            {(existingImage || imageFile) && !removeImage && (
+              <button
+                type="button"
+                className="mt-2 self-start font-sans text-[12px] font-semibold text-[#b3261e] hover:underline"
+                onClick={() => {
+                  setRemoveImage(true);
+                  setImageFile(null);
+                  if (fileRef.current) fileRef.current.value = "";
                 }}
-              />
-              {shownPhoto && (
-                <div className="mt-3 overflow-hidden rounded-lg border border-[#e6e8ef]">
-                  <img src={shownPhoto} alt="" className="h-40 w-full object-cover" />
-                </div>
-              )}
-              {(existingImage || imageFile) && !removeImage && (
-                <button
-                  type="button"
-                  className="mt-2 self-start font-sans text-[12px] font-semibold text-[#b3261e] hover:underline"
-                  onClick={() => {
-                    setRemoveImage(true);
-                    setImageFile(null);
-                    if (fileRef.current) fileRef.current.value = "";
-                  }}
-                >
-                  Remove photo
-                </button>
-              )}
-            </Field>
-          )}
+              >
+                Remove picture
+              </button>
+            )}
+          </Field>
 
           <Toggle checked={draft.published} onChange={(v) => set("published", v)} label="Visible on the website" />
 
