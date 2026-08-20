@@ -4,10 +4,12 @@ import {
   fetchPublicAnnouncements,
   fetchPublicAudio,
   fetchPublicGallery,
+  fetchPublicTestimonials,
   fetchPublicVideos,
 } from "../lib/publicApi";
-import type { PublicAnnouncement, PublicAudio, PublicGalleryImage, PublicVideo } from "../lib/types";
+import type { PublicAnnouncement, PublicAudio, PublicGalleryImage, PublicTestimony, PublicVideo } from "../lib/types";
 import {
+  approvedTestimonials,
   galleryImages,
   newsItems,
   recentEvents,
@@ -49,6 +51,16 @@ const fallbackAnnouncements: PublicAnnouncement[] = [
 
 const fallbackGallery: PublicGalleryImage[] = galleryImages.map((g) => ({ key: g.src, src: g.src, alt: g.alt }));
 
+const fallbackTestimonials: PublicTestimony[] = approvedTestimonials.map((t) => ({
+  key: t.name,
+  name: t.name,
+  role: t.role,
+  location: t.location,
+  quote: t.quote,
+  image: t.image,
+  avatar: t.avatar,
+}));
+
 /* -------------------------------------------------------------------------- */
 /* Loaders                                                                    */
 /* -------------------------------------------------------------------------- */
@@ -57,6 +69,7 @@ const loadVideos = fetchPublicVideos;
 const loadAudio = fetchPublicAudio;
 const loadAnnouncements = fetchPublicAnnouncements;
 const loadGallery = fetchPublicGallery;
+const loadTestimonials = fetchPublicTestimonials;
 
 /**
  * Reads live content when Supabase is connected. If it is not configured, or a
@@ -116,4 +129,9 @@ export function useAnnouncements() {
 export function useGallery() {
   const { data, loading } = useRemoteContent(loadGallery, fallbackGallery);
   return { images: data, loading };
+}
+
+export function useTestimonials() {
+  const { data, loading } = useRemoteContent(loadTestimonials, fallbackTestimonials);
+  return { testimonials: data, loading };
 }

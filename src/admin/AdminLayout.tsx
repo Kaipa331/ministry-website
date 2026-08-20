@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "./AuthProvider";
 import { Button } from "./ui";
-import { IconAnnounce, IconAudio, IconExternal, IconGallery, IconOverview, IconTeam, IconVideo } from "./icons";
+import { IconAnnounce, IconAudio, IconExternal, IconGallery, IconOverview, IconQuote, IconTeam, IconVideo } from "./icons";
 import BrandMark from "../components/BrandMark";
 import Login from "../pages/admin/Login";
 import { site } from "../data/content";
@@ -12,6 +12,7 @@ const sections = [
   { to: "/admin/videos", label: "Videos & Live", end: false, icon: IconVideo },
   { to: "/admin/audio", label: "Audio Sessions", end: false, icon: IconAudio },
   { to: "/admin/announcements", label: "Announcements", end: false, icon: IconAnnounce },
+  { to: "/admin/testimonials", label: "Testimonies", end: false, icon: IconQuote },
   { to: "/admin/gallery", label: "Gallery", end: false, icon: IconGallery },
   { to: "/admin/team", label: "Team & Password", end: false, icon: IconTeam },
 ];
@@ -21,6 +22,7 @@ const titles: Record<string, string> = {
   "/admin/videos": "Videos & Live",
   "/admin/audio": "Audio Sessions",
   "/admin/announcements": "Announcements",
+  "/admin/testimonials": "Testimonies",
   "/admin/gallery": "Gallery",
   "/admin/team": "Team & Password",
 };
@@ -56,7 +58,7 @@ export default function AdminLayout() {
     <div className="min-h-screen bg-[#f3f4f8] lg:flex">
       <aside className="hidden lg:flex lg:w-[248px] lg:shrink-0 lg:flex-col lg:bg-[#001a4d]">
         <div className="border-b border-white/10 px-5 py-5">
-          <BrandMark light markClassName="h-8 w-12" />
+          <BrandMark light markClassName="h-11 w-auto" />
           <p className="mt-3 font-sans text-[11px] font-semibold uppercase tracking-[1.8px] text-[#ffd700]/80">
             Ministry console
           </p>
@@ -107,7 +109,7 @@ export default function AdminLayout() {
           <div className="flex items-center justify-between gap-3 px-4 py-3 lg:px-8">
             <div className="flex min-w-0 items-center gap-3">
               <div className="lg:hidden">
-                <BrandMark showWordmark={false} markClassName="h-8 w-8" />
+                <BrandMark showWordmark={false} markClassName="h-10 w-auto" />
               </div>
               <div className="min-w-0">
                 <p className="hidden font-sans text-[11px] font-semibold uppercase tracking-[1.6px] text-[#8a6d00] lg:block">
@@ -165,7 +167,7 @@ function SetupNotice() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-[#f3f4f8] px-4 py-16">
       <div className="w-full max-w-[520px] rounded-[12px] border border-[#e6e8ef] bg-white p-7 shadow-[0_1px_2px_rgba(16,24,40,0.04)] md:p-9">
-        <BrandMark markClassName="mb-5 h-9 w-9" />
+        <BrandMark className="mb-5" markClassName="h-12 w-auto" />
         <p className="font-sans text-[11px] font-semibold uppercase tracking-[1.8px] text-[#8a6d00]">Setup</p>
         <h1 className="mt-1 font-sans text-[24px] font-semibold tracking-[-0.3px] text-[#001a4d]">
           Connect Supabase to finish setup

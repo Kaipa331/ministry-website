@@ -55,6 +55,19 @@ export function IconTeam({ className = "h-4 w-4" }: { className?: string }) {
   );
 }
 
+export function IconQuote({ className = "h-4 w-4" }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path
+        d="M8 18H4.5A2.5 2.5 0 0 1 2 15.5V12c0-3.3 2-6 6-7.5V8c-1.7.7-2.5 2-2.5 4H8a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2Zm12 0h-3.5A2.5 2.5 0 0 1 14 15.5V12c0-3.3 2-6 6-7.5V8c-1.7.7-2.5 2-2.5 4H20a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2Z"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 export function IconExternal({ className = "h-4 w-4" }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden>

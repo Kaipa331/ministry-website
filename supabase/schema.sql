@@ -63,6 +63,19 @@ create table if not exists public.gallery_images (
   created_at timestamptz not null default now()
 );
 
+-- Reviewed testimonies published from the admin dashboard.
+create table if not exists public.testimonials (
+  id         uuid primary key default gen_random_uuid(),
+  name       text not null,
+  role       text not null default '',
+  location   text not null default '',
+  quote      text not null,
+  image_path text not null default '',
+  published  boolean not null default true,
+  sort_order integer not null default 0,
+  created_at timestamptz not null default now()
+);
+
 -- -----------------------------------------------------------------------------
 -- Row level security
 -- Visitors (anon) may read published rows only. The signed-in admin may do
@@ -73,12 +86,13 @@ alter table public.videos         enable row level security;
 alter table public.audio_sessions enable row level security;
 alter table public.announcements  enable row level security;
 alter table public.gallery_images enable row level security;
+alter table public.testimonials   enable row level security;
 
 do $$
 declare
   t text;
 begin
-  foreach t in array array['videos', 'audio_sessions', 'announcements', 'gallery_images']
+  foreach t in array array['videos', 'audio_sessions', 'announcements', 'gallery_images', 'testimonials']
   loop
     execute format('drop policy if exists "public read published" on public.%I', t);
     execute format(

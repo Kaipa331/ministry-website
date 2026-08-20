@@ -1,0 +1,14 @@
+Options -MultiViews
+RewriteEngine On
+
+# Force HTTPS once the SSL certificate is active
+# RewriteCond %{HTTPS} !=on
+# RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Serve existing files and folders as-is
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Send every other path to the React app
+RewriteRule ^ index.html [L]

@@ -3,7 +3,7 @@ export const site = {
   fullName: "Headstone Prophetic Ministry International",
   organization: "Headstone Prophetic Ministry International",
   tagline: "Divine Frequencies",
-  email: "ministry@lordovertone.org",
+  email: "info@lordovertone.org",
   hours: {
     weekdays: "Mon – Fri: 9:00 AM – 5:00 PM",
     sunday: "Sun: 8:00 AM – 1:00 PM",

@@ -1,32 +1,14 @@
 ﻿import { useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  approvedTestimonials,
-  site,
-  youtubeThumb,
-  youtubeWatchUrl,
-} from "../data/content";
+import { site, youtubeThumb, youtubeWatchUrl } from "../data/content";
 import YouTubeEmbed from "../components/YouTubeEmbed";
-import { useAudioSessions, useVideos } from "../hooks/usePublicContent";
-
-function Stars() {
-  return (
-    <div className="mt-2 flex gap-1" aria-hidden>
-      {Array.from({ length: 5 }).map((_, i) => (
-        <svg key={i} width="14" height="14" viewBox="0 0 20 20" fill="none">
-          <path
-            d="M10 1.5l2.47 5.01 5.53.8-4 3.9.94 5.5L10 14.4l-4.94 2.6.94-5.5-4-3.9 5.53-.8L10 1.5Z"
-            fill="#FFD700"
-          />
-        </svg>
-      ))}
-    </div>
-  );
-}
+import TestimonialCard from "../components/TestimonialCard";
+import { useAudioSessions, useTestimonials, useVideos } from "../hooks/usePublicContent";
 
 export default function Podcast() {
   const { videos, featured, live } = useVideos();
   const { audio } = useAudioSessions();
+  const { testimonials } = useTestimonials();
   const [activeKey, setActiveKey] = useState<string | null>(null);
 
   const active = videos.find((v) => v.key === activeKey) ?? live ?? featured;
@@ -210,22 +192,8 @@ export default function Podcast() {
         </div>
 
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 md:gap-6">
-          {approvedTestimonials.map((t) => (
-            <article key={t.name} className="rounded-2xl bg-white p-5 shadow-[0px_2px_16px_rgba(0,26,77,0.07)] md:p-7">
-              <div className="mb-4 flex items-center gap-3">
-                <img
-                  src={t.image}
-                  alt=""
-                  className="h-11 w-11 shrink-0 rounded-full border border-[rgba(255,215,0,0.3)] object-cover"
-                />
-                <div>
-                  <p className="font-sans text-[14px] font-semibold text-[#1a1b20]">{t.name}</p>
-                  <p className="font-sans text-[12px] text-[#757682]">{t.role}</p>
-                </div>
-              </div>
-              <p className="font-sans text-[13px] italic leading-relaxed text-[#444650]">"{t.quote}"</p>
-              <Stars />
-            </article>
+          {testimonials.map((t) => (
+            <TestimonialCard key={t.key} testimony={t} showStars />
           ))}
         </div>
         <Link

@@ -1,7 +1,7 @@
 # Admin Dashboard Setup
 
 The ministry website now has a dashboard at `/admin` where you can publish YouTube messages and live
-sessions, upload audio, post announcements, and add gallery photos.
+sessions, upload audio, post announcements, add testimonies, and add gallery photos.
 
 It runs on [Supabase](https://supabase.com), which provides the login, the database, and the file
 storage. The free tier is enough for this site.
@@ -26,10 +26,10 @@ that ships with the code. Nothing breaks while you set this up.
 2. Copy the entire contents of `supabase/schema.sql` from this project and paste it in.
 3. Click **Run**.
 
-This creates the four tables, locks them down so only a signed-in admin can change anything,
+This creates the tables, locks them down so only a signed-in admin can change anything,
 creates the `audio` and `gallery` storage buckets, and copies across the messages and announcements
 that were previously hardcoded on the site. If you already ran this once, run it again after pulling
-updates — it is safe, and it adds new columns such as announcement pictures.
+updates — it is safe, and it adds new tables and columns such as testimonies and announcement pictures.
 
 ### 3. Connect the website
 
@@ -116,6 +116,11 @@ One place for three kinds of post, all shown on the News & Events page:
 Any of these can include an optional picture or flyer. It appears with the post on the News & Events page.
 
 The date is free text, so you can write "12 Sep 2026" or "Sundays · 9:00 PM", whichever reads better.
+
+### Testimonies
+
+Add a name, the testimony itself, and optionally a role, location, and photo. Published items appear
+on the Home, About, and Watch pages.
 
 ### Gallery
 

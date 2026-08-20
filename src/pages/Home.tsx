@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { approvedTestimonials, site, youtubeThumb, youtubeWatchUrl } from "../data/content";
-import { useVideos } from "../hooks/usePublicContent";
+import { site, youtubeThumb, youtubeWatchUrl } from "../data/content";
+import { useTestimonials, useVideos } from "../hooks/usePublicContent";
+import TestimonialCard from "../components/TestimonialCard";
 
 function LiveBanner({ title, videoId }: { title: string; videoId: string }) {
   const [dismissed, setDismissed] = useState(false);
@@ -58,6 +59,7 @@ function StarRating() {
 
 export default function Home() {
   const { videos, featured, live } = useVideos();
+  const { testimonials } = useTestimonials();
   const highlights = videos.slice(0, 3);
 
   if (!featured) return null;
@@ -78,12 +80,12 @@ export default function Home() {
         <div className="relative mx-auto flex min-h-[100svh] max-w-[1280px] flex-col justify-end px-5 pb-12 pt-[calc(7rem+env(safe-area-inset-top,0px))] md:justify-center md:px-16 md:pb-24 md:pt-32">
           <div className="max-w-[640px] animate-rise">
             <img
-              src="/logo-mark.png"
-              alt=""
-              className="mb-5 h-12 w-auto mix-blend-screen sm:h-14"
+              src="/logo.png"
+              alt={site.fullName}
+              className="mb-5 h-20 w-auto sm:h-24 md:h-28"
             />
             <p className="mb-3 max-w-[22rem] font-sans text-[10px] font-semibold uppercase leading-relaxed tracking-[1.6px] text-[#ffd700] sm:max-w-none sm:text-[11px] md:text-[13px] md:tracking-[2.4px]">
-              {site.organization}
+              Headstone Prophetic Ministry International
             </p>
             <h1 className="font-heading text-[42px] font-bold leading-[0.92] tracking-[-1px] text-white sm:text-[52px] md:text-[80px] md:tracking-[-1.5px]">
               LORD
@@ -296,22 +298,8 @@ export default function Home() {
           </p>
         </div>
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 md:gap-6">
-          {approvedTestimonials.map((t) => (
-            <article key={t.name} className="rounded-2xl bg-white p-5 shadow-[0px_2px_16px_rgba(0,26,77,0.07)] md:p-7">
-              <div className="mb-4 flex items-center gap-3">
-                <img
-                  src={t.image}
-                  alt=""
-                  className="h-11 w-11 shrink-0 rounded-full border border-[rgba(255,215,0,0.3)] object-cover"
-                />
-                <div>
-                  <p className="font-sans text-[14px] font-semibold text-[#1a1b20]">{t.name}</p>
-                  <p className="font-sans text-[12px] text-[#757682]">{t.role}</p>
-                </div>
-              </div>
-              <p className="font-sans text-[14px] italic leading-relaxed text-[#444650]">"{t.quote}"</p>
-              <StarRating />
-            </article>
+          {testimonials.map((t) => (
+            <TestimonialCard key={t.key} testimony={t} showStars />
           ))}
         </div>
         <Link

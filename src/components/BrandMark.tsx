@@ -10,7 +10,7 @@ interface BrandMarkProps {
 
 export default function BrandMark({
   className = "",
-  markClassName = "h-9 w-[3.4rem] md:h-10 md:w-[3.8rem]",
+  markClassName = "h-9 w-auto md:h-10",
   showWordmark = true,
   light = false,
   stacked = false,
@@ -18,7 +18,7 @@ export default function BrandMark({
   if (stacked) {
     return (
       <span className={`inline-flex ${className}`}>
-        <img src="/logo.png" alt={site.fullName} className="h-28 w-auto mix-blend-screen md:h-36" />
+        <img src="/logo.png" alt={site.fullName} className="h-28 w-auto md:h-36" />
       </span>
     );
   }
@@ -29,9 +29,9 @@ export default function BrandMark({
   return (
     <span className={`inline-flex min-w-0 items-center gap-2.5 sm:gap-3 ${className}`}>
       <img
-        src="/logo-mark.png"
+        src="/logo.png"
         alt={showWordmark ? "" : site.fullName}
-        className={`shrink-0 object-contain ${light ? "mix-blend-screen" : ""} ${markClassName}`}
+        className={`shrink-0 object-contain ${markClassName}`}
       />
       {showWordmark && (
         <span className="flex min-w-0 flex-col leading-none">

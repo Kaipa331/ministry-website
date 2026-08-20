@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { fetchAnnouncements, fetchAudio, fetchGallery, fetchVideos } from "../../lib/api";
+import { fetchAnnouncements, fetchAudio, fetchGallery, fetchTestimonials, fetchVideos } from "../../lib/api";
 import type { VideoRow } from "../../lib/types";
 import { useAuth } from "../../admin/AuthProvider";
 import { Badge, Banner, Card, SectionHeader } from "../../admin/ui";
-import { IconAnnounce, IconAudio, IconGallery, IconVideo } from "../../admin/icons";
+import { IconAnnounce, IconAudio, IconGallery, IconQuote, IconVideo } from "../../admin/icons";
 import { site } from "../../data/content";
 
 interface Counts {
@@ -12,6 +12,7 @@ interface Counts {
   audio: number;
   announcements: number;
   gallery: number;
+  testimonials: number;
   live: VideoRow | null;
 }
 
@@ -23,14 +24,15 @@ export default function Overview() {
   useEffect(() => {
     let cancelled = false;
 
-    Promise.all([fetchVideos(), fetchAudio(), fetchAnnouncements(), fetchGallery()])
-      .then(([videos, audio, announcements, gallery]) => {
+    Promise.all([fetchVideos(), fetchAudio(), fetchAnnouncements(), fetchGallery(), fetchTestimonials()])
+      .then(([videos, audio, announcements, gallery, testimonials]) => {
         if (cancelled) return;
         setCounts({
           videos: videos.filter((v) => v.published).length,
           audio: audio.filter((a) => a.published).length,
           announcements: announcements.filter((a) => a.published).length,
           gallery: gallery.filter((g) => g.published).length,
+          testimonials: testimonials.filter((t) => t.published).length,
           live: videos.find((v) => v.is_live && v.published) ?? null,
         });
       })
@@ -49,6 +51,7 @@ export default function Overview() {
     { label: "Videos published", value: counts?.videos, to: "/admin/videos", action: "Manage videos", icon: IconVideo },
     { label: "Audio sessions", value: counts?.audio, to: "/admin/audio", action: "Manage audio", icon: IconAudio },
     { label: "Announcements", value: counts?.announcements, to: "/admin/announcements", action: "Post an update", icon: IconAnnounce },
+    { label: "Testimonies", value: counts?.testimonials, to: "/admin/testimonials", action: "Add a testimony", icon: IconQuote },
     { label: "Gallery photos", value: counts?.gallery, to: "/admin/gallery", action: "Add photos", icon: IconGallery },
   ];
 
@@ -68,6 +71,10 @@ export default function Overview() {
     {
       title: "Announcements",
       body: "Post news, upcoming programs, and past events. They all appear on the News & Events page.",
+    },
+    {
+      title: "Testimonies",
+      body: "Add reviewed testimonies with an optional photo. They appear on the home, About, and Watch pages.",
     },
     {
       title: "Hiding something",
@@ -109,7 +116,7 @@ export default function Overview() {
         </div>
       ) : null}
 
-      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4">
+      <div className="grid grid-cols-2 gap-3 lg:grid-cols-3 lg:gap-4">
         {tiles.map((t) => {
           const Icon = t.icon;
           return (

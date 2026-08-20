@@ -1,5 +1,5 @@
 import { requireSupabase } from "./supabase";
-import type { AnnouncementRow, AudioRow, GalleryRow, VideoRow } from "./types";
+import type { AnnouncementRow, AudioRow, GalleryRow, TestimonyRow, VideoRow } from "./types";
 
 /**
  * Accepts anything the admin is likely to paste — a full watch URL, a share
@@ -42,6 +42,7 @@ export const fetchVideos = () => selectAll<VideoRow>("videos");
 export const fetchAudio = () => selectAll<AudioRow>("audio_sessions");
 export const fetchAnnouncements = () => selectAll<AnnouncementRow>("announcements");
 export const fetchGallery = () => selectAll<GalleryRow>("gallery_images");
+export const fetchTestimonials = () => selectAll<TestimonyRow>("testimonials");
 
 /* -------------------------------------------------------------------------- */
 /* Writes                                                                     */

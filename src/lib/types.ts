@@ -54,6 +54,18 @@ export interface GalleryRow {
   created_at: string;
 }
 
+export interface TestimonyRow {
+  id: string;
+  name: string;
+  role: string;
+  location: string;
+  quote: string;
+  image_path: string;
+  published: boolean;
+  sort_order: number;
+  created_at: string;
+}
+
 /**
  * Shapes the public pages render. These stay identical whether the data came
  * from Supabase or from the bundled fallback content.
@@ -92,4 +104,14 @@ export interface PublicGalleryImage {
   key: string;
   src: string;
   alt: string;
+}
+
+export interface PublicTestimony {
+  key: string;
+  name: string;
+  role: string;
+  location: string;
+  quote: string;
+  image: string;
+  avatar: string;
 }

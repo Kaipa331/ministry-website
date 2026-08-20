@@ -30,14 +30,14 @@ export default function Login() {
       <aside className="relative hidden overflow-hidden bg-[#001a4d] lg:flex lg:flex-col lg:justify-between lg:px-12 lg:py-12">
         <div className="pointer-events-none absolute -right-16 -top-16 h-72 w-72 rounded-full bg-[#ffd700]/10" />
         <div className="pointer-events-none absolute -bottom-20 left-10 h-80 w-80 rounded-full bg-white/5" />
-        <BrandMark light markClassName="h-10 w-[3.75rem]" />
+        <BrandMark light markClassName="h-12 w-auto" />
         <div className="relative max-w-[420px]">
           <p className="font-sans text-[11px] font-semibold uppercase tracking-[2px] text-[#ffd700]">Ministry console</p>
           <h1 className="mt-3 font-heading text-[42px] font-bold leading-[1.05] tracking-[-0.8px] text-white">
             Publish the work of the ministry.
           </h1>
           <p className="mt-4 font-sans text-[15px] leading-relaxed text-white/70">
-            Live sessions, audio recordings, announcements, and gallery photos — all from one signed-in workspace for{" "}
+            Live sessions, audio recordings, announcements, testimonies, and gallery photos — all from one signed-in workspace for{" "}
             {site.organization}.
           </p>
         </div>
@@ -47,7 +47,7 @@ export default function Login() {
       <div className="flex min-h-screen items-center justify-center bg-[#f3f4f8] px-4 py-16">
         <div className="w-full max-w-[400px]">
           <div className="mb-8 lg:hidden">
-            <BrandMark markClassName="h-10 w-10" />
+            <BrandMark markClassName="h-12 w-auto" />
           </div>
           <p className="font-sans text-[11px] font-semibold uppercase tracking-[1.8px] text-[#8a6d00]">Sign in</p>
           <h2 className="mt-1 font-sans text-[26px] font-semibold tracking-[-0.3px] text-[#001a4d]">Ministry Admin</h2>

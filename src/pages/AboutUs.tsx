@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
-import { approvedTestimonials, pillars, site } from "../data/content";
+import { pillars, site } from "../data/content";
+import TestimonialCard from "../components/TestimonialCard";
+import { useTestimonials } from "../hooks/usePublicContent";
 
 export default function AboutUs() {
+  const { testimonials } = useTestimonials();
   return (
     <div className="w-full bg-page">
       <section className="mx-auto max-w-[1280px] px-5 pb-10 pt-nav md:px-16 md:pb-20">
@@ -14,17 +17,6 @@ export default function AboutUs() {
           </h1>
           <p className="mt-2 max-w-[600px] font-sans text-[14px] italic text-[#444650] md:text-[16px]">
             A vision that transformed a ministry and echoed through the heavens.
-          </p>
-        </div>
-
-        <div className="mb-10 rounded-2xl border border-[rgba(255,215,0,0.35)] bg-white p-5 shadow-[0px_2px_16px_rgba(0,26,77,0.06)] md:mb-12 md:p-7">
-          <p className="font-sans text-[11px] font-bold uppercase tracking-[1.8px] text-[#735c00]">Important</p>
-          <p className="mt-2 font-heading text-[22px] font-bold text-[#001a4d] md:text-[28px]">
-            This is not a church — it is a ministry.
-          </p>
-          <p className="mt-2 max-w-[720px] font-sans text-[14px] leading-relaxed text-[#444650] md:text-[15px]">
-            There is a big difference. {site.fullName} exists to carry divine frequencies,
-            prophetic clarity, and celestial teaching. We are a ministry family, not a conventional church institution.
           </p>
         </div>
 
@@ -115,17 +107,8 @@ export default function AboutUs() {
           </p>
         </div>
         <div className="grid grid-cols-1 gap-5 md:grid-cols-3 md:gap-6">
-          {approvedTestimonials.map((t) => (
-            <article key={t.name} className="rounded-2xl bg-white p-5 shadow-[0px_2px_16px_rgba(0,26,77,0.07)] md:p-6">
-              <div className="mb-3 flex items-center gap-3">
-                <img src={t.image} alt="" className="h-11 w-11 rounded-full object-cover" />
-                <div>
-                  <p className="font-sans text-[14px] font-semibold text-[#1a1b20]">{t.name}</p>
-                  <p className="font-sans text-[12px] text-[#757682]">{t.role}</p>
-                </div>
-              </div>
-              <p className="font-sans text-[13px] italic leading-relaxed text-[#444650]">"{t.quote}"</p>
-            </article>
+          {testimonials.map((t) => (
+            <TestimonialCard key={t.key} testimony={t} />
           ))}
         </div>
         <Link

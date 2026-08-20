@@ -6,7 +6,9 @@ import type {
   PublicAnnouncement,
   PublicAudio,
   PublicGalleryImage,
+  PublicTestimony,
   PublicVideo,
+  TestimonyRow,
   VideoRow,
 } from "./types";
 
@@ -65,3 +67,26 @@ export const fetchPublicGallery = async (): Promise<PublicGalleryImage[]> =>
     src: publicFileUrl(GALLERY_BUCKET, row.image_path),
     alt: row.alt,
   }));
+
+export const fetchPublicTestimonials = async (): Promise<PublicTestimony[]> =>
+  (await selectPublished<TestimonyRow>("testimonials")).map((row) => ({
+    key: row.id,
+    name: row.name,
+    role: row.role,
+    location: row.location,
+    quote: row.quote,
+    image: row.image_path ? publicFileUrl(GALLERY_BUCKET, row.image_path) : "",
+    avatar: initialsFromName(row.name),
+  }));
+
+function initialsFromName(name: string) {
+  return (
+    name
+      .split(/\s+/)
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((part) => part[0])
+      .join("")
+      .toUpperCase() || "T"
+  );
+}

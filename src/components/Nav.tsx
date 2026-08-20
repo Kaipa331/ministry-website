@@ -42,7 +42,7 @@ export default function Nav() {
           className="min-w-0 shrink transition-opacity hover:opacity-80"
           onClick={() => setMobileMenuOpen(false)}
         >
-          <BrandMark markClassName="h-8 w-12 md:h-9 md:w-[3.4rem]" />
+          <BrandMark markClassName="h-10 w-auto md:h-11" />
         </Link>
 
         <nav className="hidden items-center gap-4 lg:flex xl:gap-6" aria-label="Primary">

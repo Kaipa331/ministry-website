@@ -19,6 +19,7 @@ const Overview = lazy(() => import("./pages/admin/Overview"));
 const VideosAdmin = lazy(() => import("./pages/admin/VideosAdmin"));
 const AudioAdmin = lazy(() => import("./pages/admin/AudioAdmin"));
 const AnnouncementsAdmin = lazy(() => import("./pages/admin/AnnouncementsAdmin"));
+const TestimonialsAdmin = lazy(() => import("./pages/admin/TestimonialsAdmin"));
 const GalleryAdmin = lazy(() => import("./pages/admin/GalleryAdmin"));
 const TeamAdmin = lazy(() => import("./pages/admin/TeamAdmin"));
 
@@ -46,6 +47,7 @@ createRoot(document.getElementById("root")!).render(
           <Route path="videos" element={<VideosAdmin />} />
           <Route path="audio" element={<AudioAdmin />} />
           <Route path="announcements" element={<AnnouncementsAdmin />} />
+          <Route path="testimonials" element={<TestimonialsAdmin />} />
           <Route path="gallery" element={<GalleryAdmin />} />
           <Route path="team" element={<TeamAdmin />} />
         </Route>
