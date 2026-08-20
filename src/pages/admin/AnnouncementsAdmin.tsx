@@ -1,6 +1,7 @@
-import { useState, type FormEvent } from "react";
-import { deleteRow, fetchAnnouncements, insertRow, updateRow } from "../../lib/api";
+import { useEffect, useRef, useState, type FormEvent } from "react";
+import { deleteRow, fetchAnnouncements, insertRow, removeFile, updateRow, uploadFile } from "../../lib/api";
 import { announcementCategories, type AnnouncementCategory, type AnnouncementRow } from "../../lib/types";
+import { GALLERY_BUCKET, publicFileUrl } from "../../lib/supabase";
 import { useAdminResource } from "../../admin/useAdminResource";
 import {
   Badge,
@@ -9,6 +10,7 @@ import {
   Card,
   EmptyState,
   Field,
+  fileInputClass,
   LoadingLine,
   Panel,
   SectionHeader,
@@ -37,18 +39,49 @@ export default function AnnouncementsAdmin() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [formError, setFormError] = useState<string | null>(null);
   const [filter, setFilter] = useState<AnnouncementCategory | "all">("all");
+  const [existingImage, setExistingImage] = useState("");
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [removeImage, setRemoveImage] = useState(false);
+  const [previewUrl, setPreviewUrl] = useState("");
+  const fileRef = useRef<HTMLInputElement>(null);
 
   const set = <K extends keyof Draft>(key: K, value: Draft[K]) => setDraft((d) => ({ ...d, [key]: value }));
+
+  useEffect(() => {
+    if (!imageFile) {
+      setPreviewUrl("");
+      return;
+    }
+    const url = URL.createObjectURL(imageFile);
+    setPreviewUrl(url);
+    return () => URL.revokeObjectURL(url);
+  }, [imageFile]);
+
+  const shownPhoto =
+    draft.category === "event"
+      ? imageFile
+        ? previewUrl
+        : existingImage && !removeImage
+          ? publicFileUrl(GALLERY_BUCKET, existingImage)
+          : ""
+      : "";
 
   const reset = () => {
     setDraft(emptyDraft);
     setEditingId(null);
     setFormError(null);
+    setExistingImage("");
+    setImageFile(null);
+    setRemoveImage(false);
+    if (fileRef.current) fileRef.current.value = "";
   };
 
   const startEdit = (row: AnnouncementRow) => {
     setEditingId(row.id);
     setFormError(null);
+    setRemoveImage(false);
+    setImageFile(null);
+    setExistingImage(row.image_path ?? "");
     setDraft({
       category: row.category,
       dateLabel: row.date_label,
@@ -56,6 +89,7 @@ export default function AnnouncementsAdmin() {
       summary: row.summary,
       published: row.published,
     });
+    if (fileRef.current) fileRef.current.value = "";
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -68,18 +102,36 @@ export default function AnnouncementsAdmin() {
       return;
     }
 
-    const values = {
-      category: draft.category,
-      date_label: draft.dateLabel.trim(),
-      title: draft.title.trim(),
-      summary: draft.summary.trim(),
-      published: draft.published,
-    };
+    if (imageFile && !imageFile.type.startsWith("image/")) {
+      setFormError("Only image files can be attached to an event.");
+      return;
+    }
 
     const ok = await run(
       async () => {
-        if (editingId) await updateRow<AnnouncementRow>("announcements", editingId, values);
-        else await insertRow<AnnouncementRow>("announcements", values);
+        let imagePath = draft.category === "event" ? existingImage : "";
+        if (draft.category === "event" && imageFile) {
+          imagePath = await uploadFile(GALLERY_BUCKET, imageFile, "events");
+        } else if (draft.category !== "event" || removeImage) {
+          imagePath = "";
+        }
+
+        const values = {
+          category: draft.category,
+          date_label: draft.dateLabel.trim(),
+          title: draft.title.trim(),
+          summary: draft.summary.trim(),
+          published: draft.published,
+          image_path: imagePath,
+        };
+
+        if (editingId) {
+          await updateRow<AnnouncementRow>("announcements", editingId, values);
+          const previous = rows.find((r) => r.id === editingId)?.image_path;
+          if (previous && previous !== imagePath) await removeFile(GALLERY_BUCKET, previous).catch(() => {});
+        } else {
+          await insertRow<AnnouncementRow>("announcements", values);
+        }
       },
       editingId ? "Announcement updated." : "Announcement published.",
     );
@@ -89,7 +141,10 @@ export default function AnnouncementsAdmin() {
 
   const onDelete = (row: AnnouncementRow) => {
     if (!window.confirm(`Remove "${row.title}"?`)) return;
-    void run(() => deleteRow("announcements", row.id), "Announcement removed.");
+    void run(async () => {
+      await deleteRow("announcements", row.id);
+      if (row.image_path) await removeFile(GALLERY_BUCKET, row.image_path).catch(() => {});
+    }, "Announcement removed.");
     if (editingId === row.id) reset();
   };
 
@@ -148,6 +203,42 @@ export default function AnnouncementsAdmin() {
             />
           </Field>
 
+          {draft.category === "event" && (
+            <Field
+              label="Event photo"
+              hint="Optional. Shown on the News & Events page with this gathering."
+            >
+              <input
+                ref={fileRef}
+                type="file"
+                accept="image/*"
+                className={fileInputClass}
+                onChange={(e) => {
+                  setImageFile(e.target.files?.[0] ?? null);
+                  setRemoveImage(false);
+                }}
+              />
+              {shownPhoto && (
+                <div className="mt-3 overflow-hidden rounded-lg border border-[#e6e8ef]">
+                  <img src={shownPhoto} alt="" className="h-40 w-full object-cover" />
+                </div>
+              )}
+              {(existingImage || imageFile) && !removeImage && (
+                <button
+                  type="button"
+                  className="mt-2 self-start font-sans text-[12px] font-semibold text-[#b3261e] hover:underline"
+                  onClick={() => {
+                    setRemoveImage(true);
+                    setImageFile(null);
+                    if (fileRef.current) fileRef.current.value = "";
+                  }}
+                >
+                  Remove photo
+                </button>
+              )}
+            </Field>
+          )}
+
           <Toggle checked={draft.published} onChange={(v) => set("published", v)} label="Visible on the website" />
 
           <div className="flex gap-3 pt-2">
@@ -191,14 +282,23 @@ export default function AnnouncementsAdmin() {
         <div className="flex flex-col gap-3">
           {visible.map((row) => (
             <Card key={row.id} className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-              <div className="min-w-0 flex-1">
-                <div className="mb-1.5 flex flex-wrap items-center gap-2">
-                  <Badge tone="gold">{categoryLabel(row.category)}</Badge>
-                  {row.date_label && <Badge>{row.date_label}</Badge>}
-                  {!row.published && <Badge>Hidden</Badge>}
+              <div className="flex min-w-0 flex-1 gap-4">
+                {row.image_path && (
+                  <img
+                    src={publicFileUrl(GALLERY_BUCKET, row.image_path)}
+                    alt=""
+                    className="h-16 w-20 shrink-0 rounded-md object-cover"
+                  />
+                )}
+                <div className="min-w-0">
+                  <div className="mb-1.5 flex flex-wrap items-center gap-2">
+                    <Badge tone="gold">{categoryLabel(row.category)}</Badge>
+                    {row.date_label && <Badge>{row.date_label}</Badge>}
+                    {!row.published && <Badge>Hidden</Badge>}
+                  </div>
+                  <p className="font-sans text-[15px] font-semibold text-[#001a4d]">{row.title}</p>
+                  {row.summary && <p className="mt-1 font-sans text-[13px] leading-relaxed text-[#757682]">{row.summary}</p>}
                 </div>
-                <p className="font-sans text-[15px] font-semibold text-[#001a4d]">{row.title}</p>
-                {row.summary && <p className="mt-1 font-sans text-[13px] leading-relaxed text-[#757682]">{row.summary}</p>}
               </div>
               <div className="flex shrink-0 gap-2">
                 <Button variant="ghost" size="sm" onClick={() => startEdit(row)}>

@@ -10,7 +10,7 @@ function SocialIcon({ children, href, label }: { children: ReactNode; href: stri
       target="_blank"
       rel="noopener noreferrer"
       aria-label={label}
-      className="opacity-70 transition-opacity hover:opacity-100"
+      className="flex h-11 w-11 items-center justify-center rounded-full bg-white/5 opacity-80 transition-opacity hover:opacity-100"
     >
       {children}
     </a>
@@ -37,18 +37,18 @@ const legal = [
 
 export default function Footer() {
   return (
-    <footer className="w-full bg-[#1a1b20]">
-      <div className="mx-auto max-w-[1280px] px-4 py-10 md:px-16 md:py-20">
+    <footer className="w-full bg-[#1a1b20] pb-[env(safe-area-inset-bottom,0px)]">
+      <div className="mx-auto max-w-[1280px] px-5 py-10 md:px-16 md:py-20">
         <div className="mb-8 flex flex-col items-start justify-between gap-10 md:mb-12 md:flex-row md:gap-0">
           <div className="flex w-full flex-col gap-4 md:max-w-[384px]">
-            <BrandMark light showWordmark markClassName="h-10 w-10" />
+            <BrandMark stacked />
             <p className="font-sans text-[14px] leading-[1.6] text-[rgba(227,226,232,0.7)] md:text-[15px]">
-              {site.organization} — a ministry website sharing divine frequencies and celestial messages. This is not a
-              church website; it is a ministry presence for peace and spiritual clarity.
+              A ministry website sharing divine frequencies and celestial messages. This is not a church website; it is
+              a ministry presence for peace and spiritual clarity.
             </p>
-            <div className="mt-2 flex gap-4">
+            <div className="mt-1 flex gap-2">
               <SocialIcon href={site.social.twitter} label="Twitter">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden>
+                <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden>
                   <path
                     d="M20 3.8a8.2 8.2 0 0 1-2.36.65 4.1 4.1 0 0 0 1.8-2.27 8.2 8.2 0 0 1-2.6 1A4.1 4.1 0 0 0 9.85 6.9a11.65 11.65 0 0 1-8.46-4.29 4.1 4.1 0 0 0 1.27 5.48 4.07 4.07 0 0 1-1.86-.51v.05a4.1 4.1 0 0 0 3.29 4.02 4.1 4.1 0 0 1-1.85.07 4.1 4.1 0 0 0 3.83 2.85A8.23 8.23 0 0 1 0 16.28a11.6 11.6 0 0 0 6.29 1.84c7.55 0 11.68-6.26 11.68-11.69 0-.18 0-.36-.01-.53A8.35 8.35 0 0 0 20 3.8Z"
                     fill="rgba(227,226,232,0.7)"
@@ -56,7 +56,7 @@ export default function Footer() {
                 </svg>
               </SocialIcon>
               <SocialIcon href={site.social.instagram} label="Instagram">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden>
+                <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden>
                   <path
                     fillRule="evenodd"
                     clipRule="evenodd"
@@ -66,7 +66,7 @@ export default function Footer() {
                 </svg>
               </SocialIcon>
               <SocialIcon href={site.social.youtube} label={`${site.organization} on YouTube`}>
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden>
+                <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden>
                   <path
                     d="M19.58 5.2a2.5 2.5 0 0 0-1.76-1.77C16.25 3 10 3 10 3s-6.25 0-7.82.43A2.5 2.5 0 0 0 .42 5.2 26.2 26.2 0 0 0 0 10a26.2 26.2 0 0 0 .42 4.8 2.5 2.5 0 0 0 1.76 1.77C3.75 17 10 17 10 17s6.25 0 7.82-.43a2.5 2.5 0 0 0 1.76-1.77A26.2 26.2 0 0 0 20 10a26.2 26.2 0 0 0-.42-4.8ZM8 13V7l5.2 3L8 13Z"
                     fill="rgba(227,226,232,0.7)"
@@ -76,26 +76,26 @@ export default function Footer() {
             </div>
           </div>
 
-          <div className="flex w-full flex-col gap-8 sm:flex-row sm:gap-12 md:w-auto">
-            <div className="flex flex-col gap-4">
-              <p className="font-sans text-[14px] uppercase tracking-[1px] text-white">Explore</p>
+          <div className="grid w-full grid-cols-2 gap-x-6 gap-y-8 sm:flex sm:gap-12 md:w-auto">
+            <div className="flex flex-col gap-3 sm:gap-4">
+              <p className="font-sans text-[13px] uppercase tracking-[1px] text-white">Explore</p>
               {explore.map((l) => (
                 <Link
                   key={l.label}
                   to={l.to}
-                  className="font-sans text-[15px] text-[rgba(227,226,232,0.7)] transition-colors hover:text-white"
+                  className="min-h-10 font-sans text-[15px] text-[rgba(227,226,232,0.7)] transition-colors hover:text-white sm:min-h-0"
                 >
                   {l.label}
                 </Link>
               ))}
             </div>
-            <div className="flex flex-col gap-4">
-              <p className="font-sans text-[14px] uppercase tracking-[1px] text-white">Support</p>
+            <div className="flex flex-col gap-3 sm:gap-4">
+              <p className="font-sans text-[13px] uppercase tracking-[1px] text-white">Support</p>
               {support.map((l) => (
                 <Link
                   key={l.label}
                   to={l.to}
-                  className={`font-sans text-[15px] transition-colors ${
+                  className={`min-h-10 font-sans text-[15px] transition-colors sm:min-h-0 ${
                     l.accent
                       ? "font-bold text-[#ffd700] hover:text-[#ffca00]"
                       : "text-[rgba(227,226,232,0.7)] hover:text-white"
@@ -105,42 +105,33 @@ export default function Footer() {
                 </Link>
               ))}
             </div>
-            <div className="flex flex-col gap-4">
-              <p className="font-sans text-[14px] uppercase tracking-[1px] text-white">Legal</p>
-              {legal.map((l) => (
-                <Link
-                  key={l.label}
-                  to={l.to}
-                  className="font-sans text-[15px] text-[rgba(227,226,232,0.7)] transition-colors hover:text-white"
-                >
-                  {l.label}
-                </Link>
-              ))}
+            <div className="col-span-2 flex flex-col gap-3 sm:col-span-1 sm:gap-4">
+              <p className="font-sans text-[13px] uppercase tracking-[1px] text-white">Legal</p>
+              <div className="flex flex-wrap gap-x-6 gap-y-3 sm:flex-col sm:gap-4">
+                {legal.map((l) => (
+                  <Link
+                    key={l.label}
+                    to={l.to}
+                    className="min-h-10 font-sans text-[15px] text-[rgba(227,226,232,0.7)] transition-colors hover:text-white sm:min-h-0"
+                  >
+                    {l.label}
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="flex flex-col-reverse items-center justify-between gap-5 border-t border-[rgba(227,226,232,0.1)] pt-8 md:flex-row md:gap-0">
-          <p className="font-sans text-[13px] text-[rgba(255,255,255,0.5)] md:text-[14px]">
+        <div className="flex flex-col-reverse items-start justify-between gap-4 border-t border-[rgba(227,226,232,0.1)] pt-6 sm:flex-row sm:items-center md:gap-0 md:pt-8">
+          <p className="font-sans text-[12px] leading-relaxed text-[rgba(255,255,255,0.5)] md:text-[14px]">
             © {new Date().getFullYear()} {site.fullName}. All Rights Reserved.
           </p>
-          <div className="flex gap-4 md:gap-6">
-            {legal.map((l) => (
-              <Link
-                key={l.label}
-                to={l.to}
-                className="font-sans text-[13px] text-[rgba(227,226,232,0.7)] transition-colors hover:text-white md:text-[14px]"
-              >
-                {l.label}
-              </Link>
-            ))}
-            <Link
-              to="/admin"
-              className="font-sans text-[13px] text-[rgba(227,226,232,0.35)] transition-colors hover:text-white md:text-[14px]"
-            >
-              Admin
-            </Link>
-          </div>
+          <Link
+            to="/admin"
+            className="font-sans text-[12px] text-[rgba(227,226,232,0.35)] transition-colors hover:text-white md:text-[14px]"
+          >
+            Admin
+          </Link>
         </div>
       </div>
     </footer>

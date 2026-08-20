@@ -1,6 +1,6 @@
 export const site = {
-  name: "Lord Overtone",
-  fullName: "Lord Overtone Ministry",
+  name: "Headstone",
+  fullName: "Headstone Prophetic Ministry International",
   organization: "Headstone Prophetic Ministry International",
   tagline: "Divine Frequencies",
   email: "ministry@lordovertone.org",
@@ -187,13 +187,17 @@ export const recentEvents = [
 ] as const;
 
 export const galleryImages = [
-  { src: "/1.jpeg", alt: "Greeting the community" },
-  { src: "/2.jpeg", alt: "Lord Overtone in session" },
-  { src: "/5.jpeg", alt: "Speaking the Word" },
-  { src: "/6.jpeg", alt: "Ministry at the podium" },
-  { src: "/3.jpeg", alt: "Ministry gathering" },
-  { src: "/4.jpeg", alt: "Fellowship moment" },
-  { src: "/7.jpeg", alt: "Community celebration" },
-  { src: "/8.jpeg", alt: "Worship and witness" },
+  { src: "/photos/hero.jpg", alt: "Lord Overtone speaking at the Headstone podium" },
+  { src: "/photos/headstone-podium.jpg", alt: "Sunday message from the Headstone pulpit" },
+  { src: "/photos/speaking-july.jpg", alt: "Lord Overtone teaching the Word" },
+  { src: "/photos/portrait-july.jpg", alt: "Lord Overtone in session" },
+  { src: "/photos/portrait-navy.jpg", alt: "A formal ministry portrait" },
+  { src: "/photos/portrait-about.jpg", alt: "Lord Overtone — Headstone Prophetic Ministry" },
+  { src: "/photos/portrait-chair.jpg", alt: "The Mighty Angel in fellowship" },
+  { src: "/photos/speaking-flowers.jpg", alt: "Speaking from the podium" },
+  { src: "/photos/speaking-portrait.jpg", alt: "Malaika Mwenye Nguvu — Bwana Overtone" },
+  { src: "/photos/prayer.jpg", alt: "Prayer and commissioning" },
+  { src: "/photos/gathering.jpg", alt: "Ministry gathering" },
+  { src: "/photos/outdoor-banner.jpg", alt: "Headstone Prophetic Ministry International" },
 ] as const;
 

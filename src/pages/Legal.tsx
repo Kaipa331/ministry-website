@@ -6,7 +6,7 @@ export function Privacy() {
   return (
     <LegalShell title="Privacy Policy">
       <p>
-        {site.fullName} ({site.organization}) respects your privacy. This website is a public information site. If you
+        {site.fullName} respects your privacy. This website is a public information site. If you
         email us through the contact page, that message is sent from your own email app to {site.email}.
       </p>
       <p>We do not collect accounts, payments, or form submissions on this website.</p>
@@ -43,9 +43,9 @@ export function Terms() {
 function LegalShell({ title, children }: { title: string; children: ReactNode }) {
   return (
     <div className="w-full bg-page">
-      <section className="mx-auto max-w-[800px] px-4 pb-20 pt-[120px] md:px-16 md:pb-28 md:pt-[160px]">
+      <section className="mx-auto max-w-[800px] px-5 pb-20 pt-nav md:px-16 md:pb-28">
         <p className="mb-2 font-sans text-[11px] font-semibold uppercase tracking-[2px] text-[#757682]">Legal</p>
-        <h1 className="mb-8 font-heading text-[36px] font-bold text-[#001a4d] md:text-[48px]">{title}</h1>
+        <h1 className="mb-8 font-heading text-[32px] font-bold text-[#001a4d] sm:text-[36px] md:text-[48px]">{title}</h1>
         <div className="flex flex-col gap-4 font-sans text-[15px] leading-relaxed text-[#444650] md:text-[16px]">
           {children}
         </div>

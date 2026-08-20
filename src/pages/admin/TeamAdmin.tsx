@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState, type FormEvent } from "react";
 import { useAuth } from "../../admin/AuthProvider";
-import { Badge, Banner, Button, Card, Field, LoadingLine, Panel, SectionHeader, TextInput } from "../../admin/ui";
+import { Badge, Banner, Button, Card, Field, LoadingLine, Panel, PasswordInput, SectionHeader, TextInput } from "../../admin/ui";
 import { createAdmin, listAdmins, removeAdmin, type AdminUser } from "../../lib/admins";
 
 export default function TeamAdmin() {
@@ -129,8 +129,7 @@ export default function TeamAdmin() {
         {passwordNotice && <Banner tone="success">{passwordNotice}</Banner>}
         <form className="flex flex-col gap-4" onSubmit={onChangePassword}>
           <Field label="Current password">
-            <TextInput
-              type="password"
+            <PasswordInput
               value={currentPassword}
               onChange={(e) => setCurrentPassword(e.target.value)}
               autoComplete="current-password"
@@ -139,8 +138,7 @@ export default function TeamAdmin() {
           </Field>
           <div className="grid gap-4 md:grid-cols-2">
             <Field label="New password" hint="At least 8 characters.">
-              <TextInput
-                type="password"
+              <PasswordInput
                 value={nextPassword}
                 onChange={(e) => setNextPassword(e.target.value)}
                 autoComplete="new-password"
@@ -148,8 +146,7 @@ export default function TeamAdmin() {
               />
             </Field>
             <Field label="Confirm new password">
-              <TextInput
-                type="password"
+              <PasswordInput
                 value={nextPasswordConfirm}
                 onChange={(e) => setNextPasswordConfirm(e.target.value)}
                 autoComplete="new-password"
@@ -185,8 +182,7 @@ export default function TeamAdmin() {
           </Field>
           <div className="grid gap-4 md:grid-cols-2">
             <Field label="Temporary password" hint="At least 8 characters.">
-              <TextInput
-                type="password"
+              <PasswordInput
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
                 autoComplete="new-password"
@@ -194,8 +190,7 @@ export default function TeamAdmin() {
               />
             </Field>
             <Field label="Confirm password">
-              <TextInput
-                type="password"
+              <PasswordInput
                 value={newPasswordConfirm}
                 onChange={(e) => setNewPasswordConfirm(e.target.value)}
                 autoComplete="new-password"

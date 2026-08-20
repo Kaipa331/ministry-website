@@ -6,7 +6,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import { site } from "./data/content";
 
 const titles: Record<string, string> = {
-  "/": `${site.name} Ministry`,
+  "/": site.fullName,
   "/about": `About · ${site.fullName}`,
   "/podcast": `Watch · ${site.fullName}`,
   "/news": `News & Events · ${site.fullName}`,
@@ -29,7 +29,7 @@ export default function App() {
     <>
       <ScrollToTop />
       <DocumentTitle />
-      <div className="flex min-h-screen flex-col bg-[#faf8ff]">
+      <div className="flex min-h-screen min-w-0 flex-col overflow-x-clip bg-[#faf8ff]">
         <Nav />
         <main className="flex-1">
           <Outlet />

@@ -41,21 +41,21 @@ export default function Podcast() {
 
   return (
     <div className="w-full bg-page">
-      <section className="mx-auto max-w-[1280px] px-4 pb-6 pt-[100px] md:px-16 md:pb-6 md:pt-[140px]">
-        <div className="mb-8 text-center md:mb-12">
-          <p className="mb-2 font-sans text-[11px] font-semibold uppercase tracking-[2px] text-[#757682] md:text-[12px]">
+      <section className="mx-auto max-w-[1280px] px-5 pb-6 pt-nav md:px-16 md:pb-6">
+        <div className="mb-8 text-left md:mb-12 md:text-center">
+          <p className="mb-2 font-sans text-[11px] font-semibold uppercase tracking-[1.6px] text-[#757682] md:text-[12px] md:tracking-[2px]">
             {site.organization}
           </p>
-          <h1 className="mb-4 font-heading text-[36px] font-bold leading-tight tracking-[-1px] text-[#001a4d] md:text-[56px]">
+          <h1 className="mb-4 font-heading text-[32px] font-bold leading-tight tracking-[-1px] text-[#001a4d] sm:text-[36px] md:text-[56px]">
             Watch &amp; Testimonies
           </h1>
-          <p className="mx-auto max-w-[560px] font-sans text-[15px] text-[#444650] md:text-[18px]">
+          <p className="max-w-[560px] font-sans text-[15px] leading-relaxed text-[#444650] md:mx-auto md:text-[18px]">
             Watch services and teachings directly from our YouTube channel — select a message below to play here.
           </p>
         </div>
       </section>
 
-      <section className="mx-auto grid max-w-[1280px] grid-cols-1 gap-8 px-4 pb-10 md:grid-cols-[1fr_340px] md:gap-8 md:px-16 md:pb-16">
+      <section className="mx-auto grid max-w-[1280px] grid-cols-1 gap-8 px-5 pb-10 md:grid-cols-[1fr_340px] md:gap-8 md:px-16 md:pb-16">
         <div className="flex flex-col gap-5 md:gap-6">
           <YouTubeEmbed key={active.key} videoId={active.id} title={active.title} />
           <div className="flex flex-col gap-2">
@@ -72,7 +72,7 @@ export default function Podcast() {
                 Now Playing
               </p>
             )}
-            <h2 className="font-heading text-[22px] font-bold leading-[1.2] text-[#001a4d] md:text-[28px]">
+            <h2 className="font-heading text-[20px] font-bold leading-[1.25] text-[#001a4d] sm:text-[22px] md:text-[28px]">
               {active.title}
             </h2>
             <p className="font-sans text-[13px] text-[#757682] md:text-[14px]">{active.subtitle}</p>
@@ -91,7 +91,7 @@ export default function Podcast() {
           </div>
         </div>
 
-        <div className="flex max-h-[640px] flex-col gap-3 overflow-y-auto pr-1">
+        <div className="flex flex-col gap-3 md:max-h-[640px] md:overflow-y-auto md:pr-1">
           <p className="font-sans text-[12px] font-semibold uppercase tracking-[1.5px] text-[#757682]">More messages</p>
           {side.map((v) => (
             <button
@@ -103,7 +103,7 @@ export default function Podcast() {
               <img
                 src={youtubeThumb(v.id)}
                 alt=""
-                className="h-[72px] w-[128px] shrink-0 rounded-lg object-cover"
+                className="h-[64px] w-[112px] shrink-0 rounded-lg object-cover sm:h-[72px] sm:w-[128px]"
               />
               <div className="min-w-0 flex-1">
                 <p className="line-clamp-2 font-sans text-[13px] font-semibold text-[#001a4d]">{v.title}</p>
@@ -129,7 +129,7 @@ export default function Podcast() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1280px] px-4 pb-10 md:px-16">
+      <section className="mx-auto max-w-[1280px] px-5 pb-10 md:px-16">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {videos.slice(0, 3).map((v) => (
             <button
@@ -144,7 +144,7 @@ export default function Podcast() {
                   alt=""
                   className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 transition-opacity group-hover:opacity-100">
+                <div className="absolute inset-0 flex items-center justify-center bg-black/20 opacity-100 transition-opacity md:opacity-0 md:group-hover:opacity-100">
                   <span className="flex h-12 w-12 items-center justify-center rounded-full bg-[#FFD700]">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
                       <path d="M5 3L19 12L5 21V3Z" fill="#001A4D" />
@@ -162,7 +162,7 @@ export default function Podcast() {
       </section>
 
       {audio.length > 0 && (
-        <section id="audio" className="mx-auto max-w-[1280px] scroll-mt-28 px-4 pb-14 md:px-16 md:pb-20">
+        <section id="audio" className="mx-auto max-w-[1280px] scroll-mt-28 px-5 pb-14 md:px-16 md:pb-20">
           <div className="mb-6 max-w-[640px] md:mb-8">
             <p className="mb-1 font-sans text-[11px] font-semibold uppercase tracking-[2px] text-[#757682] md:text-[12px]">
               Listen
@@ -188,7 +188,7 @@ export default function Podcast() {
                 {a.description && (
                   <p className="mt-3 font-sans text-[14px] leading-relaxed text-[#444650]">{a.description}</p>
                 )}
-                <audio controls preload="none" src={a.url} className="mt-4 w-full">
+                <audio controls preload="none" src={a.url} className="mt-4 w-full max-w-full">
                   Your browser does not support audio playback.
                 </audio>
               </article>
@@ -197,7 +197,7 @@ export default function Podcast() {
         </section>
       )}
 
-      <section id="testimonies" className="mx-auto max-w-[1280px] scroll-mt-28 px-4 pb-20 md:px-16 md:pb-28">
+      <section id="testimonies" className="mx-auto max-w-[1280px] scroll-mt-28 px-5 pb-20 md:px-16 md:pb-28">
         <div className="mb-6 max-w-[640px] md:mb-8">
           <p className="mb-1 font-sans text-[11px] font-semibold uppercase tracking-[2px] text-[#757682] md:text-[12px]">
             Reviewed voices

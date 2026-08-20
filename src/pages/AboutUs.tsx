@@ -4,12 +4,12 @@ import { approvedTestimonials, pillars, site } from "../data/content";
 export default function AboutUs() {
   return (
     <div className="w-full bg-page">
-      <section className="mx-auto max-w-[1280px] px-4 pb-12 pt-[120px] md:px-16 md:pb-20 md:pt-[160px]">
+      <section className="mx-auto max-w-[1280px] px-5 pb-10 pt-nav md:px-16 md:pb-20">
         <div className="mb-8 flex flex-col gap-2 md:mb-12">
-          <p className="font-sans text-[11px] font-semibold uppercase tracking-[2px] text-[#757682] md:text-[12px]">
+          <p className="font-sans text-[11px] font-semibold uppercase tracking-[1.6px] text-[#757682] md:text-[12px] md:tracking-[2px]">
             Divine Visitation
           </p>
-          <h1 className="font-heading text-[36px] font-bold leading-[1.1] tracking-[-1px] text-[#001a4d] md:text-[56px]">
+          <h1 className="font-heading text-[32px] font-bold leading-[1.12] tracking-[-1px] text-[#001a4d] sm:text-[36px] md:text-[56px]">
             About the Mighty Angel
           </h1>
           <p className="mt-2 max-w-[600px] font-sans text-[14px] italic text-[#444650] md:text-[16px]">
@@ -23,7 +23,7 @@ export default function AboutUs() {
             This is not a church — it is a ministry.
           </p>
           <p className="mt-2 max-w-[720px] font-sans text-[14px] leading-relaxed text-[#444650] md:text-[15px]">
-            There is a big difference. {site.fullName} / {site.organization} exists to carry divine frequencies,
+            There is a big difference. {site.fullName} exists to carry divine frequencies,
             prophetic clarity, and celestial teaching. We are a ministry family, not a conventional church institution.
           </p>
         </div>
@@ -34,7 +34,7 @@ export default function AboutUs() {
               <p className="font-sans text-[10px] font-semibold uppercase tracking-[2px] text-[#FFD700] md:text-[11px]">
                 February 2014 — The Commission
               </p>
-              <h2 className="font-heading text-[24px] font-bold leading-[1.2] text-[#001a4d] md:text-[32px]">
+              <h2 className="font-heading text-[22px] font-bold leading-[1.25] text-[#001a4d] md:text-[32px]">
                 On that sacred day in Blantyre, the spiritual atmosphere shifted. It was more than a dream — a profound
                 encounter with the celestial.
               </h2>
@@ -70,7 +70,7 @@ export default function AboutUs() {
 
           <div className="flex flex-col gap-5">
             <div className="overflow-hidden rounded-2xl bg-[#001a4d] shadow-[0px_8px_32px_rgba(0,26,77,0.12)]">
-              <img src="/6.jpeg" alt="Lord Overtone speaking" className="h-auto w-full object-cover object-top" />
+              <img src="/photos/portrait-about.jpg" alt="Lord Overtone speaking" className="h-auto w-full object-cover object-top" />
             </div>
 
             <div className="rounded-2xl bg-white p-6 shadow-[0px_2px_16px_rgba(0,26,77,0.07)]">
@@ -95,7 +95,7 @@ export default function AboutUs() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1280px] px-4 pb-10 md:px-16 md:pb-14">
+      <section className="mx-auto max-w-[1280px] px-5 pb-10 md:px-16 md:pb-14">
         <div className="overflow-hidden rounded-[20px] shadow-[0px_2px_24px_rgba(0,26,77,0.06)]">
           <img src="/WEBSITE.jpg" alt="The February 2014 commission story" className="h-auto w-full object-cover" />
         </div>
@@ -105,7 +105,7 @@ export default function AboutUs() {
         </p>
       </section>
 
-      <section className="mx-auto max-w-[1280px] px-4 pb-12 md:px-16 md:pb-16">
+      <section className="mx-auto max-w-[1280px] px-5 pb-12 md:px-16 md:pb-16">
         <div className="mb-6 flex flex-col gap-2 md:mb-8">
           <p className="font-sans text-[11px] font-semibold uppercase tracking-[2px] text-[#757682]">Reviewed voices</p>
           <h2 className="font-heading text-[28px] font-bold text-[#001a4d] md:text-[36px]">Selected testimonies</h2>
@@ -136,8 +136,8 @@ export default function AboutUs() {
         </Link>
       </section>
 
-      <section className="mx-auto max-w-[1280px] px-4 pb-20 md:px-16 md:pb-28">
-        <div className="relative overflow-hidden rounded-[24px] bg-[#001a4d] p-8 text-center md:p-16">
+      <section className="mx-auto max-w-[1280px] px-5 pb-20 md:px-16 md:pb-28">
+        <div className="relative overflow-hidden rounded-[20px] bg-[#001a4d] p-6 text-center md:rounded-[24px] md:p-16">
           <div className="absolute left-1/2 top-[-60px] h-[300px] w-[300px] -translate-x-1/2 rounded-full bg-[rgba(255,215,0,0.06)]" />
           <p className="mb-3 font-sans text-[11px] font-semibold uppercase tracking-[2px] text-[#b3c5ff] md:text-[12px]">
             {site.organization}
@@ -147,18 +147,18 @@ export default function AboutUs() {
             The Voice of the Mighty Angel continues to guide this ministry as we reach frequencies globally through
             professional content and community engagement.
           </p>
-          <div className="flex flex-col items-center justify-center gap-3 sm:flex-row md:gap-4">
+          <div className="flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center md:gap-4">
             <a
               href={site.social.youtube}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-full bg-[#FFD700] px-8 py-3 font-sans text-[12px] font-bold tracking-[1.3px] text-[#001a4d] transition-colors hover:bg-[#ffca00] md:text-[13px]"
+              className="rounded-full bg-[#FFD700] px-8 py-3.5 font-sans text-[12px] font-bold tracking-[1px] text-[#001a4d] transition-colors hover:bg-[#ffca00] md:text-[13px] md:tracking-[1.3px]"
             >
               WATCH ON YOUTUBE
             </a>
             <Link
               to="/contact?intent=donate"
-              className="rounded-full border border-white/40 px-8 py-3 font-sans text-[12px] tracking-[1px] text-white transition-colors hover:bg-white/10 md:text-[13px]"
+              className="rounded-full border border-white/40 px-8 py-3.5 font-sans text-[12px] tracking-[1px] text-white transition-colors hover:bg-white/10 md:text-[13px]"
             >
               Support the vision
             </Link>

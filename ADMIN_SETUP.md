@@ -28,7 +28,8 @@ that ships with the code. Nothing breaks while you set this up.
 
 This creates the four tables, locks them down so only a signed-in admin can change anything,
 creates the `audio` and `gallery` storage buckets, and copies across the messages and announcements
-that were previously hardcoded on the site.
+that were previously hardcoded on the site. If you already ran this once, run it again after pulling
+updates — it is safe, and it adds new columns such as event photos.
 
 ### 3. Connect the website
 
@@ -110,7 +111,7 @@ One place for three kinds of post, all shown on the News & Events page:
 
 - **News** — ministry updates and notices
 - **Upcoming meeting** — programs and gatherings still ahead
-- **Past event** — outstanding events that already happened
+- **Past event** — outstanding events that already happened. You can attach a photo; it appears with the event on the News & Events page.
 
 The date is free text, so you can write "12 Sep 2026" or "Sundays · 9:00 PM", whichever reads better.
 

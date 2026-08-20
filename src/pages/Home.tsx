@@ -8,8 +8,8 @@ function LiveBanner({ title, videoId }: { title: string; videoId: string }) {
   if (dismissed) return null;
 
   return (
-    <div className="fixed inset-x-0 bottom-0 z-40 border-t border-white/20 bg-[#e74c3c] shadow-[0_-4px_24px_rgba(0,0,0,0.18)]">
-      <div className="mx-auto flex max-w-[1280px] items-center gap-3 px-4 py-3 md:gap-5 md:px-16">
+    <div className="fixed inset-x-0 bottom-0 z-40 border-t border-white/20 bg-[#e74c3c] shadow-[0_-4px_24px_rgba(0,0,0,0.18)] pb-[env(safe-area-inset-bottom,0px)]">
+      <div className="mx-auto flex max-w-[1280px] items-center gap-3 px-5 py-3 md:gap-5 md:px-16">
         <span className="relative flex h-3 w-3 shrink-0" aria-hidden>
           <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-75" />
           <span className="relative inline-flex h-3 w-3 rounded-full bg-white" />
@@ -22,7 +22,7 @@ function LiveBanner({ title, videoId }: { title: string; videoId: string }) {
           href={youtubeWatchUrl(videoId)}
           target="_blank"
           rel="noopener noreferrer"
-          className="shrink-0 rounded-full bg-white px-5 py-2 font-sans text-[12px] font-bold tracking-[1px] text-[#e74c3c] transition-colors hover:bg-[#ffe9e6] md:text-[13px]"
+          className="shrink-0 rounded-full bg-white px-4 py-2.5 font-sans text-[11px] font-bold tracking-[0.6px] text-[#e74c3c] transition-colors hover:bg-[#ffe9e6] sm:px-5 sm:text-[12px] md:text-[13px]"
         >
           WATCH LIVE
         </a>
@@ -30,7 +30,7 @@ function LiveBanner({ title, videoId }: { title: string; videoId: string }) {
           type="button"
           onClick={() => setDismissed(true)}
           aria-label="Dismiss live notice"
-          className="shrink-0 rounded-full p-1.5 text-white/80 transition-colors hover:bg-white/15 hover:text-white"
+          className="-mr-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-white/80 transition-colors hover:bg-white/15 hover:text-white"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
             <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
@@ -63,35 +63,40 @@ export default function Home() {
   if (!featured) return null;
 
   return (
-    <div className="w-full bg-page">
+    <div className={`w-full bg-page ${live ? "pb-20" : ""}`}>
       {live && <LiveBanner title={live.title} videoId={live.id} />}
 
       <section className="relative min-h-[100svh] overflow-hidden">
         <img
-          src="/2.jpeg"
+          src="/photos/hero.jpg"
           alt=""
-          className="absolute inset-0 h-full w-full object-cover object-[center_20%] animate-ken-slow"
+          className="absolute inset-0 h-full w-full object-cover object-[72%_18%] animate-ken-slow"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-[#001a4d]/92 via-[#001a4d]/72 to-[#001a4d]/35" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#001a4d]/80 via-transparent to-[#001a4d]/30" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#001a4d]/88 via-[#001a4d]/20 to-[#001a4d]/30" />
 
-        <div className="relative mx-auto flex min-h-[100svh] max-w-[1280px] flex-col justify-end px-4 pb-16 pt-28 md:justify-center md:px-16 md:pb-24 md:pt-32">
+        <div className="relative mx-auto flex min-h-[100svh] max-w-[1280px] flex-col justify-end px-5 pb-12 pt-[calc(7rem+env(safe-area-inset-top,0px))] md:justify-center md:px-16 md:pb-24 md:pt-32">
           <div className="max-w-[640px] animate-rise">
-            <p className="mb-3 font-sans text-[11px] font-semibold uppercase tracking-[2.4px] text-[#ffd700] md:text-[13px]">
+            <img
+              src="/logo-mark.png"
+              alt=""
+              className="mb-5 h-12 w-auto mix-blend-screen sm:h-14"
+            />
+            <p className="mb-3 max-w-[22rem] font-sans text-[10px] font-semibold uppercase leading-relaxed tracking-[1.6px] text-[#ffd700] sm:max-w-none sm:text-[11px] md:text-[13px] md:tracking-[2.4px]">
               {site.organization}
             </p>
-            <h1 className="font-heading text-[52px] font-bold leading-[0.95] tracking-[-1.5px] text-white md:text-[80px]">
+            <h1 className="font-heading text-[42px] font-bold leading-[0.92] tracking-[-1px] text-white sm:text-[52px] md:text-[80px] md:tracking-[-1.5px]">
               LORD
               <br />
               <span className="text-[#FFD700]">OVERTONE</span>
             </h1>
-            <p className="mt-5 max-w-[460px] font-sans text-[16px] leading-relaxed text-white/85 md:text-[18px]">
+            <p className="mt-4 max-w-[460px] font-sans text-[15px] leading-relaxed text-white/85 sm:mt-5 sm:text-[16px] md:text-[18px]">
               The Mighty Angel, the Creator — speaking peace, clarity, and celestial truth through an African body.
             </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:gap-4">
+            <div className="mt-7 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:gap-4">
               <Link
                 to="/about"
-                className="rounded-full bg-[#FFD700] px-7 py-3 text-center font-sans text-[12px] font-bold tracking-[1.3px] text-[#001a4d] transition-transform hover:scale-[1.02] hover:bg-[#ffca00] md:text-[13px]"
+                className="rounded-full bg-[#FFD700] px-7 py-3.5 text-center font-sans text-[12px] font-bold tracking-[1px] text-[#001a4d] transition-transform hover:scale-[1.02] hover:bg-[#ffca00] md:text-[13px] md:tracking-[1.3px]"
               >
                 DISCOVER THE MINISTRY
               </Link>
@@ -99,7 +104,7 @@ export default function Home() {
                 href={youtubeWatchUrl(featured.id)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-full border-2 border-white/80 px-7 py-3 text-center font-sans text-[12px] font-bold tracking-[1.3px] text-white transition-colors hover:bg-white hover:text-[#001a4d] md:text-[13px]"
+                className="rounded-full border-2 border-white/80 px-7 py-3.5 text-center font-sans text-[12px] font-bold tracking-[1px] text-white transition-colors hover:bg-white hover:text-[#001a4d] md:text-[13px] md:tracking-[1.3px]"
               >
                 WATCH LATEST SERVICE
               </a>
@@ -108,14 +113,14 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1280px] px-4 py-8 md:px-16 md:py-10">
-        <div className="flex flex-col items-center gap-4 rounded-[20px] bg-white p-5 shadow-[0px_4px_24px_rgba(0,26,77,0.08)] md:flex-row md:gap-6 md:p-8">
+      <section className="mx-auto max-w-[1280px] px-5 py-6 md:px-16 md:py-10">
+        <div className="overflow-hidden rounded-[20px] bg-white shadow-[0px_4px_24px_rgba(0,26,77,0.08)] md:flex md:items-center md:gap-6 md:p-8">
           <img
             src={youtubeThumb(featured.id)}
             alt=""
-            className="h-16 w-28 shrink-0 rounded-xl object-cover md:h-20 md:w-36"
+            className="aspect-video w-full object-cover md:h-20 md:w-36 md:shrink-0 md:rounded-xl md:aspect-auto"
           />
-          <div className="min-w-0 flex-1 text-center md:text-left">
+          <div className="min-w-0 flex-1 px-5 pt-4 text-left md:px-0 md:pt-0">
             <p className="font-sans text-[16px] font-semibold leading-tight text-[#001a4d] md:text-[18px]">
               {featured.title}
             </p>
@@ -123,7 +128,7 @@ export default function Home() {
               Latest from {site.organization} — watch here or on YouTube.
             </p>
           </div>
-          <div className="flex shrink-0 items-center gap-3 md:gap-4">
+          <div className="flex shrink-0 items-center gap-3 px-5 py-4 md:gap-4 md:p-0">
             <Link
               to="/podcast"
               className="flex h-11 w-11 items-center justify-center rounded-full bg-[#001a4d] transition-colors hover:bg-[#002a7a]"
@@ -137,7 +142,7 @@ export default function Home() {
               href={youtubeWatchUrl(featured.id)}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-full border border-[#e74c3c] px-2.5 py-0.5 font-sans text-[11px] font-bold tracking-[1px] text-[#e74c3c] transition-colors hover:bg-[#e74c3c] hover:text-white md:text-[12px]"
+              className="rounded-full border border-[#e74c3c] px-3 py-1.5 font-sans text-[11px] font-bold tracking-[1px] text-[#e74c3c] transition-colors hover:bg-[#e74c3c] hover:text-white md:text-[12px]"
             >
               YOUTUBE
             </a>
@@ -145,17 +150,17 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1280px] px-4 py-4 md:px-16 md:py-6">
+      <section className="mx-auto max-w-[1280px] px-5 py-4 md:px-16 md:py-6">
         <div className="mb-5 flex items-end justify-between gap-4">
           <div>
             <p className="font-sans text-[11px] font-semibold uppercase tracking-[2px] text-[#757682]">On YouTube</p>
             <h2 className="font-heading text-[24px] font-bold text-[#001a4d] md:text-[32px]">Recent messages</h2>
           </div>
-          <Link to="/podcast" className="font-sans text-[13px] font-semibold text-[#001a4d] hover:underline">
+          <Link to="/podcast" className="shrink-0 font-sans text-[13px] font-semibold text-[#001a4d] hover:underline">
             Watch all
           </Link>
         </div>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           {highlights.map((v) => (
             <Link
               key={v.key}
@@ -168,7 +173,7 @@ export default function Home() {
                   alt=""
                   className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 flex items-center justify-center bg-black/15 opacity-0 transition-opacity group-hover:opacity-100">
+                <div className="absolute inset-0 flex items-center justify-center bg-black/15 opacity-100 transition-opacity md:opacity-0 md:group-hover:opacity-100">
                   <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[#FFD700]">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
                       <path d="M5 3L19 12L5 21V3Z" fill="#001A4D" />
@@ -185,8 +190,8 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mx-auto grid max-w-[1280px] grid-cols-1 gap-6 px-4 py-8 md:grid-cols-[2fr_1fr] md:px-16 md:py-10">
-        <div className="relative overflow-hidden rounded-[20px] bg-[#001a4d] p-8 md:p-12">
+      <section className="mx-auto grid max-w-[1280px] grid-cols-1 gap-5 px-5 py-6 md:grid-cols-[2fr_1fr] md:gap-6 md:px-16 md:py-10">
+        <div className="relative overflow-hidden rounded-[20px] bg-[#001a4d] p-6 md:p-12">
           <div className="absolute right-[-40px] top-[-40px] h-[200px] w-[200px] rounded-full bg-[rgba(255,215,0,0.08)]" />
           <p className="mb-3 font-sans text-[22px] font-bold leading-tight text-white md:text-[28px]">Watch the Ministry</p>
           <p className="mb-7 max-w-[380px] font-sans text-[14px] leading-relaxed text-[#b3c5ff] md:text-[15px]">
@@ -198,13 +203,13 @@ export default function Home() {
               href={site.social.youtube}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-full bg-[#FFD700] px-6 py-2.5 text-center font-sans text-[11px] font-bold tracking-[1.2px] text-[#001a4d] transition-colors hover:bg-[#ffca00] md:text-[12px]"
+              className="rounded-full bg-[#FFD700] px-6 py-3 text-center font-sans text-[11px] font-bold tracking-[1px] text-[#001a4d] transition-colors hover:bg-[#ffca00] md:py-2.5 md:text-[12px] md:tracking-[1.2px]"
             >
               SUBSCRIBE ON YOUTUBE
             </a>
             <Link
               to="/podcast"
-              className="rounded-full border border-white/40 px-6 py-2.5 text-center font-sans text-[11px] tracking-[1.2px] text-white transition-colors hover:bg-white/10 md:text-[12px]"
+              className="rounded-full border border-white/40 px-6 py-3 text-center font-sans text-[11px] tracking-[1px] text-white transition-colors hover:bg-white/10 md:py-2.5 md:text-[12px] md:tracking-[1.2px]"
             >
               VIEW MESSAGES
             </Link>
@@ -232,7 +237,7 @@ export default function Home() {
             href={site.social.youtube}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-5 flex items-center gap-1.5 font-sans text-[12px] font-semibold text-[#001a4d] transition-all hover:gap-2.5 md:text-[13px]"
+            className="mt-5 flex min-h-11 items-center gap-1.5 font-sans text-[12px] font-semibold text-[#001a4d] transition-all hover:gap-2.5 md:text-[13px]"
           >
             Open YouTube channel
             <svg width="16" height="8" viewBox="0 0 16 8" fill="none" aria-hidden>
@@ -242,7 +247,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mx-auto grid max-w-[1280px] grid-cols-1 items-start gap-8 px-4 py-8 md:grid-cols-2 md:gap-10 md:px-16 md:py-10">
+      <section className="mx-auto grid max-w-[1280px] grid-cols-1 items-start gap-8 px-5 py-6 md:grid-cols-2 md:gap-10 md:px-16 md:py-10">
         <div className="rounded-2xl bg-white p-5 shadow-[0px_2px_16px_rgba(0,26,77,0.07)] md:p-7">
           <div className="mb-4 flex items-center gap-3">
             <img
@@ -275,14 +280,14 @@ export default function Home() {
             href={site.social.youtube}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-fit rounded-full bg-[#001a4d] px-6 py-2.5 font-sans text-[13px] font-bold tracking-[1px] text-white transition-colors hover:bg-[#002a7a]"
+            className="inline-flex w-full items-center justify-center rounded-full bg-[#001a4d] px-6 py-3 font-sans text-[13px] font-bold tracking-[1px] text-white transition-colors hover:bg-[#002a7a] sm:w-fit"
           >
             SUBSCRIBE ON YOUTUBE
           </a>
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1280px] px-4 pb-20 md:px-16 md:pb-28">
+      <section className="mx-auto max-w-[1280px] px-5 pb-20 md:px-16 md:pb-28">
         <div className="mb-6 flex flex-col gap-2 md:mb-8">
           <p className="font-sans text-[11px] font-semibold uppercase tracking-[2px] text-[#757682]">Reviewed voices</p>
           <h2 className="font-heading text-[28px] font-bold text-[#001a4d] md:text-[36px]">Selected testimonies</h2>
@@ -311,7 +316,7 @@ export default function Home() {
         </div>
         <Link
           to="/contact?intent=testimony"
-          className="mt-6 inline-flex font-sans text-[13px] font-semibold text-[#001a4d] hover:underline"
+          className="mt-6 inline-flex min-h-11 items-center font-sans text-[13px] font-semibold text-[#001a4d] hover:underline"
         >
           Share a testimony for review →
         </Link>

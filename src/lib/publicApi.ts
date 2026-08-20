@@ -56,6 +56,7 @@ export const fetchPublicAnnouncements = async (): Promise<PublicAnnouncement[]> 
     date: row.date_label,
     title: row.title,
     summary: row.summary,
+    image: row.image_path ? publicFileUrl(GALLERY_BUCKET, row.image_path) : undefined,
   }));
 
 export const fetchPublicGallery = async (): Promise<PublicGalleryImage[]> =>

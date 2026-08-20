@@ -28,13 +28,18 @@ function CategoryBadge({ category }: { category: AnnouncementCategory }) {
 
 function ItemCard({ item }: { item: Item }) {
   return (
-    <article className="flex flex-col gap-3 rounded-2xl bg-white p-5 shadow-[0px_2px_16px_rgba(0,26,77,0.07)] md:p-6">
-      <div className="flex items-center justify-between gap-3">
-        <CategoryBadge category={item.category} />
-        {item.date && <p className="font-sans text-[12px] text-[#757682]">{item.date}</p>}
+    <article className="flex flex-col overflow-hidden rounded-2xl bg-white shadow-[0px_2px_16px_rgba(0,26,77,0.07)]">
+      {item.image && (
+        <img src={item.image} alt="" className="aspect-[16/10] w-full object-cover" />
+      )}
+      <div className="flex flex-col gap-3 p-5 md:p-6">
+        <div className="flex items-center justify-between gap-3">
+          <CategoryBadge category={item.category} />
+          {item.date && <p className="font-sans text-[12px] text-[#757682]">{item.date}</p>}
+        </div>
+        <h3 className="font-heading text-[22px] font-bold leading-tight text-[#001a4d]">{item.title}</h3>
+        <p className="font-sans text-[14px] leading-relaxed text-[#444650]">{item.summary}</p>
       </div>
-      <h3 className="font-heading text-[22px] font-bold leading-tight text-[#001a4d]">{item.title}</h3>
-      <p className="font-sans text-[14px] leading-relaxed text-[#444650]">{item.summary}</p>
     </article>
   );
 }
@@ -73,11 +78,11 @@ export default function News() {
 
   return (
     <div className="w-full bg-page">
-      <section className="mx-auto max-w-[1280px] px-4 pb-8 pt-[120px] md:px-16 md:pb-10 md:pt-[160px]">
-        <p className="mb-2 font-sans text-[11px] font-semibold uppercase tracking-[2px] text-[#757682] md:text-[12px]">
+      <section className="mx-auto max-w-[1280px] px-5 pb-8 pt-nav md:px-16 md:pb-10">
+        <p className="mb-2 font-sans text-[11px] font-semibold uppercase tracking-[1.6px] text-[#757682] md:text-[12px] md:tracking-[2px]">
           {site.organization}
         </p>
-        <h1 className="font-heading text-[36px] font-bold tracking-[-1px] text-[#001a4d] md:text-[56px]">
+        <h1 className="font-heading text-[32px] font-bold tracking-[-1px] text-[#001a4d] sm:text-[36px] md:text-[56px]">
           News &amp; Events
         </h1>
         <p className="mt-3 max-w-[640px] font-sans text-[15px] leading-relaxed text-[#444650] md:text-[18px]">
@@ -86,7 +91,7 @@ export default function News() {
         </p>
       </section>
 
-      <div className="mx-auto max-w-[1280px] px-4 pb-20 md:px-16 md:pb-28">
+      <div className="mx-auto max-w-[1280px] px-5 pb-20 md:px-16 md:pb-28">
         <Section
           eyebrow="Announcements"
           title="Ministry news"
@@ -106,23 +111,23 @@ export default function News() {
           items={events}
         />
 
-        <div className="rounded-[20px] bg-[#001a4d] p-8 text-center md:p-12">
+        <div className="rounded-[20px] bg-[#001a4d] p-6 text-center md:p-12">
           <p className="font-heading text-[24px] font-bold text-white md:text-[32px]">Watch live on YouTube</p>
           <p className="mx-auto mt-3 max-w-[480px] font-sans text-[14px] text-[#b3c5ff] md:text-[15px]">
             Services and special meetings are streamed on {site.organization}.
           </p>
-          <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <div className="mt-6 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
             <a
               href={site.social.youtube}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-full bg-[#FFD700] px-7 py-3 font-sans text-[12px] font-bold tracking-[1.2px] text-[#001a4d] hover:bg-[#ffca00]"
+              className="rounded-full bg-[#FFD700] px-7 py-3.5 font-sans text-[12px] font-bold tracking-[1px] text-[#001a4d] hover:bg-[#ffca00]"
             >
               OPEN YOUTUBE CHANNEL
             </a>
             <Link
               to="/contact"
-              className="rounded-full border border-white/40 px-7 py-3 font-sans text-[12px] tracking-[1px] text-white hover:bg-white/10"
+              className="rounded-full border border-white/40 px-7 py-3.5 font-sans text-[12px] tracking-[1px] text-white hover:bg-white/10"
             >
               Contact the ministry
             </Link>

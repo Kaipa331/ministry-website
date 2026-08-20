@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import BrandMark from "./BrandMark";
 import { site } from "../data/content";
 
@@ -14,16 +14,35 @@ const navLinks = [
 
 export default function Nav() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMobileMenuOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = previous;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [mobileMenuOpen]);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 border-b border-[rgba(197,198,210,0.3)] bg-[rgba(250,248,255,0.88)] shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)] backdrop-blur-[12px]">
-      <div className="mx-auto flex max-w-[1280px] items-center justify-between gap-4 px-4 py-3 md:px-8 lg:px-10 xl:px-16">
+    <header className="fixed top-0 left-0 right-0 z-50 border-b border-[rgba(197,198,210,0.3)] bg-[rgba(250,248,255,0.92)] shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)] backdrop-blur-[12px] pt-[env(safe-area-inset-top,0px)]">
+      <div className="mx-auto flex max-w-[1280px] items-center justify-between gap-3 px-5 py-3 md:px-8 lg:px-10 xl:px-16">
         <Link
           to="/"
           className="min-w-0 shrink transition-opacity hover:opacity-80"
           onClick={() => setMobileMenuOpen(false)}
         >
-          <BrandMark markClassName="h-8 w-8 md:h-9 md:w-9" />
+          <BrandMark markClassName="h-8 w-12 md:h-9 md:w-[3.4rem]" />
         </Link>
 
         <nav className="hidden items-center gap-4 lg:flex xl:gap-6" aria-label="Primary">
@@ -60,12 +79,13 @@ export default function Nav() {
 
         <button
           type="button"
-          className="p-2 lg:hidden"
+          className="-mr-1 flex h-11 w-11 items-center justify-center rounded-full lg:hidden"
           aria-expanded={mobileMenuOpen}
+          aria-controls="mobile-nav"
           aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
           onClick={() => setMobileMenuOpen((o) => !o)}
         >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
             {mobileMenuOpen ? (
               <path d="M18 6L6 18M6 6l12 12" stroke="#001a4d" strokeWidth="2" strokeLinecap="round" />
             ) : (
@@ -76,28 +96,33 @@ export default function Nav() {
       </div>
 
       {mobileMenuOpen && (
-        <div className="border-t border-[rgba(197,198,210,0.3)] bg-[rgba(250,248,255,0.98)] backdrop-blur-[12px] lg:hidden">
-          <div className="flex flex-col gap-4 px-4 py-4">
+        <div
+          id="mobile-nav"
+          className="absolute inset-x-0 top-full z-10 flex h-[calc(100dvh-100%)] flex-col bg-[#faf8ff] lg:hidden"
+        >
+          <nav className="flex flex-1 flex-col overflow-y-auto px-5 py-2" aria-label="Primary">
             {navLinks.map(({ label, to }) => (
               <NavLink
                 key={to}
                 to={to}
                 onClick={() => setMobileMenuOpen(false)}
                 className={({ isActive }) =>
-                  `text-left font-sans text-[16px] transition-colors ${
-                    isActive ? "font-bold text-[#735c00]" : "font-normal text-[#444650]"
+                  `flex min-h-12 items-center border-b border-[rgba(197,198,210,0.28)] font-sans text-[17px] transition-colors ${
+                    isActive ? "font-bold text-[#735c00]" : "font-medium text-[#444650]"
                   }`
                 }
               >
                 {label}
               </NavLink>
             ))}
+          </nav>
+          <div className="border-t border-[rgba(197,198,210,0.28)] px-5 pt-4 pb-[max(1.25rem,env(safe-area-inset-bottom,0px))]">
             <a
               href={site.social.youtube}
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setMobileMenuOpen(false)}
-              className="w-fit rounded-full bg-[#001a4d] px-6 py-2.5 font-sans text-[14px] font-bold tracking-[1.4px] text-white transition-colors hover:bg-[#002a7a]"
+              className="flex w-full items-center justify-center rounded-full bg-[#001a4d] px-6 py-3.5 font-sans text-[14px] font-bold tracking-[0.6px] text-white transition-colors hover:bg-[#002a7a]"
             >
               Subscribe on YouTube
             </a>

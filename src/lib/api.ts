@@ -84,8 +84,9 @@ function safeFileName(name: string): string {
   return `${Date.now()}-${cleaned || "file"}`;
 }
 
-export async function uploadFile(bucket: string, file: File): Promise<string> {
-  const path = safeFileName(file.name);
+export async function uploadFile(bucket: string, file: File, folder?: string): Promise<string> {
+  const name = safeFileName(file.name);
+  const path = folder ? `${folder}/${name}` : name;
   const { error } = await requireSupabase()
     .storage.from(bucket)
     .upload(path, file, { cacheControl: "3600", upsert: false });

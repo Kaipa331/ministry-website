@@ -56,7 +56,7 @@ export default function AdminLayout() {
     <div className="min-h-screen bg-[#f3f4f8] lg:flex">
       <aside className="hidden lg:flex lg:w-[248px] lg:shrink-0 lg:flex-col lg:bg-[#001a4d]">
         <div className="border-b border-white/10 px-5 py-5">
-          <BrandMark light markClassName="h-8 w-8" />
+          <BrandMark light markClassName="h-8 w-12" />
           <p className="mt-3 font-sans text-[11px] font-semibold uppercase tracking-[1.8px] text-[#ffd700]/80">
             Ministry console
           </p>

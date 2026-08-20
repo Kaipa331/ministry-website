@@ -43,10 +43,15 @@ create table if not exists public.announcements (
   date_label text not null default '',
   title      text not null,
   summary    text not null default '',
+  image_path text not null default '',
   published  boolean not null default true,
   sort_order integer not null default 0,
   created_at timestamptz not null default now()
 );
+
+-- Extra column for existing projects (create table above will not add it).
+alter table public.announcements
+  add column if not exists image_path text not null default '';
 
 -- Gallery photos uploaded from the dashboard into storage.
 create table if not exists public.gallery_images (

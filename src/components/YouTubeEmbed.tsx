@@ -9,7 +9,7 @@ export default function YouTubeEmbed({ videoId, title, className = "", autoplay 
   const src = `https://www.youtube.com/embed/${videoId}?rel=0${autoplay ? "&autoplay=1" : ""}`;
 
   return (
-    <div className={`relative aspect-video overflow-hidden rounded-[20px] bg-[#001a4d] shadow-[0px_8px_24px_rgba(0,26,77,0.12)] ${className}`}>
+    <div className={`relative aspect-video overflow-hidden rounded-xl bg-[#001a4d] shadow-[0px_8px_24px_rgba(0,26,77,0.12)] md:rounded-[20px] ${className}`}>
       <iframe
         src={src}
         title={title}

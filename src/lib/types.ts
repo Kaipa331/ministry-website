@@ -39,6 +39,7 @@ export interface AnnouncementRow {
   date_label: string;
   title: string;
   summary: string;
+  image_path: string;
   published: boolean;
   sort_order: number;
   created_at: string;
@@ -84,6 +85,7 @@ export interface PublicAnnouncement {
   date: string;
   title: string;
   summary: string;
+  image?: string;
 }
 
 export interface PublicGalleryImage {

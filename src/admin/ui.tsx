@@ -1,4 +1,4 @@
-import type { ButtonHTMLAttributes, InputHTMLAttributes, ReactNode, SelectHTMLAttributes, TextareaHTMLAttributes } from "react";
+import { useState, type ButtonHTMLAttributes, type InputHTMLAttributes, type ReactNode, type SelectHTMLAttributes, type TextareaHTMLAttributes } from "react";
 
 const inputBase =
   "w-full rounded-lg border border-[#d8dbe4] bg-white px-3.5 py-2.5 font-sans text-[14px] text-[#1a1b20] outline-none transition-shadow placeholder:text-[#9aa0b4] focus:border-[#001a4d] focus:ring-2 focus:ring-[rgba(0,26,77,0.12)] disabled:bg-[#f5f6fa] disabled:text-[#757682]";
@@ -8,16 +8,59 @@ export const fileInputClass =
 
 export function Field({ label, hint, children }: { label: string; hint?: string; children: ReactNode }) {
   return (
-    <label className="flex flex-col gap-1.5">
+    <div className="flex flex-col gap-1.5">
       <span className="font-sans text-[12px] font-semibold tracking-[0.2px] text-[#2a3350]">{label}</span>
       {children}
       {hint && <span className="font-sans text-[12px] leading-relaxed text-[#7a8194]">{hint}</span>}
-    </label>
+    </div>
   );
 }
 
 export function TextInput(props: InputHTMLAttributes<HTMLInputElement>) {
   return <input {...props} className={`${inputBase} ${props.className ?? ""}`} />;
+}
+
+export function PasswordInput(props: InputHTMLAttributes<HTMLInputElement>) {
+  const [visible, setVisible] = useState(false);
+
+  return (
+    <div className="relative">
+      <input
+        {...props}
+        type={visible ? "text" : "password"}
+        className={`${inputBase} pr-11 ${props.className ?? ""}`}
+      />
+      <button
+        type="button"
+        onClick={() => setVisible((v) => !v)}
+        aria-label={visible ? "Hide password" : "Show password"}
+        aria-pressed={visible}
+        className="absolute right-1.5 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-md text-[#7a8194] transition-colors hover:bg-[#f1f2f7] hover:text-[#001a4d]"
+      >
+        {visible ? (
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
+            <path
+              d="M3 3l18 18M10.6 10.7a2.5 2.5 0 0 0 3.5 3.5M9.9 5.2A10.5 10.5 0 0 1 12 5c6 0 10 7 10 7a17.7 17.7 0 0 1-3.3 4.1M6.1 6.2A17.4 17.4 0 0 0 2 12s4 7 10 7c1.5 0 2.9-.3 4.2-.9"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        ) : (
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
+            <path
+              d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinejoin="round"
+            />
+            <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="1.8" />
+          </svg>
+        )}
+      </button>
+    </div>
+  );
 }
 
 export function TextArea(props: TextareaHTMLAttributes<HTMLTextAreaElement>) {

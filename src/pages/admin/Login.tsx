@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../admin/AuthProvider";
-import { Banner, Button, Field, TextInput } from "../../admin/ui";
+import { Banner, Button, Field, PasswordInput, TextInput } from "../../admin/ui";
 import BrandMark from "../../components/BrandMark";
 import { site } from "../../data/content";
 
@@ -30,7 +30,7 @@ export default function Login() {
       <aside className="relative hidden overflow-hidden bg-[#001a4d] lg:flex lg:flex-col lg:justify-between lg:px-12 lg:py-12">
         <div className="pointer-events-none absolute -right-16 -top-16 h-72 w-72 rounded-full bg-[#ffd700]/10" />
         <div className="pointer-events-none absolute -bottom-20 left-10 h-80 w-80 rounded-full bg-white/5" />
-        <BrandMark light markClassName="h-10 w-10" />
+        <BrandMark light markClassName="h-10 w-[3.75rem]" />
         <div className="relative max-w-[420px]">
           <p className="font-sans text-[11px] font-semibold uppercase tracking-[2px] text-[#ffd700]">Ministry console</p>
           <h1 className="mt-3 font-heading text-[42px] font-bold leading-[1.05] tracking-[-0.8px] text-white">
@@ -70,8 +70,7 @@ export default function Login() {
                 />
               </Field>
               <Field label="Password">
-                <TextInput
-                  type="password"
+                <PasswordInput
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   autoComplete="current-password"
