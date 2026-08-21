@@ -1,4 +1,4 @@
-import { StrictMode, Suspense, lazy } from "react";
+import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import App from "./App";
@@ -9,25 +9,16 @@ import ContactUs from "./pages/ContactUs";
 import Gallery from "./pages/Gallery";
 import News from "./pages/News";
 import { Privacy, Terms } from "./pages/Legal";
+import { AuthProvider } from "./admin/AuthProvider";
+import AdminLayout from "./admin/AdminLayout";
+import Overview from "./pages/admin/Overview";
+import VideosAdmin from "./pages/admin/VideosAdmin";
+import AudioAdmin from "./pages/admin/AudioAdmin";
+import AnnouncementsAdmin from "./pages/admin/AnnouncementsAdmin";
+import TestimonialsAdmin from "./pages/admin/TestimonialsAdmin";
+import GalleryAdmin from "./pages/admin/GalleryAdmin";
+import TeamAdmin from "./pages/admin/TeamAdmin";
 import "./index.css";
-
-// The dashboard is only ever opened by the ministry admin, so it is kept out of
-// the bundle that visitors download.
-const AuthProvider = lazy(() => import("./admin/AuthProvider").then((m) => ({ default: m.AuthProvider })));
-const AdminLayout = lazy(() => import("./admin/AdminLayout"));
-const Overview = lazy(() => import("./pages/admin/Overview"));
-const VideosAdmin = lazy(() => import("./pages/admin/VideosAdmin"));
-const AudioAdmin = lazy(() => import("./pages/admin/AudioAdmin"));
-const AnnouncementsAdmin = lazy(() => import("./pages/admin/AnnouncementsAdmin"));
-const TestimonialsAdmin = lazy(() => import("./pages/admin/TestimonialsAdmin"));
-const GalleryAdmin = lazy(() => import("./pages/admin/GalleryAdmin"));
-const TeamAdmin = lazy(() => import("./pages/admin/TeamAdmin"));
-
-const adminFallback = (
-  <div className="flex min-h-screen items-center justify-center bg-[#faf8ff]">
-    <p className="font-sans text-[14px] text-[#757682]">Loading dashboard…</p>
-  </div>
-);
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -36,11 +27,9 @@ createRoot(document.getElementById("root")!).render(
         <Route
           path="/admin"
           element={
-            <Suspense fallback={adminFallback}>
-              <AuthProvider>
-                <AdminLayout />
-              </AuthProvider>
-            </Suspense>
+            <AuthProvider>
+              <AdminLayout />
+            </AuthProvider>
           }
         >
           <Route index element={<Overview />} />

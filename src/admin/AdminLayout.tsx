@@ -105,7 +105,7 @@ export default function AdminLayout() {
       </aside>
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="sticky top-0 z-20 border-b border-[#e6e8ef] bg-white/92 backdrop-blur-md">
+        <header className="sticky top-0 z-20 border-b border-[#e6e8ef] bg-white/92 pt-[env(safe-area-inset-top,0px)] backdrop-blur-md">
           <div className="flex items-center justify-between gap-3 px-4 py-3 lg:px-8">
             <div className="flex min-w-0 items-center gap-3">
               <div className="lg:hidden">

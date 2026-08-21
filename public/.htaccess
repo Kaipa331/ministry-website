@@ -5,6 +5,9 @@ RewriteEngine On
 # RewriteCond %{HTTPS} !=on
 # RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
+# Always send /admin to the React app, even if a folder named admin exists
+RewriteRule ^admin(/.*)?$ index.html [L]
+
 # Serve existing files and folders as-is
 RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d
