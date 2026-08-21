@@ -24,7 +24,7 @@ export default function AboutUs() {
           <div className="flex flex-col gap-6 md:gap-8">
             <div className="flex flex-col gap-2">
               <p className="font-sans text-[10px] font-semibold uppercase tracking-[2px] text-[#FFD700] md:text-[11px]">
-                February 2014 — The Commission
+                3rd February 2014 — The Commission
               </p>
               <h2 className="font-heading text-[22px] font-bold leading-[1.25] text-[#001a4d] md:text-[32px]">
                 On that sacred day in Blantyre, the spiritual atmosphere shifted. It was more than a dream — a profound
