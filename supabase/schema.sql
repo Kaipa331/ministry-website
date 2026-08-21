@@ -70,11 +70,16 @@ create table if not exists public.testimonials (
   role       text not null default '',
   location   text not null default '',
   quote      text not null,
+  date_label text not null default '',
   image_path text not null default '',
   published  boolean not null default true,
   sort_order integer not null default 0,
   created_at timestamptz not null default now()
 );
+
+-- Extra column for existing projects (create table above will not add it).
+alter table public.testimonials
+  add column if not exists date_label text not null default '';
 
 -- -----------------------------------------------------------------------------
 -- Row level security

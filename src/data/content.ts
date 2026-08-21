@@ -88,40 +88,6 @@ export const pillars = [
   "Above all, respect the Creator",
 ] as const;
 
-/** Only reviewed testimonies appear on the site — nothing is published without moderation. */
-export const approvedTestimonials = [
-  {
-    name: "Sarah M.",
-    role: "Community Leader",
-    location: "Lagos, Nigeria",
-    quote:
-      "The Lord Overtone messages have been a sanctuary for my soul. Listening to 'Kupembedza Mulengi' changed how I view my cultural identity within my faith.",
-    avatar: "SM",
-    image: "/avatar-sarah.png",
-  },
-  {
-    name: "David K.",
-    role: "Educator",
-    location: "Nairobi, Kenya",
-    quote:
-      "Finding content that is both intellectually stimulating and spiritually nourishing is rare. This ministry hits that perfect balance every single time.",
-    avatar: "DK",
-    image: "/avatar-david.png",
-  },
-  {
-    name: "John Phiri",
-    role: "Student",
-    location: "Blantyre, Malawi",
-    quote:
-      "As a young seeker, I found clarity through these teachings. The cultural perspective on faith is exactly what my generation needs to hear.",
-    avatar: "JP",
-    image: "/avatar-john.png",
-  },
-] as const;
-
-/** @deprecated Use approvedTestimonials */
-export const testimonials = approvedTestimonials;
-
 export const newsItems = [
   {
     id: "news-1",

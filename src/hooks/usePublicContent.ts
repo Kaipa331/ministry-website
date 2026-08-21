@@ -9,7 +9,6 @@ import {
 } from "../lib/publicApi";
 import type { PublicAnnouncement, PublicAudio, PublicGalleryImage, PublicTestimony, PublicVideo } from "../lib/types";
 import {
-  approvedTestimonials,
   galleryImages,
   newsItems,
   recentEvents,
@@ -50,16 +49,6 @@ const fallbackAnnouncements: PublicAnnouncement[] = [
 ];
 
 const fallbackGallery: PublicGalleryImage[] = galleryImages.map((g) => ({ key: g.src, src: g.src, alt: g.alt }));
-
-const fallbackTestimonials: PublicTestimony[] = approvedTestimonials.map((t) => ({
-  key: t.name,
-  name: t.name,
-  role: t.role,
-  location: t.location,
-  quote: t.quote,
-  image: t.image,
-  avatar: t.avatar,
-}));
 
 /* -------------------------------------------------------------------------- */
 /* Loaders                                                                    */
@@ -132,6 +121,31 @@ export function useGallery() {
 }
 
 export function useTestimonials() {
-  const { data, loading } = useRemoteContent(loadTestimonials, fallbackTestimonials);
-  return { testimonials: data, loading };
+  const [testimonials, setTestimonials] = useState<PublicTestimony[]>([]);
+  const [loading, setLoading] = useState(isSupabaseConfigured);
+
+  useEffect(() => {
+    if (!isSupabaseConfigured) {
+      setLoading(false);
+      return;
+    }
+
+    let cancelled = false;
+    loadTestimonials()
+      .then((rows) => {
+        if (!cancelled) setTestimonials(rows);
+      })
+      .catch(() => {
+        if (!cancelled) setTestimonials([]);
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  return { testimonials, loading };
 }

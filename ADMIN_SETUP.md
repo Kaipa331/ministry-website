@@ -119,7 +119,7 @@ The date is free text, so you can write "12 Sep 2026" or "Sundays · 9:00 PM", w
 
 ### Testimonies
 
-Add a name, the testimony itself, and optionally a role, location, and photo. Published items appear
+Add a name, the testimony itself, and optionally a date, role, location, and photo. Published items appear
 on the Home, About, and Watch pages.
 
 ### Gallery

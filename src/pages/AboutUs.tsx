@@ -97,27 +97,29 @@ export default function AboutUs() {
         </p>
       </section>
 
-      <section className="mx-auto max-w-[1280px] px-5 pb-12 md:px-16 md:pb-16">
-        <div className="mb-6 flex flex-col gap-2 md:mb-8">
-          <p className="font-sans text-[11px] font-semibold uppercase tracking-[2px] text-[#757682]">Reviewed voices</p>
-          <h2 className="font-heading text-[28px] font-bold text-[#001a4d] md:text-[36px]">Selected testimonies</h2>
-          <p className="max-w-[640px] font-sans text-[14px] text-[#444650]">
-            Comments and testimonies are moderated. Only reviewed messages appear here — nothing is published without
-            ministry review.
-          </p>
-        </div>
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-3 md:gap-6">
-          {testimonials.map((t) => (
-            <TestimonialCard key={t.key} testimony={t} />
-          ))}
-        </div>
-        <Link
-          to="/contact?intent=testimony"
-          className="mt-6 inline-flex font-sans text-[13px] font-semibold text-[#001a4d] hover:underline"
-        >
-          Share a testimony for review →
-        </Link>
-      </section>
+      {testimonials.length > 0 && (
+        <section className="mx-auto max-w-[1280px] px-5 pb-12 md:px-16 md:pb-16">
+          <div className="mb-6 flex flex-col gap-2 md:mb-8">
+            <p className="font-sans text-[11px] font-semibold uppercase tracking-[2px] text-[#757682]">Reviewed voices</p>
+            <h2 className="font-heading text-[28px] font-bold text-[#001a4d] md:text-[36px]">Selected testimonies</h2>
+            <p className="max-w-[640px] font-sans text-[14px] text-[#444650]">
+              Comments and testimonies are moderated. Only reviewed messages appear here — nothing is published without
+              ministry review.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 gap-5 md:grid-cols-3 md:gap-6">
+            {testimonials.map((t) => (
+              <TestimonialCard key={t.key} testimony={t} />
+            ))}
+          </div>
+          <Link
+            to="/contact?intent=testimony"
+            className="mt-6 inline-flex font-sans text-[13px] font-semibold text-[#001a4d] hover:underline"
+          >
+            Share a testimony for review →
+          </Link>
+        </section>
+      )}
 
       <section className="mx-auto max-w-[1280px] px-5 pb-20 md:px-16 md:pb-28">
         <div className="relative overflow-hidden rounded-[20px] bg-[#001a4d] p-6 text-center md:rounded-[24px] md:p-16">

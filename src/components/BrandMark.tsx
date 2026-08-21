@@ -10,7 +10,7 @@ interface BrandMarkProps {
 
 export default function BrandMark({
   className = "",
-  markClassName = "h-9 w-auto md:h-10",
+  markClassName = "h-10 w-auto md:h-11",
   showWordmark = true,
   light = false,
   stacked = false,
@@ -29,7 +29,7 @@ export default function BrandMark({
   return (
     <span className={`inline-flex min-w-0 items-center gap-2.5 sm:gap-3 ${className}`}>
       <img
-        src="/logo.png"
+        src={light ? "/logo.png" : "/logo-nav.png"}
         alt={showWordmark ? "" : site.fullName}
         className={`shrink-0 object-contain ${markClassName}`}
       />

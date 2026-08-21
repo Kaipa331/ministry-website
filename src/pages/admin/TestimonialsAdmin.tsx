@@ -23,11 +23,12 @@ interface Draft {
   name: string;
   role: string;
   location: string;
+  dateLabel: string;
   quote: string;
   published: boolean;
 }
 
-const emptyDraft: Draft = { name: "", role: "", location: "", quote: "", published: true };
+const emptyDraft: Draft = { name: "", role: "", location: "", dateLabel: "", quote: "", published: true };
 
 export default function TestimonialsAdmin() {
   const { rows, loading, busy, error, notice, run } = useAdminResource<TestimonyRow>(fetchTestimonials);
@@ -78,6 +79,7 @@ export default function TestimonialsAdmin() {
       name: row.name,
       role: row.role,
       location: row.location,
+      dateLabel: row.date_label ?? "",
       quote: row.quote,
       published: row.published,
     });
@@ -115,6 +117,7 @@ export default function TestimonialsAdmin() {
           name: draft.name.trim(),
           role: draft.role.trim(),
           location: draft.location.trim(),
+          date_label: draft.dateLabel.trim(),
           quote: draft.quote.trim(),
           published: draft.published,
           image_path: imagePath,
@@ -175,13 +178,22 @@ export default function TestimonialsAdmin() {
             </Field>
           </div>
 
-          <Field label="Location" hint="Optional. City and country, if you want it shown.">
-            <TextInput
-              value={draft.location}
-              onChange={(e) => set("location", e.target.value)}
-              placeholder="Blantyre, Malawi"
-            />
-          </Field>
+          <div className="grid gap-4 md:grid-cols-2">
+            <Field label="Location" hint="Optional. City and country, if you want it shown.">
+              <TextInput
+                value={draft.location}
+                onChange={(e) => set("location", e.target.value)}
+                placeholder="Blantyre, Malawi"
+              />
+            </Field>
+            <Field label="Date" hint="Optional. Written however you want it to read, e.g. “12 Sep 2026”.">
+              <TextInput
+                value={draft.dateLabel}
+                onChange={(e) => set("dateLabel", e.target.value)}
+                placeholder="12 Sep 2026"
+              />
+            </Field>
+          </div>
 
           <Field label="Testimony">
             <TextArea
@@ -245,7 +257,7 @@ export default function TestimonialsAdmin() {
       ) : rows.length === 0 ? (
         <EmptyState
           title="No testimonies yet"
-          description="Until you add testimonies here, the website shows the original reviewed set that shipped with the site."
+          description="Published testimonies appear on the Home, About, and Watch pages. Nothing is shown there until you add one."
         />
       ) : (
         <div className="flex flex-col gap-3">
@@ -266,6 +278,7 @@ export default function TestimonialsAdmin() {
                 <div className="min-w-0">
                   <div className="mb-1.5 flex flex-wrap items-center gap-2">
                     <p className="font-sans text-[15px] font-semibold text-[#001a4d]">{row.name}</p>
+                    {row.date_label && <Badge>{row.date_label}</Badge>}
                     {!row.published && <Badge>Hidden</Badge>}
                   </div>
                   {(row.role || row.location) && (

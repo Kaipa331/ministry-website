@@ -179,30 +179,32 @@ export default function Podcast() {
         </section>
       )}
 
-      <section id="testimonies" className="mx-auto max-w-[1280px] scroll-mt-28 px-5 pb-20 md:px-16 md:pb-28">
-        <div className="mb-6 max-w-[640px] md:mb-8">
-          <p className="mb-1 font-sans text-[11px] font-semibold uppercase tracking-[2px] text-[#757682] md:text-[12px]">
-            Reviewed voices
-          </p>
-          <h2 className="font-heading text-[28px] font-bold text-[#001a4d] md:text-[36px]">Selected testimonies</h2>
-          <p className="mt-2 font-sans text-[14px] text-[#444650]">
-            Comments are moderated. Only reviewed messages appear here — share yours via Contact for ministry review
-            before publishing.
-          </p>
-        </div>
+      {testimonials.length > 0 && (
+        <section id="testimonies" className="mx-auto max-w-[1280px] scroll-mt-28 px-5 pb-20 md:px-16 md:pb-28">
+          <div className="mb-6 max-w-[640px] md:mb-8">
+            <p className="mb-1 font-sans text-[11px] font-semibold uppercase tracking-[2px] text-[#757682] md:text-[12px]">
+              Reviewed voices
+            </p>
+            <h2 className="font-heading text-[28px] font-bold text-[#001a4d] md:text-[36px]">Selected testimonies</h2>
+            <p className="mt-2 font-sans text-[14px] text-[#444650]">
+              Comments are moderated. Only reviewed messages appear here — share yours via Contact for ministry review
+              before publishing.
+            </p>
+          </div>
 
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 md:gap-6">
-          {testimonials.map((t) => (
-            <TestimonialCard key={t.key} testimony={t} showStars />
-          ))}
-        </div>
-        <Link
-          to="/contact?intent=testimony"
-          className="mt-6 inline-flex font-sans text-[13px] font-semibold text-[#001a4d] hover:underline"
-        >
-          Share a testimony for review →
-        </Link>
-      </section>
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 md:gap-6">
+            {testimonials.map((t) => (
+              <TestimonialCard key={t.key} testimony={t} showStars />
+            ))}
+          </div>
+          <Link
+            to="/contact?intent=testimony"
+            className="mt-6 inline-flex font-sans text-[13px] font-semibold text-[#001a4d] hover:underline"
+          >
+            Share a testimony for review →
+          </Link>
+        </section>
+      )}
     </div>
   );
 }

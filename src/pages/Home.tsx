@@ -42,25 +42,12 @@ function LiveBanner({ title, videoId }: { title: string; videoId: string }) {
   );
 }
 
-function StarRating() {
-  return (
-    <div className="mt-3 flex gap-1" aria-hidden>
-      {Array.from({ length: 5 }).map((_, i) => (
-        <svg key={i} width="16" height="16" viewBox="0 0 20 20" fill="none">
-          <path
-            d="M10 1.5l2.47 5.01 5.53.8-4 3.9.94 5.5L10 14.4l-4.94 2.6.94-5.5-4-3.9 5.53-.8L10 1.5Z"
-            fill="#FFD700"
-          />
-        </svg>
-      ))}
-    </div>
-  );
-}
-
 export default function Home() {
   const { videos, featured, live } = useVideos();
   const { testimonials } = useTestimonials();
   const highlights = videos.slice(0, 3);
+  const featuredTestimony = testimonials[0];
+  const moreTestimonials = testimonials.slice(1);
 
   if (!featured) return null;
 
@@ -82,11 +69,8 @@ export default function Home() {
             <img
               src="/logo.png"
               alt={site.fullName}
-              className="mb-5 h-20 w-auto sm:h-24 md:h-28"
+              className="mb-6 h-[4.75rem] w-auto drop-shadow-[0_2px_12px_rgba(0,0,0,0.35)] sm:h-24 md:h-[6.75rem]"
             />
-            <p className="mb-3 max-w-[22rem] font-sans text-[10px] font-semibold uppercase leading-relaxed tracking-[1.6px] text-[#ffd700] sm:max-w-none sm:text-[11px] md:text-[13px] md:tracking-[2.4px]">
-              Headstone Prophetic Ministry International
-            </p>
             <h1 className="font-heading text-[42px] font-bold leading-[0.92] tracking-[-1px] text-white sm:text-[52px] md:text-[80px] md:tracking-[-1.5px]">
               LORD
               <br />
@@ -249,25 +233,12 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mx-auto grid max-w-[1280px] grid-cols-1 items-start gap-8 px-5 py-6 md:grid-cols-2 md:gap-10 md:px-16 md:py-10">
-        <div className="rounded-2xl bg-white p-5 shadow-[0px_2px_16px_rgba(0,26,77,0.07)] md:p-7">
-          <div className="mb-4 flex items-center gap-3">
-            <img
-              src="/avatar-sarah.png"
-              alt=""
-              className="h-12 w-12 shrink-0 rounded-full border border-[rgba(255,215,0,0.3)] object-cover"
-            />
-            <div>
-              <p className="font-sans text-[14px] font-semibold text-[#1a1b20]">Sarah M.</p>
-              <p className="font-sans text-[12px] text-[#757682]">Lagos, Nigeria</p>
-            </div>
-          </div>
-          <p className="font-sans text-[14px] italic leading-relaxed text-[#444650]">
-            "My life was forever changed after hearing the message of the Mighty Angel. There is a clarity I never knew
-            existed."
-          </p>
-          <StarRating />
-        </div>
+      <section
+        className={`mx-auto grid max-w-[1280px] grid-cols-1 items-start gap-8 px-5 py-6 md:gap-10 md:px-16 md:py-10 ${
+          featuredTestimony ? "md:grid-cols-2" : ""
+        }`}
+      >
+        {featuredTestimony ? <TestimonialCard testimony={featuredTestimony} showStars /> : null}
 
         <div className="flex flex-col gap-4">
           <h2 className="font-heading text-[22px] font-bold leading-tight text-[#001a4d] md:text-[28px]">
@@ -289,26 +260,28 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1280px] px-5 pb-20 md:px-16 md:pb-28">
-        <div className="mb-6 flex flex-col gap-2 md:mb-8">
-          <p className="font-sans text-[11px] font-semibold uppercase tracking-[2px] text-[#757682]">Reviewed voices</p>
-          <h2 className="font-heading text-[28px] font-bold text-[#001a4d] md:text-[36px]">Selected testimonies</h2>
-          <p className="max-w-[560px] font-sans text-[14px] text-[#444650]">
-            All comments are moderated. Only reviewed messages appear on this ministry website.
-          </p>
-        </div>
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 md:gap-6">
-          {testimonials.map((t) => (
-            <TestimonialCard key={t.key} testimony={t} showStars />
-          ))}
-        </div>
-        <Link
-          to="/contact?intent=testimony"
-          className="mt-6 inline-flex min-h-11 items-center font-sans text-[13px] font-semibold text-[#001a4d] hover:underline"
-        >
-          Share a testimony for review →
-        </Link>
-      </section>
+      {moreTestimonials.length > 0 && (
+        <section className="mx-auto max-w-[1280px] px-5 pb-20 md:px-16 md:pb-28">
+          <div className="mb-6 flex flex-col gap-2 md:mb-8">
+            <p className="font-sans text-[11px] font-semibold uppercase tracking-[2px] text-[#757682]">Reviewed voices</p>
+            <h2 className="font-heading text-[28px] font-bold text-[#001a4d] md:text-[36px]">Selected testimonies</h2>
+            <p className="max-w-[560px] font-sans text-[14px] text-[#444650]">
+              All comments are moderated. Only reviewed messages appear on this ministry website.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 md:gap-6">
+            {moreTestimonials.map((t) => (
+              <TestimonialCard key={t.key} testimony={t} showStars />
+            ))}
+          </div>
+          <Link
+            to="/contact?intent=testimony"
+            className="mt-6 inline-flex min-h-11 items-center font-sans text-[13px] font-semibold text-[#001a4d] hover:underline"
+          >
+            Share a testimony for review →
+          </Link>
+        </section>
+      )}
     </div>
   );
 }

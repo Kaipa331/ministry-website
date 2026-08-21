@@ -75,6 +75,7 @@ export const fetchPublicTestimonials = async (): Promise<PublicTestimony[]> =>
     role: row.role,
     location: row.location,
     quote: row.quote,
+    date: row.date_label ?? "",
     image: row.image_path ? publicFileUrl(GALLERY_BUCKET, row.image_path) : "",
     avatar: initialsFromName(row.name),
   }));

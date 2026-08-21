@@ -60,6 +60,7 @@ export interface TestimonyRow {
   role: string;
   location: string;
   quote: string;
+  date_label: string;
   image_path: string;
   published: boolean;
   sort_order: number;
@@ -112,6 +113,7 @@ export interface PublicTestimony {
   role: string;
   location: string;
   quote: string;
+  date: string;
   image: string;
   avatar: string;
 }
